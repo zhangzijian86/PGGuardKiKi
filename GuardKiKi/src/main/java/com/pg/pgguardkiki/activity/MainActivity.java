@@ -1,7 +1,9 @@
-package com.pg.pgguardkiki;
+package com.pg.pgguardkiki.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.pg.pgguardkiki.R;
 
 public class MainActivity extends AppCompatActivity {
 
