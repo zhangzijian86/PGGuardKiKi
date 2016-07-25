@@ -13,5 +13,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- MainActivity -->
+        <activity android:theme="@android:style/Theme.NoTitleBar"
+            android:name="com.pg.pgguardkiki.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
+
+        <!-- LoginActivity -->
+        <activity android:theme="@android:style/Theme.NoTitleBar"
+            android:name="com.pg.pgguardkiki.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
+
     </application>
 </manifest>
