@@ -28,5 +28,8 @@
             android:launchMode="singleTask">
         </activity>
 
+        <!-- ConnectService -->
+        <service android:name="com.pg.pgguardkiki.service.ConnectService" />
+
     </application>
 </manifest>

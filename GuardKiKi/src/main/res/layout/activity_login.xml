@@ -62,8 +62,8 @@
 
 
     <EditText
-        android:layout_marginTop="14dp"
         android:id="@+id/passwdedittext"
+        android:layout_marginTop="14dp"
         android:layout_below="@id/phoneedittext"
         android:layout_width="260dp"
         android:layout_height="33dp"
