@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import  com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
+import com.pg.pgguardkiki.tools.SmackManagerTool;
+
 /**
  * Created by zzj on 16-7-25.
  */
@@ -13,6 +15,7 @@ public class ConnectService extends BaseService{
     private static final String ClassName = "ConnectService";
     private IConnectionStatusChangedCallback mConnectionStatusChangedCallback;
     private IBinder mBinder = new CSBinder();
+    private Thread mConnectThread;
 
     @Override
     public void onCreate() {
@@ -39,7 +42,15 @@ public class ConnectService extends BaseService{
         mConnectionStatusChangedCallback = null;
     }
 
-    public void Login(String phone, String password) {
+    public void Login(final String phone,final String password) {
         Log.d(ClassName, "Login() phone:" + phone+"password:"+password);
+        mConnectThread = new Thread() {
+            @Override
+            public void run() {
+                SmackManagerTool smt = new SmackManagerTool(ConnectService.this);
+                smt.login(phone,password);
+            }
+        };
+        mConnectThread.start();
     }
 }

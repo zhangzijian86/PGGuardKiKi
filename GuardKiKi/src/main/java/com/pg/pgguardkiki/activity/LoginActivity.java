@@ -40,7 +40,7 @@ public class LoginActivity extends Activity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
-        startService(new Intent(LoginActivity.this, ConnectService.class));
+//        startService(new Intent(LoginActivity.this, ConnectService.class));
 
         Intent mServiceIntent = new Intent(this, ConnectService.class);
         mServiceIntent.setAction(LOGIN_ACTION);
@@ -64,7 +64,7 @@ public class LoginActivity extends Activity implements
 
     public void login(){
         Log.d(ClassName, "login() ==00==");
-        mPhoneEdit = (EditText)findViewById(R.id.passwdedittext);
+        mPhoneEdit = (EditText)findViewById(R.id.phoneedittext);
         mPasswordEdit = (EditText)findViewById(R.id.passwdedittext);
         if (TextUtils.isEmpty(mPhoneEdit.getText().toString().trim())) {
             Toast.makeText(getApplicationContext(), R.string.login_phoneempty, Toast.LENGTH_SHORT).show();
