@@ -1,5 +1,8 @@
 package com.pg.pgguardkiki.tools;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.util.Log;
 import com.pg.pgguardkiki.data.SystemData;
 import com.pg.pgguardkiki.service.ConnectService;
@@ -7,14 +10,25 @@ import com.pg.pgguardkiki.service.ConnectService;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
-import org.jivesoftware.smack.RosterEntry;
+import com.pg.pgguardkiki.tools.ChatProvider;
+import com.pg.pgguardkiki.tools.ChatProvider.ChatConstants;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smackx.ServiceDiscoveryManager;
+import org.jivesoftware.smackx.carbons.Carbon;
+import org.jivesoftware.smackx.carbons.CarbonManager;
+import org.jivesoftware.smackx.packet.DelayInfo;
+import org.jivesoftware.smackx.ping.PingManager;
+import org.jivesoftware.smackx.receipts.DeliveryReceiptManager;
 
 import java.util.Collection;
 
@@ -28,19 +42,20 @@ public class SmackManagerTool{
     private static ConnectionConfiguration  mConnectionConfig;
     private Roster mRoster;
     private RosterListener mRosterListener;
+    private final ContentResolver mContentResolver;
+    private PacketListener mPacketListener;
 
     private static final int PACKET_TIMEOUT = 30000;
 
     public SmackManagerTool(ConnectService service) {
-
         registerSmackProviders();
-
         mService = service;
         mConnectionConfig = new ConnectionConfiguration(SystemData.HOST_IP,SystemData.PORT,SystemData.SERVER_NAME);
         mConnectionConfig.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
         mConnectionConfig.setSendPresence(true);
         mConnectionConfig.setDebuggerEnabled(true);
         mConnection = new XMPPConnection(mConnectionConfig);
+        this.mContentResolver = service.getContentResolver();
     }
 
     public static void registerSmackProviders() {
@@ -48,9 +63,11 @@ public class SmackManagerTool{
     }
 
     public boolean login(String phone, String password){
+        Log.d(ClassName, "==11==");
         if (mConnection.isConnected()) {
             mConnection.disconnect();
         }
+        Log.d(ClassName, "==22==");
         try {
             SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
             SmackConfiguration.setKeepAliveInterval(-1);
@@ -60,23 +77,51 @@ public class SmackManagerTool{
             Log.d(ClassName, "Connect Error 0");
             e.printStackTrace();
         }
+        Log.d(ClassName, "==33==");
         if (!mConnection.isConnected()) {
             Log.d(ClassName, "Connect Error 1");
             return  false;
         }
+        Log.d(ClassName, "==33==");
         try {
             mConnection.login(phone,password);
         } catch (Exception e) {
             Log.d(ClassName, "Login Error");
             return  false;
         }
+        Log.d(ClassName, "==44==");
         registerRosterChangeListener();// 监听联系人动态变化
+        Log.d(ClassName, "==55==");
+        registerNewsChangeListener();
+        Log.d(ClassName, "==66==");
+
+        mConnection.addConnectionListener(new ConnectionListener() {
+            public void connectionClosedOnError(Exception e) {
+                mService.postConnectionFailed(e.getMessage());
+            }
+
+            public void connectionClosed() {
+            }
+
+            public void reconnectingIn(int seconds) {
+            }
+
+            public void reconnectionFailed(Exception e) {
+            }
+
+            public void reconnectionSuccessful() {
+            }
+        });
+
+        if(mConnection.isConnected()&&mConnection.isAuthenticated()){
+            registerMessageListener();
+        }
 
         // 更改在綫狀態
         Presence presence = new Presence(Presence.Type.available);
         presence.setMode(Presence.Mode.available);
         mConnection.sendPacket(presence);
-
+        Log.d(ClassName, "==77==");
         return true;
     }
 
@@ -104,5 +149,140 @@ public class SmackManagerTool{
             }
         };
         mRoster.addRosterListener(mRosterListener);
+    }
+
+    private void registerNewsChangeListener() {
+        // register connection features
+        ServiceDiscoveryManager sdm = ServiceDiscoveryManager
+                .getInstanceFor(mConnection);
+        if (sdm == null)
+            sdm = new ServiceDiscoveryManager(mConnection);
+
+        sdm.addFeature("http://jabber.org/protocol/disco#info");
+
+        // reference PingManager, set ping flood protection to 10s
+        PingManager.getInstanceFor(mConnection).setPingMinimumInterval(
+                10 * 1000);
+        // reference DeliveryReceiptManager, add listener
+
+        DeliveryReceiptManager dm = DeliveryReceiptManager
+                .getInstanceFor(mConnection);
+        dm.enableAutoReceipts();
+        dm.registerReceiptReceivedListener(new DeliveryReceiptManager.ReceiptReceivedListener() {
+            public void onReceiptReceived(String fromJid, String toJid,
+                                          String receiptId) {
+                Log.d(ClassName,  "got delivery receipt for " + receiptId);
+                changeMessageDeliveryStatus(receiptId, ChatConstants.DS_ACKED);
+            }
+        });
+    }
+
+    public void changeMessageDeliveryStatus(String packetID, int new_status) {
+        ContentValues cv = new ContentValues();
+        cv.put(ChatConstants.DELIVERY_STATUS, new_status);
+        Uri rowuri = Uri.parse("content://" + ChatProvider.AUTHORITY + "/"
+                + ChatProvider.TABLE_NAME);
+        mContentResolver.update(rowuri, cv, ChatConstants.PACKET_ID
+                + " = ? AND " + ChatConstants.DIRECTION + " = "
+                + ChatConstants.OUTGOING, new String[] { packetID });
+    }
+
+    /************ start 新消息处理 ********************/
+    private void registerMessageListener() {
+        // do not register multiple packet listeners
+        if (mPacketListener != null)
+            mConnection.removePacketListener(mPacketListener);
+
+        PacketTypeFilter filter = new PacketTypeFilter(Message.class);
+
+        mPacketListener = new PacketListener() {
+            public void processPacket(Packet packet) {
+                try {
+                    if (packet instanceof Message) {
+                        Message msg = (Message) packet;
+                        String chatMessage = msg.getBody();
+
+                        // try to extract a carbon
+                        Carbon cc = CarbonManager.getCarbon(msg);
+                        if (cc != null
+                                && cc.getDirection() == Carbon.Direction.received) {
+                            Log.d(ClassName, "carbon: " + cc.toXML());
+                            msg = (Message) cc.getForwarded()
+                                    .getForwardedPacket();
+                            chatMessage = msg.getBody();
+                            // fall through
+                        } else if (cc != null
+                                && cc.getDirection() == Carbon.Direction.sent) {
+                            Log.d(ClassName, "carbon: " + cc.toXML());
+                            msg = (Message) cc.getForwarded()
+                                    .getForwardedPacket();
+                            chatMessage = msg.getBody();
+                            if (chatMessage == null)
+                                return;
+                            String fromJID = getJabberID(msg.getTo());
+
+                            addChatMessageToDB(ChatConstants.OUTGOING, fromJID,
+                                    chatMessage, ChatConstants.DS_SENT_OR_READ,
+                                    System.currentTimeMillis(),
+                                    msg.getPacketID());
+                            // always return after adding
+                            return;
+                        }
+
+                        if (chatMessage == null) {
+                            return;
+                        }
+
+                        if (msg.getType() == Message.Type.error) {
+                            chatMessage = "<Error> " + chatMessage;
+                        }
+
+                        long ts;
+                        DelayInfo timestamp = (DelayInfo) msg.getExtension(
+                                "delay", "urn:xmpp:delay");
+                        if (timestamp == null)
+                            timestamp = (DelayInfo) msg.getExtension("x",
+                                    "jabber:x:delay");
+                        if (timestamp != null)
+                            ts = timestamp.getStamp().getTime();
+                        else
+                            ts = System.currentTimeMillis();
+
+                        String fromJID = getJabberID(msg.getFrom());
+
+                        addChatMessageToDB(ChatConstants.INCOMING, fromJID,
+                                chatMessage, ChatConstants.DS_NEW, ts,
+                                msg.getPacketID());
+                        mService.newMessage(fromJID, chatMessage);
+                    }
+                } catch (Exception e) {
+                    // SMACK silently discards exceptions dropped from
+                    // processPacket :(
+                    Log.d(ClassName, "failed to process packet:");
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        mConnection.addPacketListener(mPacketListener, filter);
+    }
+
+    private String getJabberID(String from) {
+        String[] res = from.split("/");
+        return res[0].toLowerCase();
+    }
+
+    private void addChatMessageToDB(int direction, String JID, String message,
+                                    int delivery_status, long ts, String packetID) {
+        ContentValues values = new ContentValues();
+
+        values.put(ChatConstants.DIRECTION, direction);
+        values.put(ChatConstants.JID, JID);
+        values.put(ChatConstants.MESSAGE, message);
+        values.put(ChatConstants.DELIVERY_STATUS, delivery_status);
+        values.put(ChatConstants.DATE, ts);
+        values.put(ChatConstants.PACKET_ID, packetID);
+
+        mContentResolver.insert(ChatProvider.CONTENT_URI, values);
     }
 }

@@ -38,6 +38,11 @@
 
         <!-- ConnectService -->
         <service android:name="com.pg.pgguardkiki.service.ConnectService" />
-
+        <provider
+            android:name="com.pg.pgguardkiki.tools.ChatProvider"
+            android:authorities="com.way.xx.provider.Chats" />
+        <provider
+            android:name="com.pg.pgguardkiki.tools.RosterProvider"
+            android:authorities="com.way.xx.provider.Roster" />
     </application>
 </manifest>

@@ -53,4 +53,13 @@ public class ConnectService extends BaseService{
         };
         mConnectThread.start();
     }
+
+    public void postConnectionFailed(final String reason) {
+        Log.d(ClassName, "postConnectionFailed");
+    }
+
+    // 收到新消息
+    public void newMessage(final String from, final String message) {
+        Log.d(ClassName, "newMessage from:"+from+"message:"+message);
+    }
 }
