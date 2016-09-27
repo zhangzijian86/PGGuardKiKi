@@ -15,6 +15,7 @@ public class ConnectService extends BaseService{
     private static final String ClassName = "ConnectService";
     private IConnectionStatusChangedCallback mConnectionStatusChangedCallback;
     private IBinder mBinder = new CSBinder();
+    SmackManagerTool smt;
     private Thread mConnectThread;
 
     @Override
@@ -47,12 +48,21 @@ public class ConnectService extends BaseService{
         mConnectThread = new Thread() {
             @Override
             public void run() {
-                SmackManagerTool smt = new SmackManagerTool(ConnectService.this);
+                smt = new SmackManagerTool(ConnectService.this);
                 smt.login(phone,password);
             }
         };
         mConnectThread.start();
     }
+
+    // 发送消息
+    public void sendMessage(String user, String message) {
+        if (smt != null)
+            smt.sendMessage(user, message);
+//        else
+//            smt.sendOfflineMessage(getContentResolver(), user, message);
+    }
+
 
     public void postConnectionFailed(final String reason) {
         Log.d(ClassName, "postConnectionFailed");

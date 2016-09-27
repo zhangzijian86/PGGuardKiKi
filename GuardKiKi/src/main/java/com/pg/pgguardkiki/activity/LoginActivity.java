@@ -30,6 +30,7 @@ public class LoginActivity extends Activity implements
     public static final String LOGIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.LOGIN";
     private ConnectService mConnectService;
     private Button loginBt;
+    private Button registerBt;
     private EditText mPhoneEdit;
     private EditText mPasswordEdit;
 
@@ -49,6 +50,9 @@ public class LoginActivity extends Activity implements
 
         loginBt = (Button)findViewById(R.id.loginBt);
         loginBt.setOnClickListener(this);
+
+        registerBt = (Button)findViewById(R.id.registerBt);
+        registerBt.setOnClickListener(this);
     }
 
     @Override
@@ -57,6 +61,9 @@ public class LoginActivity extends Activity implements
             case  R.id.loginBt:
                 login();
                 break;
+            case  R.id.registerBt:
+                mConnectService.sendMessage(mPhoneEdit.getText().toString().trim(),
+                        mPasswordEdit.getText().toString().trim());
             default:
                 break;
         }
