@@ -128,13 +128,17 @@ public class SmackManagerTool{
 
     public void sendMessage(String toJID, String message) {
         Log.d(ClassName, "==aa==");
-        final Message newMessage = new Message("zzj0@zzj/Spark 2.7.0", Message.Type.chat);
+        //final Message newMessage = new Message("zzj0@zzj/Spark 2.7.0", Message.Type.chat);
+        final Message newMessage = new Message("zzj0@zzj/Spark", Message.Type.chat);
         newMessage.setBody(message);
         Log.d(ClassName, "==bb==");
         newMessage.addExtension(new DeliveryReceiptRequest());
         if (mConnection.isConnected()&&mConnection.isAuthenticated()) {
             Log.d(ClassName, "==cc=="+newMessage.getPacketID());
-            addChatMessageToDB(ChatConstants.OUTGOING, "zzj0@zzj/Spark 2.7.0", message,
+//            addChatMessageToDB(ChatConstants.OUTGOING, "zzj0@zzj/Spark 2.7.0", message,
+//                    ChatConstants.DS_SENT_OR_READ, System.currentTimeMillis(),
+//                    newMessage.getPacketID());
+            addChatMessageToDB(ChatConstants.OUTGOING, "zzj0@zzj/Spark", message,
                     ChatConstants.DS_SENT_OR_READ, System.currentTimeMillis(),
                     newMessage.getPacketID());
             Log.d(ClassName, "==dd==");
