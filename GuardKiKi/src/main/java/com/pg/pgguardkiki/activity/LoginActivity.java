@@ -62,8 +62,11 @@ public class LoginActivity extends Activity implements
                 login();
                 break;
             case  R.id.registerBt:
-                mConnectService.sendMessage(mPhoneEdit.getText().toString().trim(),
-                        mPasswordEdit.getText().toString().trim());
+                mConnectService.register("zzj2","123456");
+                Log.d(ClassName, "register() ==11==");
+                break;
+//                mConnectService.sendMessage(mPhoneEdit.getText().toString().trim(),
+//                        mPasswordEdit.getText().toString().trim());
             default:
                 break;
         }

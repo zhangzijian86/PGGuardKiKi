@@ -11,6 +11,7 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import com.pg.pgguardkiki.tools.ChatProvider;
@@ -19,10 +20,15 @@ import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.filter.AndFilter;
+import org.jivesoftware.smack.filter.PacketFilter;
+import org.jivesoftware.smack.filter.PacketIDFilter;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
+import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.Registration;
 import org.jivesoftware.smackx.ServiceDiscoveryManager;
 import org.jivesoftware.smackx.carbons.Carbon;
 import org.jivesoftware.smackx.carbons.CarbonManager;
@@ -55,6 +61,7 @@ public class SmackManagerTool{
         mConnectionConfig.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
         mConnectionConfig.setSendPresence(true);
         mConnectionConfig.setDebuggerEnabled(true);
+        mConnectionConfig.setSASLAuthenticationEnabled(false);
         mConnection = new XMPPConnection(mConnectionConfig);
         this.mContentResolver = service.getContentResolver();
     }
@@ -125,6 +132,53 @@ public class SmackManagerTool{
         Log.d(ClassName, "==77==");
         return true;
     }
+
+	public void register(String name, String password) {
+        Log.d(ClassName, "==register=b=000=");
+        if (mConnection.isConnected()) {
+            mConnection.disconnect();
+        }
+        Log.d(ClassName, "==register=b=111=");
+        try {
+            SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
+            SmackConfiguration.setKeepAliveInterval(-1);
+            SmackConfiguration.setDefaultPingInterval(0);
+            mConnection.connect();
+        } catch (XMPPException e) {
+            Log.d(ClassName, "register Connect Error 0");
+            e.printStackTrace();
+            
+        }
+        Log.d(ClassName, "==register=b=222=");
+        if (!mConnection.isConnected()) {
+            Log.d(ClassName, "register Connect Error 1");
+        }
+        Registration reg = new Registration();
+        reg.setType(IQ.Type.SET);
+        reg.setTo(mConnection.getServiceName());
+        reg.setUsername(name);// 注意这里createAccount注册时，参数是username，不是jid，是“@”前面的部分。
+        reg.setPassword(password);
+        reg.addAttribute("android", "geolo_createUser_android");
+        PacketFilter filter = new AndFilter(new PacketIDFilter(
+                reg.getPacketID()), new PacketTypeFilter(IQ.class));
+        PacketCollector collector = mConnection.createPacketCollector(filter);
+        mConnection.sendPacket(reg);
+        IQ result = (IQ) collector.nextResult(SmackConfiguration
+                .getPacketReplyTimeout());
+        collector.cancel();
+        if (result == null) {
+            Log.d(ClassName, "==register=b=444=");
+        } else if (result.getType() == IQ.Type.RESULT) {
+        } else {
+            if (result.getError().toString().equalsIgnoreCase("conflict(409)")) {
+                Log.d(ClassName, "==register=b=555=IQ.Type.ERROR: "
+                        + result.getError().toString());
+            } else {
+                Log.d(ClassName, "==register=b=666=IQ.Type.ERROR: " + result.getError().toString());
+            }
+        }
+    }
+
 
 //    public void sendMessage(String toJID, String message) {
 //        Log.d(ClassName, "==aa==");

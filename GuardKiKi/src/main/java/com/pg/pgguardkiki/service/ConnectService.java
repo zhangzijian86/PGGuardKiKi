@@ -63,6 +63,21 @@ public class ConnectService extends BaseService{
 //            smt.sendOfflineMessage(getContentResolver(), user, message);
     }
 
+    public void register(final String  name, final String password) {
+        Log.d(ClassName, "register=a=000==");
+        mConnectThread = new Thread() {
+            @Override
+            public void run() {
+                Log.d(ClassName, "register=a=111==");
+                smt = new SmackManagerTool(ConnectService.this);
+                Log.d(ClassName, "register=a=222==");
+                smt.register(name, password);
+                Log.d(ClassName, "register=a=333==");
+            }
+        };
+        mConnectThread.start();
+    }
+
 
     public void postConnectionFailed(final String reason) {
         Log.d(ClassName, "postConnectionFailed");
