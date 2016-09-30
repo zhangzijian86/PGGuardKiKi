@@ -5,7 +5,7 @@ package com.pg.pgguardkiki.data;
  */
 public class SystemData {
 
-    public final static String HOST_IP = "192.168.1.110"; //"192.168.1.110";//"172.16.26.89";
+    public final static String HOST_IP = "172.16.26.89"; //"192.168.1.110";//"172.16.26.89";
     public final static String SERVER_NAME = "openfire";
     public final static int PORT = 5222;
     public final static int PACKET_TIMEOUT = 30000;
