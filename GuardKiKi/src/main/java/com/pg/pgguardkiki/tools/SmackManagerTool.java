@@ -11,6 +11,7 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
@@ -207,13 +208,43 @@ public class SmackManagerTool{
 //        }
 //    }
 
+    public void yazhengma(String toJID, String message) {
+        Log.d(ClassName, "==aa==");
+
+        Log.d(ClassName, "==sendMessage=b=000=");
+        if (mConnection.isConnected()) {
+            mConnection.disconnect();
+        }
+        Log.d(ClassName, "==sendMessage=b=111=");
+        try {
+            SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
+            SmackConfiguration.setKeepAliveInterval(-1);
+            SmackConfiguration.setDefaultPingInterval(0);
+            mConnection.connect();
+            mConnection.loginAnonymously();//匿名登陆
+        } catch (XMPPException e) {
+            Log.d(ClassName, "sendMessage Connect Error 0");
+            e.printStackTrace();
+
+        }
+        Log.d(ClassName, "==sendMessage=b=222=");
+        if (!mConnection.isConnected()) {
+            Log.d(ClassName, "sendMessage Connect Error 1");
+        }
+        final Message newMessage = new Message("admin@zzj", Message.Type.chat);
+        newMessage.setBody("==yazhengma==给服务端的数据==yazhengma==");
+        newMessage.addExtension(new DeliveryReceiptRequest());
+        mConnection.sendPacket(newMessage);
+        mConnection.disconnect();
+    }
+
     public void sendMessage(String toJID, String message) {
         Log.d(ClassName, "==aa==");
         //final Message newMessage = new Message("zzj0@zzj/Spark 2.7.0", Message.Type.chat);
         //final Message newMessage = new Message("zzj0@zzj/Spark", Message.Type.chat);
 
         final Message newMessage = new Message("zzj", Message.Type.chat);
-        newMessage.setBody("给服务端的数据");
+        newMessage.setBody("==给服务端的数据==");
 
 //        final Message newMessage = new Message("zzj0@zzj/Spark", Message.Type.chat);
 //        newMessage.setBody("给服务端的数据");

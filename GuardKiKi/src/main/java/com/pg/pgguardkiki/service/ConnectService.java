@@ -56,6 +56,20 @@ public class ConnectService extends BaseService{
     }
 
     // 发送消息
+    public void yazhengma(final String user,final String message) {
+        mConnectThread = new Thread() {
+            @Override
+            public void run() {
+                smt = new SmackManagerTool(ConnectService.this);
+                smt.yazhengma(user, message);
+            }
+        };
+        mConnectThread.start();
+//        else
+//            smt.sendOfflineMessage(getContentResolver(), user, message);
+    }
+
+    // 发送消息
     public void sendMessage(String user, String message) {
         if (smt != null)
             smt.sendMessage(user, message);
