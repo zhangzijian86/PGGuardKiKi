@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroupOverlay;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -21,16 +22,19 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.pg.pgguardkiki.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,9 +70,73 @@ public class MapDemo  extends Activity{
         mLocationClient.registerLocationListener(mBDLocationListener);
 
         getLocation(mapView);
+
+        mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
+            /**
+             * 地图单击事件回调函数
+             * @param point 点击的地理坐标
+             */
+            public void onMapClick(LatLng point) {
+                Log.d(ClassName, "=OnMapClickListener=point.latitude==" + point.latitude);
+                Log.d(ClassName, "=OnMapClickListener=point.longitude==" + point.longitude);
+//                ViewGroupOverlay vgos = mapView.getOverlay();
+//                vgos.remove();
+            }
+
+            /**
+             * 地图内 Poi 单击事件回调函数
+             * @param arg0 点击的 poi 信息
+             */
+            @Override
+            public boolean onMapPoiClick(MapPoi arg0) {
+                Log.d(ClassName, "=OnMapClickListener=arg0.getName()==" + arg0.getName());
+                Log.d(ClassName, "=OnMapClickListener=arg0.getPosition()==" + arg0.getPosition());
+                return false;
+            }
+        });
+        DrawLines();
     }
 
-    /** 获得所在位置经纬度及详细地址 */
+    public void  DrawLines(){
+
+        //1 point 40.1443  116.649957
+        //2 point 40.1413  116.651957
+
+
+
+        double startlats=40.1443;
+        double startlongs=116.649957;
+
+        double rulats=40.1443;
+        double rplongs=116.651957;
+
+        double ldlats=40.1413;
+        double ldlongs=116.651957;
+
+        double latline=40.1413;
+        double lngline=116.649957;
+
+        LatLng p1 = new LatLng(startlats, startlongs);
+        LatLng p2 = new LatLng(rulats, rplongs);
+        LatLng p3 = new LatLng(ldlats, ldlongs);
+        LatLng p4 = new LatLng(latline, lngline);
+
+        List<LatLng> points = new ArrayList<LatLng>();
+        points.add(p1);
+        points.add(p2);
+        points.add(p3);
+        points.add(p4);
+        points.add(p1);
+        OverlayOptions ooPolyline = new PolylineOptions().width(10).color(0xAAFF0000).points(points);
+        mBaiduMap.addOverlay(ooPolyline);
+        /*
+         * 调用Distance方法获取两点间x,y轴之间的距离
+        */
+        double cc= Distance(startlats,  startlongs,latline,lngline);
+        Log.d(ClassName, "=OnMapClickListener=cc=="+cc);
+    }
+
+        /** 获得所在位置经纬度及详细地址 */
     public void getLocation(View view) {
         // 声明定位参数
         LocationClientOption option = new LocationClientOption();
@@ -148,6 +216,17 @@ public class MapDemo  extends Activity{
                 }
             }
         }
+    }
+
+    public Double Distance(double lat1, double lng1,double lat2, double lng2) {
+        Double R=6370996.81;  //地球的半径
+        /*
+        * 获取两点间x,y轴之间的距离
+        */
+        Double x = (lng2 - lng1)*Math.PI*R*Math.cos(((lat1+lat2)/2)*Math.PI/180)/180;
+        Double y = (lat2 - lat1)*Math.PI*R/180;
+        Double distance = Math.hypot(x, y);   //得到两点之间的直线距离
+        return   distance;
     }
 
     @Override
