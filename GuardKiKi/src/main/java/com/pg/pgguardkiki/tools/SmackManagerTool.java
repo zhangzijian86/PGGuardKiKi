@@ -243,7 +243,11 @@ public class SmackManagerTool{
         //final Message newMessage = new Message("zzj0@zzj/Spark 2.7.0", Message.Type.chat);
         //final Message newMessage = new Message("zzj0@zzj/Spark", Message.Type.chat);
 
-        final Message newMessage = new Message("zzj", Message.Type.chat);
+//        final Message newMessage = new Message("zzj", Message.Type.chat);
+//        newMessage.setBody("==给服务端的数据==");
+
+        //final Message newMessage = new Message("specialfrienduser@zzj/Spark", Message.Type.chat);
+        final Message newMessage = new Message("specialfrienduser", Message.Type.chat);
         newMessage.setBody("==给服务端的数据==");
 
 //        final Message newMessage = new Message("zzj0@zzj/Spark", Message.Type.chat);
@@ -401,12 +405,12 @@ public class SmackManagerTool{
                                 msg.getPacketID());
                         Log.d(ClassName, "==mService.newMessage==" + fromJID+"==="+chatMessage);
                         mService.newMessage(fromJID, chatMessage);
-                        final Message newMessage = new Message("zzj0@zzj/Smack", Message.Type.chat);
-                        newMessage.setBody("返回的数据啊啊啊啊啊");
-                        newMessage.addExtension(new DeliveryReceiptRequest());
-                        if (mConnection.isConnected()&&mConnection.isAuthenticated()) {
-                            mConnection.sendPacket(newMessage);
-                        }
+//                        final Message newMessage = new Message("zzj0@zzj/Smack", Message.Type.chat);
+//                        newMessage.setBody("返回的数据啊啊啊啊啊");
+//                        newMessage.addExtension(new DeliveryReceiptRequest());
+//                        if (mConnection.isConnected()&&mConnection.isAuthenticated()) {
+//                            mConnection.sendPacket(newMessage);
+//                        }
                     }
                 } catch (Exception e) {
                     // SMACK silently discards exceptions dropped from

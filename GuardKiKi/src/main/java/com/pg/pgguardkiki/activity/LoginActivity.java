@@ -66,15 +66,15 @@ public class LoginActivity extends Activity implements
 //                mConnectService.register("zzj3", "123456");
 //                Log.d(ClassName, "register() ==11==");
                   //register
-//                mConnectService.sendMessage("zzz","TTT");
+                mConnectService.sendMessage("zzz","TTT");
 
 //                mConnectService.yazhengma("zzz","TTT");
 
 //                mConnectService.sendMessage(mPhoneEdit.getText().toString().trim(),
 //                        mPasswordEdit.getText().toString().trim());
 
-                Intent intent = new Intent(LoginActivity.this,MapDemo.class);
-                startActivity(intent);
+//                Intent intent = new Intent(LoginActivity.this,MapDemo.class);
+//                startActivity(intent);
 
                 break;
             default:
