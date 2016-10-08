@@ -246,8 +246,8 @@ public class SmackManagerTool{
 //        final Message newMessage = new Message("zzj", Message.Type.chat);
 //        newMessage.setBody("==给服务端的数据==");
 
-        //final Message newMessage = new Message("specialfrienduser@zzj/Spark", Message.Type.chat);
-        final Message newMessage = new Message("specialfrienduser", Message.Type.chat);
+        final Message newMessage = new Message("specialfrienduser@zzj/Spark", Message.Type.chat);
+        //final Message newMessage = new Message("specialfrienduser", Message.Type.chat);
         newMessage.setBody("==给服务端的数据==");
 
 //        final Message newMessage = new Message("zzj0@zzj/Spark", Message.Type.chat);
