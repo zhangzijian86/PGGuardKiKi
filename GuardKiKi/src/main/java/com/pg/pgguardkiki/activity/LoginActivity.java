@@ -62,11 +62,13 @@ public class LoginActivity extends Activity implements
                 login();
                 break;
             case  R.id.registerBt:
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
                   //register
 //                mConnectService.register("zzj3", "123456");
 //                Log.d(ClassName, "register() ==11==");
                   //register
-                mConnectService.sendMessage("zzz","TTT");
+//                mConnectService.sendMessage("zzz","TTT");
 
 //                mConnectService.yazhengma("zzz","TTT");
 

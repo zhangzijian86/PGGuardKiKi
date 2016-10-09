@@ -222,20 +222,23 @@ public class SmackManagerTool{
             SmackConfiguration.setDefaultPingInterval(0);
             mConnection.connect();
             mConnection.loginAnonymously();//匿名登陆
+            registerMessageListener();
         } catch (XMPPException e) {
             Log.d(ClassName, "sendMessage Connect Error 0");
             e.printStackTrace();
 
         }
         Log.d(ClassName, "==sendMessage=b=222=");
+
         if (!mConnection.isConnected()) {
             Log.d(ClassName, "sendMessage Connect Error 1");
         }
+
         final Message newMessage = new Message("admin@zzj", Message.Type.chat);
         newMessage.setBody("==yazhengma==给服务端的数据==yazhengma==");
         newMessage.addExtension(new DeliveryReceiptRequest());
         mConnection.sendPacket(newMessage);
-        mConnection.disconnect();
+        //mConnection.disconnect();
     }
 
     public void sendMessage(String toJID, String message) {

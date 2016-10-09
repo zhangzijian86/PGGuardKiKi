@@ -50,13 +50,19 @@
             android:launchMode="singleTask">
         </activity>
 
+        <!-- RegisterActivity -->
+        <activity android:theme="@android:style/Theme.NoTitleBar"
+            android:name="com.pg.pgguardkiki.activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
+
         <!-- MapDemo -->
         <activity android:theme="@android:style/Theme.NoTitleBar"
             android:name="com.pg.pgguardkiki.activity.MapDemo"
             android:screenOrientation="portrait"
             android:launchMode="singleTask">
         </activity>
-
 
         <!-- ConnectService -->
         <service android:name="com.pg.pgguardkiki.service.ConnectService" />
