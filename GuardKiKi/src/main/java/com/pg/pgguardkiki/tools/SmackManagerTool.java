@@ -221,7 +221,7 @@ public class SmackManagerTool{
             SmackConfiguration.setKeepAliveInterval(-1);
             SmackConfiguration.setDefaultPingInterval(0);
             mConnection.connect();
-            mConnection.loginAnonymously();//匿名登陆
+//            mConnection.loginAnonymously();//匿名登陆
             registerMessageListener();
         } catch (XMPPException e) {
             Log.d(ClassName, "sendMessage Connect Error 0");
