@@ -37,7 +37,6 @@ public class LoginActivity extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
@@ -87,7 +86,7 @@ public class LoginActivity extends Activity implements
     public void login(){
         Log.d(ClassName, "login() ==00==");
         mPhoneEdit = (EditText)findViewById(R.id.phoneedittext);
-        mPasswordEdit = (EditText)findViewById(R.id.passwdedittext);
+        mPasswordEdit = null;//(EditText)findViewById(R.id.passwdedittext);
         if (TextUtils.isEmpty(mPhoneEdit.getText().toString().trim())) {
             Toast.makeText(getApplicationContext(), R.string.login_phoneempty, Toast.LENGTH_SHORT).show();
             return;

@@ -1,58 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#45BFCE"
+    android:background="#ecedf1"
     >
-
-    <LinearLayout
-        android:id="@+id/head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#45BFCE"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:text=""
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            />
-    </LinearLayout>
-
-
-    <ImageView
+    <com.pg.pgguardkiki.tools.view.RoundImageView
         android:id="@+id/logo"
-        android:layout_below="@id/head"
-        android:layout_marginTop="30dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/title"
-        />
+        imagecontrol:border_inside_color="#fff7f2e9"
+        imagecontrol:border_outside_color="#ffd5d1c8"
+        imagecontrol:border_thickness="2dp"
+        android:src="@mipmap/title" />
 
+    <RelativeLayout
+        android:id="@+id/phonerelativelayout"
+        android:layout_below="@id/logo"
+        android:layout_marginTop="35dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#f9fafb"
+        >
 
     <EditText
-        android:layout_below="@id/logo"
-        android:layout_marginTop="28dp"
         android:id="@+id/phoneedittext"
-        android:layout_width="260dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
         android:layout_height="33dp"
+        android:maxLength="15"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/login_textedit"
+        android:background="#f9fafb"
         />
 
     <TextView
         android:id="@+id/phonetext"
-        android:layout_below="@id/logo"
-        android:layout_marginTop="35dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -60,24 +49,35 @@
         android:textColor="#d3d3d3"
         />
 
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/passwdrelativelayout"
+        android:layout_below="@id/phonerelativelayout"
+        android:layout_marginTop="1dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#f9fafb"
+        >
 
     <EditText
         android:id="@+id/passwdedittext"
+        android:maxLength="15"
         android:layout_marginTop="14dp"
-        android:layout_below="@id/phoneedittext"
-        android:layout_width="260dp"
+        android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:gravity="center_vertical"
+        android:background="#f9fafb"
         android:layout_centerInParent="true"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:background="@drawable/login_textedit"
         android:inputType="textPassword"
         />
 
     <TextView
         android:id="@+id/passwdtext"
-        android:layout_below="@id/phoneedittext"
         android:layout_marginTop="21dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,11 +86,13 @@
         android:textColor="#d3d3d3"
         />
 
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/loginLL"
-        android:layout_below="@id/passwdedittext"
-        android:layout_alignRight="@id/passwdedittext"
-        android:layout_alignLeft="@id/passwdedittext"
+        android:layout_below="@id/passwdrelativelayout"
+        android:layout_alignRight="@id/passwdrelativelayout"
+        android:layout_alignLeft="@id/passwdrelativelayout"
         android:layout_marginTop="35dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
