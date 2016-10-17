@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pg.pgguardkiki.R;
@@ -30,28 +31,43 @@ public class LoginActivity extends Activity implements
     public static final String LOGIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.LOGIN";
     private ConnectService mConnectService;
     private Button loginBt;
-    private Button registerBt;
     private EditText mPhoneEdit;
     private EditText mPasswordEdit;
+    private TextView forgetTV;
+    private TextView registerTV;
+    private TextView phoneT;
+    private TextView passwordT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
-//        startService(new Intent(LoginActivity.this, ConnectService.class));
-
         Intent mServiceIntent = new Intent(this, ConnectService.class);
         mServiceIntent.setAction(LOGIN_ACTION);
+
         bindService(mServiceIntent, mServiceConnection,
                 Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
 
         loginBt = (Button)findViewById(R.id.loginBt);
         loginBt.setOnClickListener(this);
 
-        registerBt = (Button)findViewById(R.id.registerBt);
-        registerBt.setOnClickListener(this);
+        forgetTV =  (TextView)findViewById(R.id.forgetTV);
+        forgetTV.setOnClickListener(this);
+
+        registerTV =  (TextView)findViewById(R.id.registerTV);
+        registerTV.setOnClickListener(this);
+
+        mPhoneEdit = (EditText)findViewById(R.id.phoneET);
+        mPhoneEdit.addTextChangedListener(textWatcher);
+
+        mPasswordEdit = (EditText)findViewById(R.id.passwordET);
+        mPasswordEdit.addTextChangedListener(textWatcher);
+
+        phoneT =  (TextView)findViewById(R.id.phoneT);
+        passwordT =  (TextView)findViewById(R.id.passwordT);
     }
 
     @Override
@@ -60,7 +76,8 @@ public class LoginActivity extends Activity implements
             case  R.id.loginBt:
                 login();
                 break;
-            case  R.id.registerBt:
+            case  R.id.registerTV:
+                Log.d(ClassName, "registerTV() ==00==");
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
                   //register
@@ -78,6 +95,9 @@ public class LoginActivity extends Activity implements
 //                startActivity(intent);
 
                 break;
+            case  R.id.forgetTV:
+                Log.d(ClassName, "forgetTV() ==00==");
+                break;
             default:
                 break;
         }
@@ -85,8 +105,6 @@ public class LoginActivity extends Activity implements
 
     public void login(){
         Log.d(ClassName, "login() ==00==");
-        mPhoneEdit = (EditText)findViewById(R.id.phoneedittext);
-        mPasswordEdit = null;//(EditText)findViewById(R.id.passwdedittext);
         if (TextUtils.isEmpty(mPhoneEdit.getText().toString().trim())) {
             Toast.makeText(getApplicationContext(), R.string.login_phoneempty, Toast.LENGTH_SHORT).show();
             return;
@@ -101,6 +119,35 @@ public class LoginActivity extends Activity implements
             mConnectService.Login(mPhoneEdit.getText().toString().trim(), mPasswordEdit.getText().toString().trim());
         }
     }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+            if(mPhoneEdit.getText().toString().equals("")){
+                phoneT.setVisibility(View.VISIBLE);
+            }else{
+                phoneT.setVisibility(View.INVISIBLE);
+            }
+            if(mPasswordEdit.getText().toString().equals("")){
+                passwordT.setVisibility(View.VISIBLE);
+            }else{
+                passwordT.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     @Override
     public void connectionStatusChanged(int connectedState, String reason) {

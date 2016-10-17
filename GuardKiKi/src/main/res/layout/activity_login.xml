@@ -7,7 +7,7 @@
     >
     <com.pg.pgguardkiki.tools.view.RoundImageView
         android:id="@+id/logo"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
@@ -20,34 +20,33 @@
     <RelativeLayout
         android:id="@+id/phonerelativelayout"
         android:layout_below="@id/logo"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         android:background="#f9fafb"
         >
 
-    <EditText
-        android:id="@+id/phoneedittext"
-        android:layout_marginTop="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:maxLength="15"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_centerInParent="true"
-        android:background="#f9fafb"
-        />
+        <TextView
+            android:id="@+id/phoneT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/login_phone"
+            android:textColor="#d3d3d3"
+            />
 
-    <TextView
-        android:id="@+id/phonetext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/login_phone"
-        android:textColor="#d3d3d3"
-        />
+        <EditText
+            android:id="@+id/phoneET"
+            android:layout_marginTop="25dp"
+            android:layout_width="250dp"
+            android:layout_height="33dp"
+            android:maxLength="15"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:numeric="integer"
+            android:background="#00000000"
+            />
 
     </RelativeLayout>
 
@@ -57,79 +56,74 @@
         android:layout_below="@id/phonerelativelayout"
         android:layout_marginTop="1dp"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         android:background="#f9fafb"
         >
 
-    <EditText
-        android:id="@+id/passwdedittext"
-        android:maxLength="15"
-        android:layout_marginTop="14dp"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:gravity="center_vertical"
-        android:background="#f9fafb"
-        android:layout_centerInParent="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:inputType="textPassword"
-        />
+        <TextView
+            android:id="@+id/passwordT"
+            android:layout_marginTop="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/login_passwd"
+            android:textColor="#d3d3d3"
+            />
 
-    <TextView
-        android:id="@+id/passwdtext"
-        android:layout_marginTop="21dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/login_passwd"
-        android:textColor="#d3d3d3"
-        />
+        <EditText
+            android:id="@+id/passwordET"
+            android:maxLength="12"
+            android:layout_marginTop="14dp"
+            android:layout_width="250dp"
+            android:layout_height="33dp"
+            android:background="#00000000"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:inputType="textPassword"
+            />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/loginLL"
-        android:layout_below="@id/passwdrelativelayout"
-        android:layout_alignRight="@id/passwdrelativelayout"
-        android:layout_alignLeft="@id/passwdrelativelayout"
-        android:layout_marginTop="35dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
         <Button
             android:id="@+id/loginBt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="37sp"
+            android:layout_below="@id/passwdrelativelayout"
+            android:layout_alignRight="@id/passwdrelativelayout"
+            android:layout_alignLeft="@id/passwdrelativelayout"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="100dp"
+            android:layout_height="45sp"
             android:text="@string/login_login"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:background="@drawable/login_button"
-            />
-
-        <Button
-            android:id="@+id/registerBt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="37sp"
-            android:text="@string/login_register"
-            android:textColor="#d3d3d3"
             android:background="@drawable/register_button"
             />
-    </LinearLayout>
 
     <TextView
-        android:id="@+id/wangji"
-        android:layout_below="@id/loginLL"
-        android:layout_marginTop="15dp"
-        android:layout_alignRight="@id/loginLL"
+        android:id="@+id/forgetTV"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_forgetpassword"
-        android:textColor="#d3d3d3"
+        android:textColor="#20aee2"
+        />
+
+    <TextView
+        android:id="@+id/registerTV"
+        android:gravity="right"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_register"
+        android:textColor="#20aee2"
         />
 
 </RelativeLayout>
