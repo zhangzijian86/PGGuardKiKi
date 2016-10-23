@@ -10,4 +10,19 @@
     <string name="login_register">新用户注册</string>
     <string name="login_forgetpassword">忘记密码？</string>
 
+
+    <string name="register_verifyphonenumber">验证手机号码</string>
+    <string name="register_phonenotice">中国    +86</string>
+    <string name="register_phone">请输入手机号码</string>
+    <string name="register_next">下一步</string>
+
+    <string name="register_inputverifyphonenumber">请填写验证码</string>
+    <string name="register_inputverifyphonenumbertitle">填写验证码</string>
+    <string name="register_inputverifyphonenumbernotice">验证码</string>
+    <string name="register_password">请输入密码</string>
+    <string name="register_passwordconfirm">请确认密码</string>
+    <string name="register_passwordnotice">用户密码</string>
+    <string name="register_passwordconfirmnotice">密码确认</string>
+    <string name="register_register">注册</string>
+
 </resources>

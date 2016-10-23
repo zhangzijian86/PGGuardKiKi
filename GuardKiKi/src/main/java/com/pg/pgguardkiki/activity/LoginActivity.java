@@ -26,10 +26,10 @@ import com.pg.pgguardkiki.service.ConnectService;
  * Created by zzj on 16-7-25.
  */
 public class LoginActivity extends Activity implements
-        IConnectionStatusChangedCallback, TextWatcher , View.OnClickListener {
+        IConnectionStatusChangedCallback , View.OnClickListener {
     private static final String ClassName = "LoginActivity";
     public static final String LOGIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.LOGIN";
-    private ConnectService mConnectService;
+    private ConnectService mLoginConnectService;
     private Button loginBt;
     private EditText mPhoneEdit;
     private EditText mPasswordEdit;
@@ -48,7 +48,7 @@ public class LoginActivity extends Activity implements
         Intent mServiceIntent = new Intent(this, ConnectService.class);
         mServiceIntent.setAction(LOGIN_ACTION);
 
-        bindService(mServiceIntent, mServiceConnection,
+        bindService(mServiceIntent, mLoginServiceConnection,
                 Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
 
         loginBt = (Button)findViewById(R.id.loginBt);
@@ -114,9 +114,9 @@ public class LoginActivity extends Activity implements
             Toast.makeText(getApplicationContext(), R.string.login_passwdempty, Toast.LENGTH_SHORT).show();
             return;
         }
-        if (mConnectService != null) {
+        if (mLoginConnectService != null) {
             Log.d(ClassName, "login() ==22==");
-            mConnectService.Login(mPhoneEdit.getText().toString().trim(), mPasswordEdit.getText().toString().trim());
+            mLoginConnectService.Login(mPhoneEdit.getText().toString().trim(), mPasswordEdit.getText().toString().trim());
         }
     }
 
@@ -125,7 +125,7 @@ public class LoginActivity extends Activity implements
         @Override
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
-            if(mPhoneEdit.getText().toString().equals("")){
+            if(mPhoneEdit.getText().toString().trim().equals("")){
                 phoneT.setVisibility(View.VISIBLE);
             }else{
                 phoneT.setVisibility(View.INVISIBLE);
@@ -154,31 +154,16 @@ public class LoginActivity extends Activity implements
 
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
-    ServiceConnection mServiceConnection = new ServiceConnection() {
+    ServiceConnection mLoginServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mConnectService = ((ConnectService.CSBinder) service).getService();
-            mConnectService.registerConnectionStatusCallback(LoginActivity.this);
+            mLoginConnectService = ((ConnectService.CSBinder) service).getService();
+            mLoginConnectService.registerConnectionStatusCallback(LoginActivity.this);
         }
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mConnectService.unRegisterConnectionStatusCallback();
-            mConnectService = null;
+            mLoginConnectService.unRegisterConnectionStatusCallback();
+            mLoginConnectService = null;
         }
     };
 }
