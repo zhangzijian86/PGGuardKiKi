@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
@@ -82,6 +83,10 @@ public class RegisterVerifyActivity extends Activity implements
 				registerpasswordRL.setVisibility(View.VISIBLE);
 				registerconfirmpasswordRL.setVisibility(View.VISIBLE);
 				registerverifynumberET.setEnabled(false);
+
+				RelativeLayout.LayoutParams textParams = (RelativeLayout.LayoutParams)registerverifyBt.getLayoutParams();
+				textParams.addRule(RelativeLayout.BELOW, registerconfirmpasswordRL.getId());
+				registerverifyBt.setLayoutParams(textParams);
 			}
 
 			if(registerverifynumberET.getText().toString().trim().equals("")){
@@ -124,8 +129,13 @@ public class RegisterVerifyActivity extends Activity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.registerBt:
-				Log.d(ClassName, "==RegisterVerify=="+registerverifyBt.isEnabled());
+			case R.id.registerverifyBt:
+				if(registerpasswordET.getText().toString().length()<8){
+					Toast.makeText(getApplicationContext(), "密码长度应大于或等于8位！", Toast.LENGTH_SHORT).show();
+					Log.d(ClassName, "==RegisterVerify=no=ok=" + registerverifyBt.isEnabled());
+				}else{
+					Log.d(ClassName, "==RegisterVerify=ok="+registerverifyBt.isEnabled());
+				}
 				break;
 			default:
 				break;

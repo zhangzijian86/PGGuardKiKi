@@ -225,7 +225,7 @@
 
 		<Button
 			android:id="@+id/registerverifyBt"
-			android:layout_below="@id/registerconfirmpasswordRL"
+			android:layout_below="@id/registerverifynumberinputRL"
 			android:layout_alignRight="@id/registerconfirmpasswordRL"
 			android:layout_alignLeft="@id/registerconfirmpasswordRL"
 			android:layout_marginTop="25dp"
