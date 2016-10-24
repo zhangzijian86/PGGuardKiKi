@@ -20,18 +20,19 @@ public class RegisterVerifyActivity extends Activity implements
 		IConnectionStatusChangedCallback , View.OnClickListener{
 	private static final String ClassName = "RegisterVerifyActivity";
 	public static final String REGISTER_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.REGISTER";
-	private Button registerverifyBt;
-	private EditText registerverifynumberET;
-	private TextView registerverifynumberT;
-	private String verifyNumber;
-	private RelativeLayout registerpasswordRL;
-	private RelativeLayout registerconfirmpasswordRL;
+	private Button mRegisterverifyBt;
+	private EditText mRegisterverifynumberET;
+	private TextView mRegisterverifynumberT;
+	private String mPhoneNumber;
+	private String mVerifyNumber;
+	private RelativeLayout mRegisterpasswordRL;
+	private RelativeLayout mRegisterconfirmpasswordRL;
 
-	private EditText registerpasswordET;
-	private TextView registerpasswordT;
+	private EditText mRegisterpasswordET;
+	private TextView mRegisterpasswordT;
 
-	private EditText registerconfirmpasswordET;
-	private TextView registerconfirmpasswordT;
+	private EditText mRegisterconfirmpasswordET;
+	private TextView mRegisterconfirmpasswordT;
 
 
 	@Override
@@ -40,31 +41,33 @@ public class RegisterVerifyActivity extends Activity implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_registerverify);
 
-		verifyNumber = this.getIntent().getStringExtra("verifyNumber");
-		Log.d(ClassName, "==onCreate==" + verifyNumber);
+		mVerifyNumber = this.getIntent().getStringExtra("verifyNumber");
+		Log.d(ClassName, "==onCreate==" + mVerifyNumber);
+		mPhoneNumber = this.getIntent().getStringExtra("phoneNumber");
+		Log.d(ClassName, "==onCreate==" + mPhoneNumber);
 
-		registerverifyBt = (Button)findViewById(R.id.registerverifyBt);
-		registerverifyBt.setOnClickListener(this);
+		mRegisterverifyBt = (Button)findViewById(R.id.registerverifyBt);
+		mRegisterverifyBt.setOnClickListener(this);
 
-		registerverifynumberET = (EditText)findViewById(R.id.registerverifynumberET);
-		registerverifynumberET.addTextChangedListener(textWatcher);
+		mRegisterverifynumberET = (EditText)findViewById(R.id.registerverifynumberET);
+		mRegisterverifynumberET.addTextChangedListener(textWatcher);
 
-		registerverifynumberT = (TextView)findViewById(R.id.registerverifynumberT);
+		mRegisterverifynumberT = (TextView)findViewById(R.id.registerverifynumberT);
 
-		registerpasswordET  = (EditText)findViewById(R.id.registerpasswordET);
-		registerpasswordET.addTextChangedListener(textWatcher);
+		mRegisterpasswordET  = (EditText)findViewById(R.id.registerpasswordET);
+		mRegisterpasswordET.addTextChangedListener(textWatcher);
 
-		registerpasswordT = (TextView)findViewById(R.id.registerpasswordT);
+		mRegisterpasswordT = (TextView)findViewById(R.id.registerpasswordT);
 
-		registerconfirmpasswordET  = (EditText)findViewById(R.id.registerconfirmpasswordET);
-		registerconfirmpasswordET.addTextChangedListener(textWatcher);
+		mRegisterconfirmpasswordET  = (EditText)findViewById(R.id.registerconfirmpasswordET);
+		mRegisterconfirmpasswordET.addTextChangedListener(textWatcher);
 
-		registerconfirmpasswordT = (TextView)findViewById(R.id.registerconfirmpasswordT);
+		mRegisterconfirmpasswordT = (TextView)findViewById(R.id.registerconfirmpasswordT);
 
-		registerpasswordRL  = (RelativeLayout)findViewById(R.id.registerpasswordRL);
-		registerpasswordRL.setVisibility(View.INVISIBLE);
-		registerconfirmpasswordRL  = (RelativeLayout)findViewById(R.id.registerconfirmpasswordRL);
-		registerconfirmpasswordRL.setVisibility(View.INVISIBLE);
+		mRegisterpasswordRL  = (RelativeLayout)findViewById(R.id.registerpasswordRL);
+		mRegisterpasswordRL.setVisibility(View.INVISIBLE);
+		mRegisterconfirmpasswordRL  = (RelativeLayout)findViewById(R.id.registerconfirmpasswordRL);
+		mRegisterconfirmpasswordRL.setVisibility(View.INVISIBLE);
 
 	}
 
@@ -78,41 +81,41 @@ public class RegisterVerifyActivity extends Activity implements
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 								  int count) {
-			if (!registerverifynumberET.getText().toString().trim().equals("")
-				&&registerverifynumberET.getText().toString().trim().equals(verifyNumber)) {
-				registerpasswordRL.setVisibility(View.VISIBLE);
-				registerconfirmpasswordRL.setVisibility(View.VISIBLE);
-				registerverifynumberET.setEnabled(false);
+			if (!mRegisterverifynumberET.getText().toString().trim().equals("")
+				&&mRegisterverifynumberET.getText().toString().trim().equals(mVerifyNumber)) {
+				mRegisterpasswordRL.setVisibility(View.VISIBLE);
+				mRegisterconfirmpasswordRL.setVisibility(View.VISIBLE);
+				mRegisterverifynumberET.setEnabled(false);
 
-				RelativeLayout.LayoutParams textParams = (RelativeLayout.LayoutParams)registerverifyBt.getLayoutParams();
-				textParams.addRule(RelativeLayout.BELOW, registerconfirmpasswordRL.getId());
-				registerverifyBt.setLayoutParams(textParams);
+				RelativeLayout.LayoutParams textParams = (RelativeLayout.LayoutParams)mRegisterverifyBt.getLayoutParams();
+				textParams.addRule(RelativeLayout.BELOW, mRegisterconfirmpasswordRL.getId());
+				mRegisterverifyBt.setLayoutParams(textParams);
 			}
 
-			if(registerverifynumberET.getText().toString().trim().equals("")){
-				registerverifynumberT.setVisibility(View.VISIBLE);
+			if(mRegisterverifynumberET.getText().toString().trim().equals("")){
+				mRegisterverifynumberT.setVisibility(View.VISIBLE);
 			}else{
-				registerverifynumberT.setVisibility(View.INVISIBLE);
+				mRegisterverifynumberT.setVisibility(View.INVISIBLE);
 			}
 
-			if(registerpasswordET.getText().toString().trim().equals("")){
-				registerpasswordT.setVisibility(View.VISIBLE);
+			if(mRegisterpasswordET.getText().toString().trim().equals("")){
+				mRegisterpasswordT.setVisibility(View.VISIBLE);
 			}else{
-				registerpasswordT.setVisibility(View.INVISIBLE);
+				mRegisterpasswordT.setVisibility(View.INVISIBLE);
 			}
 
-			if(registerconfirmpasswordET.getText().toString().trim().equals("")){
-				registerconfirmpasswordT.setVisibility(View.VISIBLE);
+			if(mRegisterconfirmpasswordET.getText().toString().trim().equals("")){
+				mRegisterconfirmpasswordT.setVisibility(View.VISIBLE);
 			}else{
-				registerconfirmpasswordT.setVisibility(View.INVISIBLE);
+				mRegisterconfirmpasswordT.setVisibility(View.INVISIBLE);
 			}
 
-			if(!registerpasswordET.getText().toString().trim().equals("")&&
-			   !registerconfirmpasswordET.getText().toString().trim().equals("")
-				&&registerpasswordET.getText().toString().trim().equals(registerconfirmpasswordET.getText().toString().trim())){
-				registerverifyBt.setEnabled(true);
+			if(!mRegisterpasswordET.getText().toString().trim().equals("")&&
+			   !mRegisterconfirmpasswordET.getText().toString().trim().equals("")
+				&&mRegisterpasswordET.getText().toString().trim().equals(mRegisterconfirmpasswordET.getText().toString().trim())){
+				mRegisterverifyBt.setEnabled(true);
 			}else{
-				registerverifyBt.setEnabled(false);
+				mRegisterverifyBt.setEnabled(false);
 			}
 		}
 		@Override
@@ -130,11 +133,11 @@ public class RegisterVerifyActivity extends Activity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.registerverifyBt:
-				if(registerpasswordET.getText().toString().length()<8){
+				if(mRegisterpasswordET.getText().toString().length()<8){
 					Toast.makeText(getApplicationContext(), "密码长度应大于或等于8位！", Toast.LENGTH_SHORT).show();
-					Log.d(ClassName, "==RegisterVerify=no=ok=" + registerverifyBt.isEnabled());
+					Log.d(ClassName, "==RegisterVerify=no=ok=" + mRegisterverifyBt.isEnabled());
 				}else{
-					Log.d(ClassName, "==RegisterVerify=ok="+registerverifyBt.isEnabled());
+					Log.d(ClassName, "==RegisterVerify=ok="+mRegisterverifyBt.isEnabled());
 				}
 				break;
 			default:

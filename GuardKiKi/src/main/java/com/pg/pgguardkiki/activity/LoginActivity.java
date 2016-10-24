@@ -30,13 +30,13 @@ public class LoginActivity extends Activity implements
     private static final String ClassName = "LoginActivity";
     public static final String LOGIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.LOGIN";
     private ConnectService mLoginConnectService;
-    private Button loginBt;
+    private Button mLoginBt;
     private EditText mPhoneEdit;
     private EditText mPasswordEdit;
-    private TextView forgetTV;
-    private TextView registerTV;
-    private TextView phoneT;
-    private TextView passwordT;
+    private TextView mForgetTV;
+    private TextView mRegisterTV;
+    private TextView mPhoneT;
+    private TextView mPasswordT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +51,14 @@ public class LoginActivity extends Activity implements
         bindService(mServiceIntent, mLoginServiceConnection,
                 Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
 
-        loginBt = (Button)findViewById(R.id.loginBt);
-        loginBt.setOnClickListener(this);
+        mLoginBt = (Button)findViewById(R.id.loginBt);
+        mLoginBt.setOnClickListener(this);
 
-        forgetTV =  (TextView)findViewById(R.id.forgetTV);
-        forgetTV.setOnClickListener(this);
+        mForgetTV =  (TextView)findViewById(R.id.forgetTV);
+        mForgetTV.setOnClickListener(this);
 
-        registerTV =  (TextView)findViewById(R.id.registerTV);
-        registerTV.setOnClickListener(this);
+        mRegisterTV =  (TextView)findViewById(R.id.registerTV);
+        mRegisterTV.setOnClickListener(this);
 
         mPhoneEdit = (EditText)findViewById(R.id.phoneET);
         mPhoneEdit.addTextChangedListener(textWatcher);
@@ -66,8 +66,8 @@ public class LoginActivity extends Activity implements
         mPasswordEdit = (EditText)findViewById(R.id.passwordET);
         mPasswordEdit.addTextChangedListener(textWatcher);
 
-        phoneT =  (TextView)findViewById(R.id.phoneT);
-        passwordT =  (TextView)findViewById(R.id.passwordT);
+        mPhoneT =  (TextView)findViewById(R.id.phoneT);
+        mPasswordT =  (TextView)findViewById(R.id.passwordT);
     }
 
     @Override
@@ -126,14 +126,14 @@ public class LoginActivity extends Activity implements
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
             if(mPhoneEdit.getText().toString().trim().equals("")){
-                phoneT.setVisibility(View.VISIBLE);
+                mPhoneT.setVisibility(View.VISIBLE);
             }else{
-                phoneT.setVisibility(View.INVISIBLE);
+                mPhoneT.setVisibility(View.INVISIBLE);
             }
             if(mPasswordEdit.getText().toString().equals("")){
-                passwordT.setVisibility(View.VISIBLE);
+                mPasswordT.setVisibility(View.VISIBLE);
             }else{
-                passwordT.setVisibility(View.INVISIBLE);
+                mPasswordT.setVisibility(View.INVISIBLE);
             }
         }
 

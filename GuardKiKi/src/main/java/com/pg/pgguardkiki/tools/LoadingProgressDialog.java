@@ -18,7 +18,7 @@ public class LoadingProgressDialog extends Dialog {
 	
 	public LoadingProgressDialog(Context context,String msg) {
 		// TODO Auto-generated constructor stub
-		super(context,R.style.loading_progress_dialog);
+		super(context,R.style.DialogStyle);
 		this.context=context;
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View  view=inflater.inflate(R.layout.dialog_loading, null); 

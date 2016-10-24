@@ -372,12 +372,12 @@ public class SmackManagerTool{
                             chatMessage = msg.getBody();
                             if (chatMessage == null)
                                 return;
-                            String fromJID = getJabberID(msg.getTo());
-
-                            addChatMessageToDB(ChatConstants.OUTGOING, fromJID,
-                                    chatMessage, ChatConstants.DS_SENT_OR_READ,
-                                    System.currentTimeMillis(),
-                                    msg.getPacketID());
+//                            String fromJID = getJabberID(msg.getTo());
+//
+//                            addChatMessageToDB(ChatConstants.OUTGOING, fromJID,
+//                                    chatMessage, ChatConstants.DS_SENT_OR_READ,
+//                                    System.currentTimeMillis(),
+//                                    msg.getPacketID());
                             // always return after adding
                             return;
                         }
@@ -401,13 +401,13 @@ public class SmackManagerTool{
                         else
                             ts = System.currentTimeMillis();
 
-                        String fromJID = getJabberID(msg.getFrom());
-
-                        addChatMessageToDB(ChatConstants.INCOMING, fromJID,
-                                chatMessage, ChatConstants.DS_NEW, ts,
-                                msg.getPacketID());
-                        Log.d(ClassName, "==mService.newMessage==" + fromJID+"==="+chatMessage);
-                        mService.newMessage(fromJID, chatMessage);
+//                        String fromJID = getJabberID(msg.getFrom());
+//
+//                        addChatMessageToDB(ChatConstants.INCOMING, fromJID,
+//                                chatMessage, ChatConstants.DS_NEW, ts,
+//                                msg.getPacketID());
+//                        Log.d(ClassName, "==mService.newMessage==" + fromJID+"==="+chatMessage);
+//                        mService.newMessage(fromJID, chatMessage);
 //                        final Message newMessage = new Message("zzj0@zzj/Smack", Message.Type.chat);
 //                        newMessage.setBody("返回的数据啊啊啊啊啊");
 //                        newMessage.addExtension(new DeliveryReceiptRequest());

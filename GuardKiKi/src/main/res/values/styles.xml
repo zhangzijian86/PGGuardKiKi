@@ -1,13 +1,20 @@
 <resources>
 
-    <!-- 自定义loadingDialog -->
-    <style name="loading_progress_dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item> <!--Dialog的windowFrame框为无 -->
-        <item name="android:windowIsFloating">true</item><!-- 是否漂现在activity上 -->
-        <item name="android:windowIsTranslucent">true</item><!-- 是否半透明 -->
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
+    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
+        <!-- 设置完全透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 设置无边框 -->
+        <!-- <item name="android:windowFrame">@null</item> -->
+        <!-- 设置无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 设置为浮动窗口 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 设置动画 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 设置屏幕变暗 -->
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <!-- Base application theme. -->
