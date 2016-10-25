@@ -153,6 +153,11 @@ public class RegisterActivity extends Activity implements
 		}
 	}
 
+	// 收到新消息
+	public void getVerifyNumberSuccess(final String from, final String message) {
+		Log.d(ClassName, "newMessage from:"+from+"message:"+message);
+	}
+
 	@Override
 	public void connectionStatusChanged(int connectedState, String reason) {
 		// TODO Auto-generated method stub
@@ -165,14 +170,18 @@ public class RegisterActivity extends Activity implements
 		if (connectedState == mRegisterConnectService.CONNECTED) {
 			Log.d(ClassName, "==connectionStatusChanged=CONNECTED=" + reason);
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
-			Intent intent = new Intent();
-		    intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
-			intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
-		    intent.putExtra("verifyNumber", "123456");
-		    startActivity(intent);
+
 		} else if (connectedState == mRegisterConnectService.DISCONNECTED) {
 			Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + reason);
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
+		}
+
+		if(connectedState == 100){
+			Intent intent = new Intent();
+			intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
+			intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
+			intent.putExtra("verifyNumber", reason);
+			startActivity(intent);
 		}
 	}
 

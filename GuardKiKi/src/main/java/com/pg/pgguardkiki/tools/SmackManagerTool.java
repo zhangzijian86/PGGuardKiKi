@@ -332,7 +332,7 @@ public class SmackManagerTool{
         dm.registerReceiptReceivedListener(new DeliveryReceiptManager.ReceiptReceivedListener() {
             public void onReceiptReceived(String fromJid, String toJid,
                                           String receiptId) {
-                Log.d(ClassName,  "got delivery receipt for " + receiptId);
+                Log.d(ClassName, "got delivery receipt for " + receiptId);
                 changeMessageDeliveryStatus(receiptId, ChatConstants.DS_ACKED);
             }
         });
@@ -345,7 +345,7 @@ public class SmackManagerTool{
                 + ChatProvider.TABLE_NAME);
         mContentResolver.update(rowuri, cv, ChatConstants.PACKET_ID
                 + " = ? AND " + ChatConstants.DIRECTION + " = "
-                + ChatConstants.OUTGOING, new String[] { packetID });
+                + ChatConstants.OUTGOING, new String[]{packetID});
     }
 
     /************ start 新消息处理 ********************/
@@ -360,68 +360,14 @@ public class SmackManagerTool{
             public void processPacket(Packet packet) {
                 try {
                     if (packet instanceof Message) {
+                        Log.d(ClassName, "===registerMessageListener===");
                         Message msg = (Message) packet;
                         String chatMessage = msg.getBody();
-
-                        // try to extract a carbon
-                        Carbon cc = CarbonManager.getCarbon(msg);
-                        if (cc != null
-                                && cc.getDirection() == Carbon.Direction.received) {
-                            Log.d(ClassName, "carbon: " + cc.toXML());
-                            msg = (Message) cc.getForwarded()
-                                    .getForwardedPacket();
-                            chatMessage = msg.getBody();
-                            // fall through
-                        } else if (cc != null
-                                && cc.getDirection() == Carbon.Direction.sent) {
-                            Log.d(ClassName, "carbon: " + cc.toXML());
-                            msg = (Message) cc.getForwarded()
-                                    .getForwardedPacket();
-                            chatMessage = msg.getBody();
-                            if (chatMessage == null)
-                                return;
-//                            String fromJID = getJabberID(msg.getTo());
-//
-//                            addChatMessageToDB(ChatConstants.OUTGOING, fromJID,
-//                                    chatMessage, ChatConstants.DS_SENT_OR_READ,
-//                                    System.currentTimeMillis(),
-//                                    msg.getPacketID());
-                            // always return after adding
-                            return;
+                        Log.d(ClassName, "===registerMessageListener=getBody=="+chatMessage);
+                        if(chatMessage.equals("----000000000----")){
+                            Log.d(ClassName, "===registerMessageListener=return==" + chatMessage);
+                            mService.getVerifyNumberSuccess("admin@zzj",chatMessage);
                         }
-
-                        if (chatMessage == null) {
-                            return;
-                        }
-
-                        if (msg.getType() == Message.Type.error) {
-                            chatMessage = "<Error> " + chatMessage;
-                        }
-
-                        long ts;
-                        DelayInfo timestamp = (DelayInfo) msg.getExtension(
-                                "delay", "urn:xmpp:delay");
-                        if (timestamp == null)
-                            timestamp = (DelayInfo) msg.getExtension("x",
-                                    "jabber:x:delay");
-                        if (timestamp != null)
-                            ts = timestamp.getStamp().getTime();
-                        else
-                            ts = System.currentTimeMillis();
-
-//                        String fromJID = getJabberID(msg.getFrom());
-//
-//                        addChatMessageToDB(ChatConstants.INCOMING, fromJID,
-//                                chatMessage, ChatConstants.DS_NEW, ts,
-//                                msg.getPacketID());
-//                        Log.d(ClassName, "==mService.newMessage==" + fromJID+"==="+chatMessage);
-//                        mService.newMessage(fromJID, chatMessage);
-//                        final Message newMessage = new Message("zzj0@zzj/Smack", Message.Type.chat);
-//                        newMessage.setBody("返回的数据啊啊啊啊啊");
-//                        newMessage.addExtension(new DeliveryReceiptRequest());
-//                        if (mConnection.isConnected()&&mConnection.isAuthenticated()) {
-//                            mConnection.sendPacket(newMessage);
-//                        }
                     }
                 } catch (Exception e) {
                     // SMACK silently discards exceptions dropped from

@@ -109,6 +109,12 @@ public class ConnectService extends BaseService{
     }
 
     // 收到新消息
+    public void getVerifyNumberSuccess(final String from, final String message) {
+        Log.d(ClassName, "newMessage from:"+from+"message:"+message);
+        mConnectionStatusChangedCallback.connectionStatusChanged(100,message);
+    }
+
+    // 收到新消息
     public void connectError(String type) {
         //Log.d(ClassName, "newMessage from:"+from+"message:"+message);
     }
