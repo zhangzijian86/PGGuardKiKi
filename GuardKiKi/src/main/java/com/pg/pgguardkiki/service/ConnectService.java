@@ -12,6 +12,8 @@ import com.pg.pgguardkiki.tools.SmackManagerTool;
  * Created by zzj on 16-7-25.
  */
 public class ConnectService extends BaseService{
+    public static final int CONNECTED = 0;
+    public static final int DISCONNECTED = -1;
     private static final String ClassName = "ConnectService";
     private IConnectionStatusChangedCallback mConnectionStatusChangedCallback;
     private IBinder mBinder = new CSBinder();
@@ -61,7 +63,11 @@ public class ConnectService extends BaseService{
             @Override
             public void run() {
                 smt = new SmackManagerTool(ConnectService.this);
-                smt.yazhengma(user, message);
+                if(smt.yazhengma(user, message)){
+                    mConnectionStatusChangedCallback.connectionStatusChanged(CONNECTED,"验证码已发送");
+                }else{
+                    mConnectionStatusChangedCallback.connectionStatusChanged(DISCONNECTED,"网络链接失败,请重试！");
+                }
             }
         };
         mConnectThread.start();
@@ -100,5 +106,10 @@ public class ConnectService extends BaseService{
     // 收到新消息
     public void newMessage(final String from, final String message) {
         Log.d(ClassName, "newMessage from:"+from+"message:"+message);
+    }
+
+    // 收到新消息
+    public void connectError(String type) {
+        //Log.d(ClassName, "newMessage from:"+from+"message:"+message);
     }
 }

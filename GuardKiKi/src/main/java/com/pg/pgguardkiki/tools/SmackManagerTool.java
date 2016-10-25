@@ -134,7 +134,7 @@ public class SmackManagerTool{
         return true;
     }
 
-	public void register(String name, String password) {
+	public boolean register(String name, String password) {
         Log.d(ClassName, "==register=b=000=");
         if (mConnection.isConnected()) {
             mConnection.disconnect();
@@ -147,12 +147,15 @@ public class SmackManagerTool{
             mConnection.connect();
         } catch (XMPPException e) {
             Log.d(ClassName, "register Connect Error 0");
+            mService.connectError("Error 0");
             e.printStackTrace();
-            
+            return false;
         }
         Log.d(ClassName, "==register=b=222=");
         if (!mConnection.isConnected()) {
             Log.d(ClassName, "register Connect Error 1");
+            mService.connectError("Error 1");
+            return false;
         }
         Registration reg = new Registration();
         reg.setType(IQ.Type.SET);
@@ -178,6 +181,7 @@ public class SmackManagerTool{
                 Log.d(ClassName, "==register=b=666=IQ.Type.ERROR: " + result.getError().toString());
             }
         }
+        return true;
     }
 
 
@@ -208,7 +212,7 @@ public class SmackManagerTool{
 //        }
 //    }
 
-    public void yazhengma(String toJID, String message) {
+    public boolean yazhengma(String toJID, String message) {
         Log.d(ClassName, "==aa==");
 
         Log.d(ClassName, "==sendMessage=b=000=");
@@ -226,18 +230,22 @@ public class SmackManagerTool{
         } catch (XMPPException e) {
             Log.d(ClassName, "sendMessage Connect Error 0");
             e.printStackTrace();
-
+            mService.connectError("Error 0");
+            return false;
         }
         Log.d(ClassName, "==sendMessage=b=222=");
 
         if (!mConnection.isConnected()) {
             Log.d(ClassName, "sendMessage Connect Error 1");
+            mService.connectError("Error 1");
+            return false;
         }
 
         final Message newMessage = new Message("admin@zzj", Message.Type.chat);
         newMessage.setBody("==yazhengma==给服务端的数据==yazhengma==");
         newMessage.addExtension(new DeliveryReceiptRequest());
         mConnection.sendPacket(newMessage);
+        return true;
         //mConnection.disconnect();
     }
 

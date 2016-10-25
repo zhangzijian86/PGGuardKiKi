@@ -11,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -22,11 +24,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends Activity implements
 		IConnectionStatusChangedCallback , View.OnClickListener{
+	private static final int LOGIN_OUT_TIME = 0;
 	private static final String ClassName = "RegisterActivity";
 	private ConnectService mRegisterConnectService;
+	private ConnectionOutTimeProcess mRegisterOutTimeProcess;
 	public static final String REGISTER_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.REGISTER";
 	private Button mRegisterBt;
 	private EditText mRegisterphoneET;
@@ -67,6 +72,21 @@ public class RegisterActivity extends Activity implements
 		mRegisterphoneT = (TextView)findViewById(R.id.registerphoneT);
 
 		mRegisterDialog = getRegisterDialog(this);
+
+		mRegisterOutTimeProcess = new ConnectionOutTimeProcess();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		try {
+			unbindService(mRegisterConnection);
+		} catch (IllegalArgumentException e) {
+		}
+		if (mRegisterOutTimeProcess != null) {
+			mRegisterOutTimeProcess.stop();
+			mRegisterOutTimeProcess = null;
+		}
 	}
 
 	public Dialog getRegisterDialog(Activity context) {
@@ -89,11 +109,6 @@ public class RegisterActivity extends Activity implements
 		DisplayMetrics dm = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm.widthPixels;
-	}
-
-	@Override
-	public void connectionStatusChanged(int connectedState, String reason) {
-
 	}
 
 	private TextWatcher textWatcher = new TextWatcher() {
@@ -127,17 +142,102 @@ public class RegisterActivity extends Activity implements
 				Log.d(ClassName, "==registerBt==" + mRegisterBt.isEnabled());
 				if (mRegisterDialog != null && !mRegisterDialog.isShowing())
 					mRegisterDialog.show();
+				if (mRegisterOutTimeProcess != null && !mRegisterOutTimeProcess.running)
+					mRegisterOutTimeProcess.start();
 				if (mRegisterConnectService != null) {
 					mRegisterConnectService.yazhengma("zzz","TTT");
 				}
-//				Intent intent = new Intent();
-//		    	intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
-//				intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
-//		    	intent.putExtra("verifyNumber", "123456");
-//		    	startActivity(intent);
 				break;
 			default:
 				break;
+		}
+	}
+
+	@Override
+	public void connectionStatusChanged(int connectedState, String reason) {
+		// TODO Auto-generated method stub
+		if (mRegisterDialog != null && mRegisterDialog.isShowing())
+			mRegisterDialog.dismiss();
+		if (mRegisterOutTimeProcess != null && mRegisterOutTimeProcess.running) {
+			mRegisterOutTimeProcess.stop();
+			mRegisterOutTimeProcess = null;
+		}
+		if (connectedState == mRegisterConnectService.CONNECTED) {
+			Log.d(ClassName, "==connectionStatusChanged=CONNECTED=" + reason);
+//			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent();
+		    intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
+			intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
+		    intent.putExtra("verifyNumber", "123456");
+		    startActivity(intent);
+		} else if (connectedState == mRegisterConnectService.DISCONNECTED) {
+			Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + reason);
+//			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private Handler mHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+				case LOGIN_OUT_TIME:
+					if (mRegisterOutTimeProcess != null
+							&& mRegisterOutTimeProcess.running)
+						mRegisterOutTimeProcess.stop();
+					if (mRegisterDialog != null && mRegisterDialog.isShowing())
+						mRegisterDialog.dismiss();
+					Toast.makeText(getApplicationContext(), "网络链接失败22222！", Toast.LENGTH_SHORT).show();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+	};
+
+	// 注册超时处理线程
+	class ConnectionOutTimeProcess implements Runnable {
+		public boolean running = false;
+		private long startTime = 0L;
+		private Thread thread = null;
+
+		ConnectionOutTimeProcess() {
+		}
+
+		public void run() {
+			while (true) {
+				if (!this.running)
+					return;
+				if (System.currentTimeMillis() - this.startTime > 20 * 1000L) {
+					mHandler.sendEmptyMessage(LOGIN_OUT_TIME);
+				}
+				try {
+					Thread.sleep(10L);
+				} catch (Exception localException) {
+				}
+			}
+		}
+
+		public void start() {
+			try {
+				this.thread = new Thread(this);
+				this.running = true;
+				this.startTime = System.currentTimeMillis();
+				this.thread.start();
+			} finally {
+			}
+		}
+
+		public void stop() {
+			try {
+				this.running = false;
+				this.thread = null;
+				this.startTime = 0L;
+			} finally {
+			}
 		}
 	}
 }
