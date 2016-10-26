@@ -14,6 +14,7 @@ import com.pg.pgguardkiki.tools.SmackManagerTool;
 public class ConnectService extends BaseService{
     public static final int CONNECTED = 0;
     public static final int DISCONNECTED = -1;
+    public static final int Verify = 100;
     private static final String ClassName = "ConnectService";
     private IConnectionStatusChangedCallback mConnectionStatusChangedCallback;
     private IBinder mBinder = new CSBinder();
@@ -58,12 +59,12 @@ public class ConnectService extends BaseService{
     }
 
     // 发送消息
-    public void yazhengma(final String user,final String message) {
+    public void yazhengma(final String phonenumber) {
         mConnectThread = new Thread() {
             @Override
             public void run() {
                 smt = new SmackManagerTool(ConnectService.this);
-                if(smt.yazhengma(user, message)){
+                if(smt.yazhengma(phonenumber)){
                     mConnectionStatusChangedCallback.connectionStatusChanged(CONNECTED,"验证码已发送");
                 }else{
                     mConnectionStatusChangedCallback.connectionStatusChanged(DISCONNECTED,"网络链接失败,请重试！");
@@ -110,8 +111,9 @@ public class ConnectService extends BaseService{
 
     // 收到新消息
     public void getVerifyNumberSuccess(final String from, final String message) {
-        Log.d(ClassName, "newMessage from:"+from+"message:"+message);
-        mConnectionStatusChangedCallback.connectionStatusChanged(100,message);
+        Log.d(ClassName, "newMessage from:" + from + "message:" + message);
+        String content = message.replace("Verify:","");
+        mConnectionStatusChangedCallback.connectionStatusChanged(Verify,content);
     }
 
     // 收到新消息

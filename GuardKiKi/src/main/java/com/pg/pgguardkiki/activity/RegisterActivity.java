@@ -145,7 +145,7 @@ public class RegisterActivity extends Activity implements
 				if (mRegisterOutTimeProcess != null && !mRegisterOutTimeProcess.running)
 					mRegisterOutTimeProcess.start();
 				if (mRegisterConnectService != null) {
-					mRegisterConnectService.yazhengma("zzz","TTT");
+					mRegisterConnectService.yazhengma(mRegisterphoneET.getText().toString().trim());
 				}
 				break;
 			default:
@@ -159,7 +159,7 @@ public class RegisterActivity extends Activity implements
 	}
 
 	@Override
-	public void connectionStatusChanged(int connectedState, String reason) {
+	public void connectionStatusChanged(int connectedState, String content) {
 		// TODO Auto-generated method stub
 		if (mRegisterDialog != null && mRegisterDialog.isShowing())
 			mRegisterDialog.dismiss();
@@ -168,20 +168,26 @@ public class RegisterActivity extends Activity implements
 			mRegisterOutTimeProcess = null;
 		}
 		if (connectedState == mRegisterConnectService.CONNECTED) {
-			Log.d(ClassName, "==connectionStatusChanged=CONNECTED=" + reason);
+			Log.d(ClassName, "==connectionStatusChanged=CONNECTED=" + content);
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 
 		} else if (connectedState == mRegisterConnectService.DISCONNECTED) {
-			Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + reason);
+			Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + content);
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 		}
 
 		if(connectedState == 100){
-			Intent intent = new Intent();
-			intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
-			intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
-			intent.putExtra("verifyNumber", reason);
-			startActivity(intent);
+			if(content.startsWith("HasRegistered")){
+				Log.d(ClassName, "==connectionStatusChanged=HasRegistered=" + content);
+			}else{
+				Log.d(ClassName, "==connectionStatusChanged=Unregistered=" + content);
+				content = content.replace("Unregistered:","");
+				Intent intent = new Intent();
+				intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
+				intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
+				intent.putExtra("verifyNumber", content);
+				startActivity(intent);
+			}
 		}
 	}
 

@@ -212,7 +212,7 @@ public class SmackManagerTool{
 //        }
 //    }
 
-    public boolean yazhengma(String toJID, String message) {
+    public boolean yazhengma(String phonenumber) {
         Log.d(ClassName, "==aa==");
 
         Log.d(ClassName, "==sendMessage=b=000=");
@@ -242,7 +242,7 @@ public class SmackManagerTool{
         }
 
         final Message newMessage = new Message("admin@zzj", Message.Type.chat);
-        newMessage.setBody("==yazhengma==给服务端的数据==yazhengma==");
+        newMessage.setBody(phonenumber);
         newMessage.addExtension(new DeliveryReceiptRequest());
         mConnection.sendPacket(newMessage);
         return true;
@@ -364,7 +364,7 @@ public class SmackManagerTool{
                         Message msg = (Message) packet;
                         String chatMessage = msg.getBody();
                         Log.d(ClassName, "===registerMessageListener=getBody=="+chatMessage);
-                        if(chatMessage.equals("----000000000----")){
+                        if(chatMessage.startsWith("Verify:")){
                             Log.d(ClassName, "===registerMessageListener=return==" + chatMessage);
                             mService.getVerifyNumberSuccess("admin@zzj",chatMessage);
                         }
