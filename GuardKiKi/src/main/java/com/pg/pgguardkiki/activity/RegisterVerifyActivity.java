@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
+import com.pg.pgguardkiki.tools.ActivityCollector;
+import com.pg.pgguardkiki.tools.MyToast;
 
 public class RegisterVerifyActivity extends Activity implements
 		IConnectionStatusChangedCallback , View.OnClickListener{
@@ -97,6 +100,8 @@ public class RegisterVerifyActivity extends Activity implements
 		mRegisterDialog = getRegisterDialog(this);
 
 		mRegisterVerifyOutTimeProcess = new ConnectionOutTimeProcess();
+
+		((ActivityCollector) getApplication()).addActivity(this);
 	}
 
 	public Dialog getRegisterDialog(Activity context) {
@@ -213,13 +218,20 @@ public class RegisterVerifyActivity extends Activity implements
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 
 		} else if (connectedState == mRegisterVerifyConnectService.DISCONNECTED) {
+			Looper.prepare();
+			MyToast.showShort(RegisterVerifyActivity.this, "网络链接失败，请重试!");
+			Looper.loop();
 			Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + content);
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 		}
 
 		if(connectedState == mRegisterVerifyConnectService.Register){
 			if(content.equals("RegisterSuccess")){
+				Looper.prepare();
+				MyToast.showShort(RegisterVerifyActivity.this, "注册成功!");
 				Log.d(ClassName, "==connectionStatusChanged=RegisterSuccess=" + content);
+				((ActivityCollector) getApplication()).finishAll();
+				Looper.loop();
 			}else{
 
 			}
@@ -305,6 +317,7 @@ public class RegisterVerifyActivity extends Activity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		Log.d(ClassName, "====RegisterVerify====onDestroy========");
 		try {
 			unbindService(mRegisterVerifyConnection);
 		} catch (IllegalArgumentException e) {
@@ -313,5 +326,6 @@ public class RegisterVerifyActivity extends Activity implements
 			mRegisterVerifyOutTimeProcess.stop();
 			mRegisterVerifyOutTimeProcess = null;
 		}
+		((ActivityCollector) getApplication()).removeActivity(this);
 	}
 }

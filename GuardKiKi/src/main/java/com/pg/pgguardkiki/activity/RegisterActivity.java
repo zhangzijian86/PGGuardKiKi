@@ -3,6 +3,8 @@ package com.pg.pgguardkiki.activity;
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
+import com.pg.pgguardkiki.tools.ActivityCollector;
+import com.pg.pgguardkiki.tools.MyToast;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -13,6 +15,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -74,11 +77,14 @@ public class RegisterActivity extends Activity implements
 		mRegisterDialog = getRegisterDialog(this);
 
 		mRegisterOutTimeProcess = new ConnectionOutTimeProcess();
+
+		((ActivityCollector) getApplication()).addActivity(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		Log.d(ClassName, "====Register====onDestroy========");
 		try {
 			unbindService(mRegisterConnection);
 		} catch (IllegalArgumentException e) {
@@ -87,6 +93,7 @@ public class RegisterActivity extends Activity implements
 			mRegisterOutTimeProcess.stop();
 			mRegisterOutTimeProcess = null;
 		}
+		((ActivityCollector) getApplication()).removeActivity(this);
 	}
 
 	public Dialog getRegisterDialog(Activity context) {
@@ -172,13 +179,20 @@ public class RegisterActivity extends Activity implements
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 
 		} else if (connectedState == mRegisterConnectService.DISCONNECTED) {
+			Looper.prepare();
+			MyToast.showShort(RegisterActivity.this, "网络链接失败，请重试!");
+			Looper.loop();
 			Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + content);
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 		}
 
 		if(connectedState == mRegisterConnectService.Verify){
 			if(content.startsWith("HasRegistered")){
+				Looper.prepare();
+				MyToast.showShort(RegisterActivity.this, "此手机号码已注册!");
+				Looper.loop();
 				Log.d(ClassName, "==connectionStatusChanged=HasRegistered=" + content);
+//				Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 			}else{
 				Log.d(ClassName, "==connectionStatusChanged=Unregistered=" + content);
 				content = content.replace("Unregistered:","");

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
+import com.pg.pgguardkiki.tools.ActivityCollector;
 
 /**
  * Created by zzj on 16-7-25.
@@ -68,6 +69,8 @@ public class LoginActivity extends Activity implements
 
         mPhoneT =  (TextView)findViewById(R.id.phoneT);
         mPasswordT =  (TextView)findViewById(R.id.passwordT);
+
+        ((ActivityCollector) getApplication()).addActivity(this);
     }
 
     @Override
@@ -166,4 +169,19 @@ public class LoginActivity extends Activity implements
             mLoginConnectService = null;
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(ClassName, "====Login====onDestroy========");
+        try {
+            unbindService(mLoginServiceConnection);
+        } catch (IllegalArgumentException e) {
+        }
+//        if (mRegisterOutTimeProcess != null) {
+//            mRegisterOutTimeProcess.stop();
+//            mRegisterOutTimeProcess = null;
+//        }
+        ((ActivityCollector) getApplication()).removeActivity(this);
+    }
 }
