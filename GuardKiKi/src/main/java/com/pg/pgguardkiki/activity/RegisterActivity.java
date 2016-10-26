@@ -176,7 +176,7 @@ public class RegisterActivity extends Activity implements
 //			Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 		}
 
-		if(connectedState == 100){
+		if(connectedState == mRegisterConnectService.Verify){
 			if(content.startsWith("HasRegistered")){
 				Log.d(ClassName, "==connectionStatusChanged=HasRegistered=" + content);
 			}else{

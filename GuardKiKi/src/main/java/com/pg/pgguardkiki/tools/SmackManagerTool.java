@@ -173,6 +173,8 @@ public class SmackManagerTool{
         if (result == null) {
             Log.d(ClassName, "==register=b=444=");
         } else if (result.getType() == IQ.Type.RESULT) {
+            Log.d(ClassName, "==register=b=ok=");
+            mService.registerSuccess("admin@zzj", "RegisterSuccess");
         } else {
             if (result.getError().toString().equalsIgnoreCase("conflict(409)")) {
                 Log.d(ClassName, "==register=b=555=IQ.Type.ERROR: "

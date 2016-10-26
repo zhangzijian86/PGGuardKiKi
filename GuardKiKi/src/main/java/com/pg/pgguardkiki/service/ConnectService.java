@@ -15,6 +15,7 @@ public class ConnectService extends BaseService{
     public static final int CONNECTED = 0;
     public static final int DISCONNECTED = -1;
     public static final int Verify = 100;
+    public static final int Register = 200;
     private static final String ClassName = "ConnectService";
     private IConnectionStatusChangedCallback mConnectionStatusChangedCallback;
     private IBinder mBinder = new CSBinder();
@@ -113,7 +114,12 @@ public class ConnectService extends BaseService{
     public void getVerifyNumberSuccess(final String from, final String message) {
         Log.d(ClassName, "newMessage from:" + from + "message:" + message);
         String content = message.replace("Verify:","");
-        mConnectionStatusChangedCallback.connectionStatusChanged(Verify,content);
+        mConnectionStatusChangedCallback.connectionStatusChanged(Verify, content);
+    }
+
+    // 收到新消息
+    public void registerSuccess(final String from, final String message) {
+        mConnectionStatusChangedCallback.connectionStatusChanged(Register,message);
     }
 
     // 收到新消息
