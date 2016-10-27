@@ -22,6 +22,7 @@ import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
 import com.pg.pgguardkiki.tools.ActivityCollector;
+import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
 
 /**
  * Created by zzj on 16-7-25.
@@ -38,6 +39,8 @@ public class LoginActivity extends Activity implements
     private TextView mRegisterTV;
     private TextView mPhoneT;
     private TextView mPasswordT;
+
+    private ShapeLoadingDialog shapeLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,9 @@ public class LoginActivity extends Activity implements
         mPhoneT =  (TextView)findViewById(R.id.phoneT);
         mPasswordT =  (TextView)findViewById(R.id.passwordT);
 
+        shapeLoadingDialog=new ShapeLoadingDialog(this);
+        shapeLoadingDialog.setLoadingText("加载中...");
+
         ((ActivityCollector) getApplication()).addActivity(this);
     }
 
@@ -77,7 +83,8 @@ public class LoginActivity extends Activity implements
     public void onClick(View v) {
         switch (v.getId()){
             case  R.id.loginBt:
-                login();
+                shapeLoadingDialog.show();
+                //login();
                 break;
             case  R.id.registerTV:
                 Log.d(ClassName, "registerTV() ==00==");
