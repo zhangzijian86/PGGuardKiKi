@@ -16,6 +16,7 @@ public class ConnectService extends BaseService{
     public static final int DISCONNECTED = -1;
     public static final int Verify = 100;
     public static final int Register = 200;
+    public static final int ChangePassword = 300;
     private static final String ClassName = "ConnectService";
     private IConnectionStatusChangedCallback mConnectionStatusChangedCallback;
     private IBinder mBinder = new CSBinder();
@@ -60,12 +61,12 @@ public class ConnectService extends BaseService{
     }
 
     // 发送消息
-    public void yazhengma(final String phonenumber) {
+    public void getVerifyNumber(final String phonenumber,final String activityType) {
         mConnectThread = new Thread() {
             @Override
             public void run() {
                 smt = new SmackManagerTool(ConnectService.this);
-                if(smt.yazhengma(phonenumber)){
+                if(smt.getVerifyNumber(phonenumber,activityType)){
                     mConnectionStatusChangedCallback.connectionStatusChanged(CONNECTED,"验证码已发送");
                 }else{
                     mConnectionStatusChangedCallback.connectionStatusChanged(DISCONNECTED,"网络链接失败,请重试！");
@@ -100,6 +101,21 @@ public class ConnectService extends BaseService{
         mConnectThread.start();
     }
 
+    public void changePassword(final String  phone, final String password) {
+        Log.d(ClassName, "register=a=000==");
+        mConnectThread = new Thread() {
+            @Override
+            public void run() {
+                Log.d(ClassName, "register=a=111==");
+                smt = new SmackManagerTool(ConnectService.this);
+                Log.d(ClassName, "register=a=222==");
+                smt.changePassword(phone, password);
+                Log.d(ClassName, "register=a=333==");
+            }
+        };
+        mConnectThread.start();
+    }
+
 
     public void postConnectionFailed(final String reason) {
         Log.d(ClassName, "postConnectionFailed");
@@ -116,6 +132,21 @@ public class ConnectService extends BaseService{
         String content = message.replace("Verify:","");
         mConnectionStatusChangedCallback.connectionStatusChanged(Verify, content);
     }
+
+    // 收到新消息
+    public void isChangePasswordSuccess(final String from, final String message) {
+        Log.d(ClassName, "newMessage from:" + from + "message:" + message);
+        String content = message.replace("Forget:","");
+        mConnectionStatusChangedCallback.connectionStatusChanged(ChangePassword, content);
+    }
+
+    // 收到新消息
+    public void changePasswordSuccess(final String from, final String message) {
+        Log.d(ClassName, "newMessage from:" + from + "message:" + message);
+        String content = message.replace("ChangePassword:","");
+        mConnectionStatusChangedCallback.connectionStatusChanged(ChangePassword, content);
+    }
+
 
     // 收到新消息
     public void registerSuccess(final String from, final String message) {

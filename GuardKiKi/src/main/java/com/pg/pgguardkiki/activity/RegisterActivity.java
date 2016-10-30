@@ -5,6 +5,7 @@ import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
 import com.pg.pgguardkiki.tools.ActivityCollector;
 import com.pg.pgguardkiki.tools.MyToast;
+import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -39,7 +40,8 @@ public class RegisterActivity extends Activity implements
 	private Button mRegisterBt;
 	private EditText mRegisterphoneET;
 	private TextView mRegisterphoneT;
-	private Dialog mRegisterDialog;
+	private ShapeLoadingDialog mRegisterDialog;
+	private String mActivityType;
 
 	ServiceConnection mRegisterConnection = new ServiceConnection() {
 		@Override
@@ -60,6 +62,9 @@ public class RegisterActivity extends Activity implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_register);
 
+		mActivityType  = this.getIntent().getStringExtra("ActivityType");
+		Log.d(ClassName, "==onCreate==" + mActivityType);
+
 		Intent mServiceIntent = new Intent(this, ConnectService.class);
 		mServiceIntent.setAction(REGISTER_ACTION);
 
@@ -74,7 +79,8 @@ public class RegisterActivity extends Activity implements
 
 		mRegisterphoneT = (TextView)findViewById(R.id.registerphoneT);
 
-		mRegisterDialog = getRegisterDialog(this);
+		mRegisterDialog = new ShapeLoadingDialog(this);
+		mRegisterDialog.setLoadingText("加载中...");//getRegisterDialog(this);
 
 		mRegisterOutTimeProcess = new ConnectionOutTimeProcess();
 
@@ -96,21 +102,21 @@ public class RegisterActivity extends Activity implements
 		((ActivityCollector) getApplication()).removeActivity(this);
 	}
 
-	public Dialog getRegisterDialog(Activity context) {
-
-		final Dialog dialog = new Dialog(context, R.style.DialogStyle);
-		dialog.setCancelable(false);
-		dialog.setContentView(R.layout.activity_dialog);
-		Window window = dialog.getWindow();
-		WindowManager.LayoutParams lp = window.getAttributes();
-
-		int screenW = getScreenWidth(context);
-		lp.width = (int) (0.6 * screenW);
-
-		TextView titleTxtv = (TextView) dialog.findViewById(R.id.dialogText);
-		titleTxtv.setText(R.string.register_getverifynumber);
-		return dialog;
-	}
+//	public Dialog getRegisterDialog(Activity context) {
+//
+//		final Dialog dialog = new Dialog(context, R.style.DialogStyle);
+//		dialog.setCancelable(false);
+//		dialog.setContentView(R.layout.activity_dialog);
+//		Window window = dialog.getWindow();
+//		WindowManager.LayoutParams lp = window.getAttributes();
+//
+//		int screenW = getScreenWidth(context);
+//		lp.width = (int) (0.6 * screenW);
+//
+//		TextView titleTxtv = (TextView) dialog.findViewById(R.id.dialogText);
+//		titleTxtv.setText(R.string.register_getverifynumber);
+//		return dialog;
+//	}
 
 	public static int getScreenWidth(Activity context) {
 		DisplayMetrics dm = new DisplayMetrics();
@@ -152,7 +158,7 @@ public class RegisterActivity extends Activity implements
 				if (mRegisterOutTimeProcess != null && !mRegisterOutTimeProcess.running)
 					mRegisterOutTimeProcess.start();
 				if (mRegisterConnectService != null) {
-					mRegisterConnectService.yazhengma(mRegisterphoneET.getText().toString().trim());
+					mRegisterConnectService.getVerifyNumber(mRegisterphoneET.getText().toString().trim(),mActivityType);
 				}
 				break;
 			default:
@@ -191,16 +197,36 @@ public class RegisterActivity extends Activity implements
 				Looper.prepare();
 				MyToast.showShort(RegisterActivity.this, "此手机号码已注册!");
 				Looper.loop();
-				Log.d(ClassName, "==connectionStatusChanged=HasRegistered=" + content);
+				Log.d(ClassName, "==connectionStatusChanged=HasRegistered=111=" + content);
 //				Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 			}else{
-				Log.d(ClassName, "==connectionStatusChanged=Unregistered=" + content);
+				Log.d(ClassName, "==connectionStatusChanged=Unregistered=222=" + content);
 				content = content.replace("Unregistered:","");
 				Intent intent = new Intent();
 				intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
+				intent.putExtra("ActivityType", mActivityType);
 				intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
 				intent.putExtra("verifyNumber", content);
 				startActivity(intent);
+			}
+		}
+
+		if(connectedState == mRegisterConnectService.ChangePassword){
+			if(content.startsWith("HasRegistered")){
+				Log.d(ClassName, "==connectionStatusChanged=Unregistered=111=" + content);
+				content = content.replace("HasRegistered:","");
+				Intent intent = new Intent();
+				intent.setClass(RegisterActivity.this, RegisterVerifyActivity.class);
+				intent.putExtra("ActivityType", mActivityType);
+				intent.putExtra("phoneNumber", mRegisterphoneET.getText().toString().trim());
+				intent.putExtra("verifyNumber", content);
+				startActivity(intent);
+			}else{
+				Looper.prepare();
+				MyToast.showShort(RegisterActivity.this, "此手机号码未注册!");
+				Looper.loop();
+				Log.d(ClassName, "==connectionStatusChanged=HasRegistered=222=" + content);
+//				Toast.makeText(getApplicationContext(), reason, Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -217,7 +243,7 @@ public class RegisterActivity extends Activity implements
 						mRegisterOutTimeProcess.stop();
 					if (mRegisterDialog != null && mRegisterDialog.isShowing())
 						mRegisterDialog.dismiss();
-					Toast.makeText(getApplicationContext(), "网络链接失败22222！", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "网络链接失败！", Toast.LENGTH_SHORT).show();
 					break;
 
 				default:

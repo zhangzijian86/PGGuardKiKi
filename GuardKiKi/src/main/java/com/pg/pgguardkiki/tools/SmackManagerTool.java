@@ -183,6 +183,7 @@ public class SmackManagerTool{
                 Log.d(ClassName, "==register=b=666=IQ.Type.ERROR: " + result.getError().toString());
             }
         }
+        //mConnection.getAccountManager().changePassword();
         return true;
     }
 
@@ -214,8 +215,8 @@ public class SmackManagerTool{
 //        }
 //    }
 
-    public boolean yazhengma(String phonenumber) {
-        Log.d(ClassName, "==aa==");
+    public boolean getVerifyNumber(String phonenumber,String activityType) {
+        Log.d(ClassName, "==aa=activityType="+activityType);
 
         Log.d(ClassName, "==sendMessage=b=000=");
         if (mConnection.isConnected()) {
@@ -243,10 +244,53 @@ public class SmackManagerTool{
             return false;
         }
 
+        if(activityType.equals("Register")) {
+            final Message newMessage = new Message("admin@zzj", Message.Type.chat);
+            newMessage.setBody("Verify:"+phonenumber);
+            newMessage.addExtension(new DeliveryReceiptRequest());
+            mConnection.sendPacket(newMessage);
+        }else if(activityType.equals("ChangePassword")){
+            final Message newMessage = new Message("admin@zzj", Message.Type.chat);
+            newMessage.setBody("Forget:"+phonenumber);
+            newMessage.addExtension(new DeliveryReceiptRequest());
+            mConnection.sendPacket(newMessage);
+        }
+        return true;
+        //mConnection.disconnect();
+    }
+
+    public boolean changePassword(String phonenumber,String password) {
+        Log.d(ClassName, "==changePassword=b=000=");
+        if (mConnection.isConnected()) {
+            mConnection.disconnect();
+        }
+        Log.d(ClassName, "==changePassword=b=111=");
+        try {
+            SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
+            SmackConfiguration.setKeepAliveInterval(-1);
+            SmackConfiguration.setDefaultPingInterval(0);
+            mConnection.connect();
+//            mConnection.loginAnonymously();//匿名登陆
+            registerMessageListener();
+        } catch (XMPPException e) {
+            Log.d(ClassName, "changePassword Connect Error 0");
+            e.printStackTrace();
+            mService.connectError("Error 0");
+            return false;
+        }
+        Log.d(ClassName, "==changePassword=b=222=");
+
+        if (!mConnection.isConnected()) {
+            Log.d(ClassName, "changePassword Connect Error 1");
+            mService.connectError("Error 1");
+            return false;
+        }
+
         final Message newMessage = new Message("admin@zzj", Message.Type.chat);
-        newMessage.setBody(phonenumber);
+        newMessage.setBody("ChangePassword:"+phonenumber+"&"+password);
         newMessage.addExtension(new DeliveryReceiptRequest());
         mConnection.sendPacket(newMessage);
+
         return true;
         //mConnection.disconnect();
     }
@@ -367,8 +411,16 @@ public class SmackManagerTool{
                         String chatMessage = msg.getBody();
                         Log.d(ClassName, "===registerMessageListener=getBody=="+chatMessage);
                         if(chatMessage.startsWith("Verify:")){
-                            Log.d(ClassName, "===registerMessageListener=return==" + chatMessage);
+                            Log.d(ClassName, "===registerMessageListener=return=1=" + chatMessage);
                             mService.getVerifyNumberSuccess("admin@zzj",chatMessage);
+                        }
+                        if(chatMessage.startsWith("Forget:")){
+                            Log.d(ClassName, "===registerMessageListener=return=2=" + chatMessage);
+                            mService.isChangePasswordSuccess("admin@zzj", chatMessage);
+                        }
+                        if(chatMessage.startsWith("ChangePassword:")){
+                            Log.d(ClassName, "===registerMessageListener=return=3=" + chatMessage);
+                            mService.changePasswordSuccess("admin@zzj",chatMessage);
                         }
                     }
                 } catch (Exception e) {

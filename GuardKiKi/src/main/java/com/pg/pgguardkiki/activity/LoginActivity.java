@@ -88,8 +88,10 @@ public class LoginActivity extends Activity implements
                 break;
             case  R.id.registerTV:
                 Log.d(ClassName, "registerTV() ==00==");
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
+                Intent intentRegister = new Intent();
+                intentRegister.setClass(LoginActivity.this, RegisterActivity.class);
+                intentRegister.putExtra("ActivityType", "Register");
+                startActivity(intentRegister);
                   //register
 //                mConnectService.register("zzj3", "123456");
 //                Log.d(ClassName, "register() ==11==");
@@ -107,6 +109,10 @@ public class LoginActivity extends Activity implements
                 break;
             case  R.id.forgetTV:
                 Log.d(ClassName, "forgetTV() ==00==");
+                Intent intentChangePassword = new Intent();
+                intentChangePassword.setClass(LoginActivity.this, RegisterActivity.class);
+                intentChangePassword.putExtra("ActivityType", "ChangePassword");
+                startActivity(intentChangePassword);
                 break;
             default:
                 break;

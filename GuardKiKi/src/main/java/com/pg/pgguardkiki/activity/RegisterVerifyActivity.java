@@ -29,6 +29,7 @@ import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
 import com.pg.pgguardkiki.tools.ActivityCollector;
 import com.pg.pgguardkiki.tools.MyToast;
+import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
 
 public class RegisterVerifyActivity extends Activity implements
 		IConnectionStatusChangedCallback , View.OnClickListener{
@@ -40,7 +41,7 @@ public class RegisterVerifyActivity extends Activity implements
 	private ConnectService mRegisterVerifyConnectService;
 	private ConnectionOutTimeProcess mRegisterVerifyOutTimeProcess;
 
-	private Dialog mRegisterDialog;
+	private ShapeLoadingDialog mRegisterVerifyDialog;
 
 	private Button mRegisterverifyBt;
 	private EditText mRegisterverifynumberET;
@@ -55,7 +56,7 @@ public class RegisterVerifyActivity extends Activity implements
 
 	private EditText mRegisterconfirmpasswordET;
 	private TextView mRegisterconfirmpasswordT;
-
+	private String mActivityType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class RegisterVerifyActivity extends Activity implements
 		bindService(mServiceIntent, mRegisterVerifyConnection,
 				Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
 
+		mActivityType  = this.getIntent().getStringExtra("ActivityType");
+		Log.d(ClassName, "==onCreate==" + mActivityType);
 		mVerifyNumber = this.getIntent().getStringExtra("verifyNumber");
 		Log.d(ClassName, "==onCreate==" + mVerifyNumber);
 		mPhoneNumber = this.getIntent().getStringExtra("phoneNumber");
@@ -97,27 +100,18 @@ public class RegisterVerifyActivity extends Activity implements
 		mRegisterconfirmpasswordRL  = (RelativeLayout)findViewById(R.id.registerconfirmpasswordRL);
 		mRegisterconfirmpasswordRL.setVisibility(View.INVISIBLE);
 
-		mRegisterDialog = getRegisterDialog(this);
+		if(mActivityType.equals("ChangePassword")){
+			mRegisterpasswordT.setText(R.string.register_newpassword);
+			mRegisterconfirmpasswordT.setText(R.string.register_newpasswordconfirm);
+			mRegisterverifyBt.setText(R.string.register_registernew);
+		}
+
+		mRegisterVerifyDialog = new ShapeLoadingDialog(this);
+		mRegisterVerifyDialog.setLoadingText("加载中...");
 
 		mRegisterVerifyOutTimeProcess = new ConnectionOutTimeProcess();
 
 		((ActivityCollector) getApplication()).addActivity(this);
-	}
-
-	public Dialog getRegisterDialog(Activity context) {
-
-		final Dialog dialog = new Dialog(context, R.style.DialogStyle);
-		dialog.setCancelable(false);
-		dialog.setContentView(R.layout.activity_dialog);
-		Window window = dialog.getWindow();
-		WindowManager.LayoutParams lp = window.getAttributes();
-
-		int screenW = getScreenWidth(context);
-		lp.width = (int) (0.6 * screenW);
-
-		TextView titleTxtv = (TextView) dialog.findViewById(R.id.dialogText);
-		titleTxtv.setText(R.string.register_getverifynumber);
-		return dialog;
 	}
 
 	public static int getScreenWidth(Activity context) {
@@ -136,8 +130,8 @@ public class RegisterVerifyActivity extends Activity implements
 					if (mRegisterVerifyOutTimeProcess != null
 							&& mRegisterVerifyOutTimeProcess.running)
 						mRegisterVerifyOutTimeProcess.stop();
-					if (mRegisterDialog != null && mRegisterDialog.isShowing())
-						mRegisterDialog.dismiss();
+					if (mRegisterVerifyDialog != null && mRegisterVerifyDialog.isShowing())
+						mRegisterVerifyDialog.dismiss();
 					Toast.makeText(getApplicationContext(), "网络链接失败22222！", Toast.LENGTH_SHORT).show();
 					break;
 
@@ -207,8 +201,8 @@ public class RegisterVerifyActivity extends Activity implements
 	@Override
 	public void connectionStatusChanged(int connectedState, String content) {
 		// TODO Auto-generated method stub
-		if (mRegisterDialog != null && mRegisterDialog.isShowing())
-			mRegisterDialog.dismiss();
+		if (mRegisterVerifyDialog != null && mRegisterVerifyDialog.isShowing())
+			mRegisterVerifyDialog.dismiss();
 		if (mRegisterVerifyOutTimeProcess != null && mRegisterVerifyOutTimeProcess.running) {
 			mRegisterVerifyOutTimeProcess.stop();
 			mRegisterVerifyOutTimeProcess = null;
@@ -234,6 +228,16 @@ public class RegisterVerifyActivity extends Activity implements
 				Looper.loop();
 			}else{
 
+			}
+		}
+
+		if(connectedState == mRegisterVerifyConnectService.ChangePassword){
+			if(content.startsWith("OK")){
+				Looper.prepare();
+				MyToast.showShort(RegisterVerifyActivity.this, "密码修改成功!");
+				Log.d(ClassName, "==connectionStatusChanged=RegisterSuccess=" + content);
+				((ActivityCollector) getApplication()).finishAll();
+				Looper.loop();
 			}
 		}
 	}
@@ -300,12 +304,16 @@ public class RegisterVerifyActivity extends Activity implements
 					Log.d(ClassName, "==RegisterVerify=no=ok=" + mRegisterverifyBt.isEnabled());
 				}else{
 					Log.d(ClassName, "==RegisterVerify=ok="+mRegisterverifyBt.isEnabled());
-					if (mRegisterDialog != null && !mRegisterDialog.isShowing())
-						mRegisterDialog.show();
+					if (mRegisterVerifyDialog != null && !mRegisterVerifyDialog.isShowing())
+						mRegisterVerifyDialog.show();
 					if (mRegisterVerifyOutTimeProcess != null && !mRegisterVerifyOutTimeProcess.running)
 						mRegisterVerifyOutTimeProcess.start();
 					if (mRegisterVerifyConnectService != null) {
-						mRegisterVerifyConnectService.register(mPhoneNumber,mRegisterpasswordET.getText().toString());
+						if(mActivityType.equals("Register")) {
+							mRegisterVerifyConnectService.register(mPhoneNumber, mRegisterpasswordET.getText().toString());
+						}else if(mActivityType.equals("ChangePassword")){
+							mRegisterVerifyConnectService.changePassword(mPhoneNumber, mRegisterpasswordET.getText().toString());
+						}
 					}
 				}
 				break;

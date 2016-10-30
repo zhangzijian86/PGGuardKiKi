@@ -22,8 +22,11 @@
     <string name="register_inputverifyphonenumbernotice">验证码</string>
     <string name="register_password">请输入密码</string>
     <string name="register_passwordconfirm">请确认密码</string>
+    <string name="register_newpassword">请输入新密码</string>
+    <string name="register_newpasswordconfirm">请确认新密码</string>
     <string name="register_passwordnotice">用户密码</string>
     <string name="register_passwordconfirmnotice">密码确认</string>
     <string name="register_register">注册</string>
+    <string name="register_registernew">确认</string>
 
 </resources>
