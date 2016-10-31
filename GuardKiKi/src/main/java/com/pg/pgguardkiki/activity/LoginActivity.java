@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,6 +25,7 @@ import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
 import com.pg.pgguardkiki.tools.ActivityCollector;
+import com.pg.pgguardkiki.tools.MyToast;
 import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
 
 /**
@@ -29,6 +33,7 @@ import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
  */
 public class LoginActivity extends Activity implements
         IConnectionStatusChangedCallback , View.OnClickListener {
+    private static final int LOGIN_OUT_TIME = 0;
     private static final String ClassName = "LoginActivity";
     public static final String LOGIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.LOGIN";
     private ConnectService mLoginConnectService;
@@ -40,7 +45,8 @@ public class LoginActivity extends Activity implements
     private TextView mPhoneT;
     private TextView mPasswordT;
 
-    private ShapeLoadingDialog shapeLoadingDialog;
+    private ShapeLoadingDialog mLoginDialog;
+    private ConnectionOutTimeProcess mLoginOutTimeProcess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +79,10 @@ public class LoginActivity extends Activity implements
         mPhoneT =  (TextView)findViewById(R.id.phoneT);
         mPasswordT =  (TextView)findViewById(R.id.passwordT);
 
-        shapeLoadingDialog=new ShapeLoadingDialog(this);
-        shapeLoadingDialog.setLoadingText("加载中...");
+        mLoginDialog=new ShapeLoadingDialog(this);
+        mLoginDialog.setLoadingText("登陆中...");
+
+        mLoginOutTimeProcess = new ConnectionOutTimeProcess();
 
         ((ActivityCollector) getApplication()).addActivity(this);
     }
@@ -83,8 +91,7 @@ public class LoginActivity extends Activity implements
     public void onClick(View v) {
         switch (v.getId()){
             case  R.id.loginBt:
-                shapeLoadingDialog.show();
-                //login();
+                login();
                 break;
             case  R.id.registerTV:
                 Log.d(ClassName, "registerTV() ==00==");
@@ -105,7 +112,6 @@ public class LoginActivity extends Activity implements
 
 //                Intent intent = new Intent(LoginActivity.this,MapDemo.class);
 //                startActivity(intent);
-
                 break;
             case  R.id.forgetTV:
                 Log.d(ClassName, "forgetTV() ==00==");
@@ -132,6 +138,10 @@ public class LoginActivity extends Activity implements
         }
         if (mLoginConnectService != null) {
             Log.d(ClassName, "login() ==22==");
+            if (mLoginDialog != null && !mLoginDialog.isShowing())
+                mLoginDialog.show();
+            if (mLoginOutTimeProcess != null && !mLoginOutTimeProcess.running)
+                mLoginOutTimeProcess.start();
             mLoginConnectService.Login(mPhoneEdit.getText().toString().trim(), mPasswordEdit.getText().toString().trim());
         }
     }
@@ -166,8 +176,23 @@ public class LoginActivity extends Activity implements
     };
 
     @Override
-    public void connectionStatusChanged(int connectedState, String reason) {
-
+    public void connectionStatusChanged(int connectedState, String content) {
+        if (mLoginDialog != null && mLoginDialog.isShowing())
+            mLoginDialog.dismiss();
+        if (mLoginOutTimeProcess != null && mLoginOutTimeProcess.running) {
+            mLoginOutTimeProcess.stop();
+            mLoginOutTimeProcess = null;
+        }
+        if (connectedState == mLoginConnectService.CONNECTED) {
+            Log.d(ClassName, "==connectionStatusChanged=CONNECTED=" + content);
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        } else if (connectedState == mLoginConnectService.DISCONNECTED) {
+            Looper.prepare();
+            MyToast.showShort(LoginActivity.this, "网络链接失败，请重试!");
+            Looper.loop();
+            Log.d(ClassName, "==connectionStatusChanged=DISCONNECTED=" + content);
+        }
     }
 
     ServiceConnection mLoginServiceConnection = new ServiceConnection() {
@@ -191,10 +216,75 @@ public class LoginActivity extends Activity implements
             unbindService(mLoginServiceConnection);
         } catch (IllegalArgumentException e) {
         }
-//        if (mRegisterOutTimeProcess != null) {
-//            mRegisterOutTimeProcess.stop();
-//            mRegisterOutTimeProcess = null;
-//        }
+        if (mLoginOutTimeProcess != null) {
+            mLoginOutTimeProcess.stop();
+            mLoginOutTimeProcess = null;
+        }
         ((ActivityCollector) getApplication()).removeActivity(this);
+    }
+
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case LOGIN_OUT_TIME:
+                    if (mLoginOutTimeProcess != null
+                            && mLoginOutTimeProcess.running)
+                        mLoginOutTimeProcess.stop();
+                    if (mLoginDialog != null && mLoginDialog.isShowing())
+                        mLoginDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "网络链接失败！", Toast.LENGTH_SHORT).show();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    };
+
+    // 注册超时处理线程
+    class ConnectionOutTimeProcess implements Runnable {
+        public boolean running = false;
+        private long startTime = 0L;
+        private Thread thread = null;
+
+        ConnectionOutTimeProcess() {
+        }
+
+        public void run() {
+            while (true) {
+                if (!this.running)
+                    return;
+                if (System.currentTimeMillis() - this.startTime > 20 * 1000L) {
+                    mHandler.sendEmptyMessage(LOGIN_OUT_TIME);
+                }
+                try {
+                    Thread.sleep(10L);
+                } catch (Exception localException) {
+                }
+            }
+        }
+
+        public void start() {
+            try {
+                this.thread = new Thread(this);
+                this.running = true;
+                this.startTime = System.currentTimeMillis();
+                this.thread.start();
+            } finally {
+            }
+        }
+
+        public void stop() {
+            try {
+                this.running = false;
+                this.thread = null;
+                this.startTime = 0L;
+            } finally {
+            }
+        }
     }
 }

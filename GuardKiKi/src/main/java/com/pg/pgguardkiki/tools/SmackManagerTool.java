@@ -131,7 +131,7 @@ public class SmackManagerTool{
         presence.setMode(Presence.Mode.available);
         mConnection.sendPacket(presence);
         Log.d(ClassName, "==77==");
-        return true;
+        return mConnection.isAuthenticated();
     }
 
 	public boolean register(String name, String password) {

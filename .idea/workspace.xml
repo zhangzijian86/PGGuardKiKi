@@ -32,21 +32,65 @@
       <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="113" column="59" selection-start-line="113" selection-start-column="47" selection-end-line="113" selection-end-column="59" />
+            <state vertical-scroll-proportion="15.857142">
+              <caret line="36" column="60" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4819#4844#0" expanded="true" />
+                <element signature="e#5076#5102#0" expanded="true" />
+                <element signature="e#8444#9133#0" expanded="true" />
+                <element signature="e#9132#9133#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.1551725">
+              <caret line="48" column="61" selection-start-line="48" selection-start-column="61" selection-end-line="48" selection-end-column="61" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4492#5174#0" expanded="true" />
+                <element signature="e#5173#5174#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="65" column="19" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
+              <folding>
+                <element signature="e#1400#1418#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_main.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.4571428">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="RegisterActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.028571">
-              <caret line="230" column="9" selection-start-line="213" selection-start-column="8" selection-end-line="230" selection-end-column="9" />
+            <state vertical-scroll-proportion="-5.6">
+              <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="102" selection-end-column="5" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#8236#8739#0" expanded="true" />
                 <element signature="e#8738#8739#0" expanded="true" />
               </folding>
@@ -54,28 +98,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SystemData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/data/SystemData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="55" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ConnectService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/service/ConnectService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="145" column="56" selection-start-line="145" selection-start-column="56" selection-end-line="145" selection-end-column="56" />
+            <state vertical-scroll-proportion="-31.285715">
+              <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
               <folding>
-                <element signature="e#1382#1383#0" expanded="true" />
-                <element signature="e#1437#1438#0" expanded="true" />
-                <element signature="e#1968#2437#0" expanded="true" />
-                <element signature="e#2436#2437#0" expanded="true" />
-                <element signature="e#3500#3872#0" expanded="true" />
-                <element signature="e#3871#3872#0" expanded="true" />
+                <element signature="e#1372#1373#0" expanded="true" />
+                <element signature="e#1402#1403#0" expanded="true" />
+                <element signature="e#1751#1752#0" expanded="true" />
+                <element signature="e#1806#1807#0" expanded="true" />
+                <element signature="e#2106#3178#0" expanded="true" />
+                <element signature="e#3177#3178#0" expanded="true" />
+                <element signature="e#3347#3449#0" expanded="true" />
+                <element signature="e#3448#3449#0" expanded="true" />
+                <element signature="e#3820#3930#0" expanded="true" />
+                <element signature="e#3929#3930#0" expanded="true" />
+                <element signature="e#6298#6670#0" expanded="true" />
+                <element signature="e#6669#6670#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,21 +124,9 @@
       <file leaf-file-name="SmackManagerTool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/SmackManagerTool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.742857">
-              <caret line="422" column="53" selection-start-line="422" selection-start-column="53" selection-end-line="422" selection-end-column="53" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="133" column="42" selection-start-line="133" selection-start-column="27" selection-end-line="133" selection-end-column="42" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegisterVerifyActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterVerifyActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15384616">
-              <caret line="234" column="41" selection-start-line="234" selection-start-column="41" selection-end-line="234" selection-end-column="41" />
-              <folding>
-                <element signature="e#4120#4149#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -1706,7 +1734,6 @@
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_registerverify.xml" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_dialog.xml" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/LoadingProgressDialog.java" />
-        <option value="$PROJECT_DIR$/GuardKiKi/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/ActivityCollector.java" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/MyToast.java" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/view/LoadingView.java" />
@@ -1716,13 +1743,15 @@
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/res/layout/layout_dialog.xml" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/res/layout/load_view.xml" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/view/ShapeLoadingDialog.java" />
-        <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/data/SystemData.java" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterActivity.java" />
+        <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterVerifyActivity.java" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/SmackManagerTool.java" />
         <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/service/ConnectService.java" />
-        <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterVerifyActivity.java" />
+        <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/GuardKiKi/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1765,23 +1794,39 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
+      <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="PGGuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PGGuardKiKi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PGGuardKiKi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PGGuardKiKi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PGGuardKiKi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="GuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scratches">
-        <subPane />
       </pane>
       <pane id="AndroidView">
         <subPane>
@@ -1931,38 +1976,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PGGuardKiKi" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GuardKiKi" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
+      <pane id="Scratches">
+        <subPane />
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="PGGuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PGGuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PGGuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PGGuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PGGuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="GuardKiKi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2185,7 +2228,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5409483" sideWeight="0.5019369" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5606557" sideWeight="0.4980631" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6590164" sideWeight="0.4980631" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5344262" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2194,7 +2237,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22658126" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24419536" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
@@ -2208,6 +2251,38 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3885246" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5409483" sideWeight="0.5019369" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.68688524" sideWeight="0.4980631" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32543105" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5344262" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298639" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24419536" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3885246" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -2227,132 +2302,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="38" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Sdk/sources/android-23/android/app/Dialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="260" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#43609#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4657#4658#0" expanded="false" />
-            <element signature="e#4696#4697#0" expanded="false" />
-            <element signature="e#5089#5090#0" expanded="false" />
-            <element signature="e#5127#5128#0" expanded="false" />
-            <element signature="e#7556#7557#0" expanded="false" />
-            <element signature="e#7587#7588#0" expanded="false" />
-            <element signature="e#7812#7813#0" expanded="false" />
-            <element signature="e#7845#7846#0" expanded="false" />
-            <element signature="e#8652#8653#0" expanded="false" />
-            <element signature="e#8689#8690#0" expanded="false" />
-            <element signature="e#15829#15830#0" expanded="false" />
-            <element signature="e#15859#15860#0" expanded="false" />
-            <element signature="e#16188#16189#0" expanded="false" />
-            <element signature="e#16261#16262#0" expanded="false" />
-            <element signature="e#16995#16996#0" expanded="false" />
-            <element signature="e#17046#17047#0" expanded="false" />
-            <element signature="e#17339#17340#0" expanded="false" />
-            <element signature="e#17383#17384#0" expanded="false" />
-            <element signature="e#18742#18743#0" expanded="false" />
-            <element signature="e#18793#18794#0" expanded="false" />
-            <element signature="e#19582#19583#0" expanded="false" />
-            <element signature="e#19610#19611#0" expanded="false" />
-            <element signature="e#20347#20348#0" expanded="false" />
-            <element signature="e#20375#20376#0" expanded="false" />
-            <element signature="e#21274#21275#0" expanded="false" />
-            <element signature="e#21302#21303#0" expanded="false" />
-            <element signature="e#22861#22862#0" expanded="false" />
-            <element signature="e#22889#22890#0" expanded="false" />
-            <element signature="e#24117#24118#0" expanded="false" />
-            <element signature="e#24145#24146#0" expanded="false" />
-            <element signature="e#24612#24613#0" expanded="false" />
-            <element signature="e#24637#24638#0" expanded="false" />
-            <element signature="e#28345#28346#0" expanded="false" />
-            <element signature="e#28372#28373#0" expanded="false" />
-            <element signature="e#29434#29435#0" expanded="false" />
-            <element signature="e#29462#29463#0" expanded="false" />
-            <element signature="e#30049#30050#0" expanded="false" />
-            <element signature="e#30076#30077#0" expanded="false" />
-            <element signature="e#30414#30415#0" expanded="false" />
-            <element signature="e#30441#30442#0" expanded="false" />
-            <element signature="e#30569#30570#0" expanded="false" />
-            <element signature="e#30597#30598#0" expanded="false" />
-            <element signature="e#31755#31756#0" expanded="false" />
-            <element signature="e#31812#31813#0" expanded="false" />
-            <element signature="e#31939#31940#0" expanded="false" />
-            <element signature="e#31996#31997#0" expanded="false" />
-            <element signature="e#32105#32106#0" expanded="false" />
-            <element signature="e#32143#32144#0" expanded="false" />
-            <element signature="e#32271#32272#0" expanded="false" />
-            <element signature="e#32299#32300#0" expanded="false" />
-            <element signature="e#33643#33644#0" expanded="false" />
-            <element signature="e#33678#33679#0" expanded="false" />
-            <element signature="e#34625#34626#0" expanded="false" />
-            <element signature="e#34659#34660#0" expanded="false" />
-            <element signature="e#36159#36160#0" expanded="false" />
-            <element signature="e#36201#36202#0" expanded="false" />
-            <element signature="e#37844#37845#0" expanded="false" />
-            <element signature="e#37898#37899#0" expanded="false" />
-            <element signature="e#38063#38064#0" expanded="false" />
-            <element signature="e#38097#38098#0" expanded="false" />
-            <element signature="e#40301#40302#0" expanded="false" />
-            <element signature="e#40337#40338#0" expanded="false" />
-            <element signature="e#41579#41580#0" expanded="false" />
-            <element signature="e#41616#41617#0" expanded="false" />
-            <element signature="e#42560#42561#0" expanded="false" />
-            <element signature="e#42619#42620#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/view/ShapeLoadingDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="80" selection-start-line="28" selection-start-column="80" selection-end-line="28" selection-end-column="80" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1242#1243#0" expanded="true" />
-            <element signature="e#1284#1285#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_register.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="130" column="32" selection-start-line="120" selection-start-column="8" selection-end-line="130" selection-end-column="32" />
-          <folding>
-            <element signature="e#8236#8739#0" expanded="true" />
-            <element signature="e#8738#8739#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2364,14 +2329,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/drawable/register_button.xml">
@@ -2385,10 +2350,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="125" column="11" selection-start-line="125" selection-start-column="11" selection-end-line="125" selection-end-column="11" />
-          <folding>
-            <element signature="e#8236#8739#0" expanded="true" />
-            <element signature="e#8738#8739#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2400,14 +2362,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/drawable/login_button.xml">
@@ -2432,14 +2394,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java">
@@ -2450,14 +2412,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/drawable/login_textedit.xml">
@@ -2475,14 +2437,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_register.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8019802">
           <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/drawable/register_button.xml">
@@ -2528,14 +2490,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="75" column="39" selection-start-line="75" selection-start-column="39" selection-end-line="75" selection-end-column="39" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/mipmap-xhdpi/loading_background.png">
@@ -2565,14 +2527,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_dialog.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/interfaces/IConnectionStatusChangedCallback.java">
@@ -2635,14 +2597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.09952607">
@@ -2655,76 +2609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="260" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#43609#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4657#4658#0" expanded="false" />
-            <element signature="e#4696#4697#0" expanded="false" />
-            <element signature="e#5089#5090#0" expanded="false" />
-            <element signature="e#5127#5128#0" expanded="false" />
-            <element signature="e#7556#7557#0" expanded="false" />
-            <element signature="e#7587#7588#0" expanded="false" />
-            <element signature="e#7812#7813#0" expanded="false" />
-            <element signature="e#7845#7846#0" expanded="false" />
-            <element signature="e#8652#8653#0" expanded="false" />
-            <element signature="e#8689#8690#0" expanded="false" />
-            <element signature="e#15829#15830#0" expanded="false" />
-            <element signature="e#15859#15860#0" expanded="false" />
-            <element signature="e#16188#16189#0" expanded="false" />
-            <element signature="e#16261#16262#0" expanded="false" />
-            <element signature="e#16995#16996#0" expanded="false" />
-            <element signature="e#17046#17047#0" expanded="false" />
-            <element signature="e#17339#17340#0" expanded="false" />
-            <element signature="e#17383#17384#0" expanded="false" />
-            <element signature="e#18742#18743#0" expanded="false" />
-            <element signature="e#18793#18794#0" expanded="false" />
-            <element signature="e#19582#19583#0" expanded="false" />
-            <element signature="e#19610#19611#0" expanded="false" />
-            <element signature="e#20347#20348#0" expanded="false" />
-            <element signature="e#20375#20376#0" expanded="false" />
-            <element signature="e#21274#21275#0" expanded="false" />
-            <element signature="e#21302#21303#0" expanded="false" />
-            <element signature="e#22861#22862#0" expanded="false" />
-            <element signature="e#22889#22890#0" expanded="false" />
-            <element signature="e#24117#24118#0" expanded="false" />
-            <element signature="e#24145#24146#0" expanded="false" />
-            <element signature="e#24612#24613#0" expanded="false" />
-            <element signature="e#24637#24638#0" expanded="false" />
-            <element signature="e#28345#28346#0" expanded="false" />
-            <element signature="e#28372#28373#0" expanded="false" />
-            <element signature="e#29434#29435#0" expanded="false" />
-            <element signature="e#29462#29463#0" expanded="false" />
-            <element signature="e#30049#30050#0" expanded="false" />
-            <element signature="e#30076#30077#0" expanded="false" />
-            <element signature="e#30414#30415#0" expanded="false" />
-            <element signature="e#30441#30442#0" expanded="false" />
-            <element signature="e#30569#30570#0" expanded="false" />
-            <element signature="e#30597#30598#0" expanded="false" />
-            <element signature="e#31755#31756#0" expanded="false" />
-            <element signature="e#31812#31813#0" expanded="false" />
-            <element signature="e#31939#31940#0" expanded="false" />
-            <element signature="e#31996#31997#0" expanded="false" />
-            <element signature="e#32105#32106#0" expanded="false" />
-            <element signature="e#32143#32144#0" expanded="false" />
-            <element signature="e#32271#32272#0" expanded="false" />
-            <element signature="e#32299#32300#0" expanded="false" />
-            <element signature="e#33643#33644#0" expanded="false" />
-            <element signature="e#33678#33679#0" expanded="false" />
-            <element signature="e#34625#34626#0" expanded="false" />
-            <element signature="e#34659#34660#0" expanded="false" />
-            <element signature="e#36159#36160#0" expanded="false" />
-            <element signature="e#36201#36202#0" expanded="false" />
-            <element signature="e#37844#37845#0" expanded="false" />
-            <element signature="e#37898#37899#0" expanded="false" />
-            <element signature="e#38063#38064#0" expanded="false" />
-            <element signature="e#38097#38098#0" expanded="false" />
-            <element signature="e#40301#40302#0" expanded="false" />
-            <element signature="e#40337#40338#0" expanded="false" />
-            <element signature="e#41579#41580#0" expanded="false" />
-            <element signature="e#41616#41617#0" expanded="false" />
-            <element signature="e#42560#42561#0" expanded="false" />
-            <element signature="e#42619#42620#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2741,14 +2625,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_registerverify.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-85.28571">
           <caret line="199" column="61" selection-start-line="199" selection-start-column="37" selection-end-line="199" selection-end-column="61" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/values/strings.xml">
@@ -2759,64 +2643,122 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java">
+    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterVerifyActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="59" selection-start-line="113" selection-start-column="47" selection-end-line="113" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="234" column="41" selection-start-line="234" selection-start-column="41" selection-end-line="234" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/data/SystemData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="55" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+          <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/GuardKiKi/libs/asmack-android-6.jar!/org/jivesoftware/smack/Connection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35489833">
+          <caret line="104" column="16" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/tools/SmackManagerTool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.742857">
-          <caret line="422" column="53" selection-start-line="422" selection-start-column="53" selection-end-line="422" selection-end-column="53" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="133" column="42" selection-start-line="133" selection-start-column="27" selection-end-line="133" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/service/ConnectService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="145" column="56" selection-start-line="145" selection-start-column="56" selection-end-line="145" selection-end-column="56" />
+        <state vertical-scroll-proportion="-31.285715">
+          <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
           <folding>
-            <element signature="e#1382#1383#0" expanded="true" />
-            <element signature="e#1437#1438#0" expanded="true" />
-            <element signature="e#1968#2437#0" expanded="true" />
-            <element signature="e#2436#2437#0" expanded="true" />
-            <element signature="e#3500#3872#0" expanded="true" />
-            <element signature="e#3871#3872#0" expanded="true" />
+            <element signature="e#1372#1373#0" expanded="true" />
+            <element signature="e#1402#1403#0" expanded="true" />
+            <element signature="e#1751#1752#0" expanded="true" />
+            <element signature="e#1806#1807#0" expanded="true" />
+            <element signature="e#2106#3178#0" expanded="true" />
+            <element signature="e#3177#3178#0" expanded="true" />
+            <element signature="e#3347#3449#0" expanded="true" />
+            <element signature="e#3448#3449#0" expanded="true" />
+            <element signature="e#3820#3930#0" expanded="true" />
+            <element signature="e#3929#3930#0" expanded="true" />
+            <element signature="e#6298#6670#0" expanded="true" />
+            <element signature="e#6669#6670#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.028571">
-          <caret line="230" column="9" selection-start-line="213" selection-start-column="8" selection-end-line="230" selection-end-column="9" />
+        <state vertical-scroll-proportion="-5.6">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="102" selection-end-column="5" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#8236#8739#0" expanded="true" />
             <element signature="e#8738#8739#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/RegisterVerifyActivity.java">
+    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15384616">
-          <caret line="234" column="41" selection-start-line="234" selection-start-column="41" selection-end-line="234" selection-end-column="41" />
+        <state vertical-scroll-proportion="2.4571428">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="19" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
           <folding>
-            <element signature="e#4120#4149#0" expanded="true" />
+            <element signature="e#1400#1418#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../Sdk/extras/android/m2repository/com/android/support/appcompat-v7/23.2.1/appcompat-v7-23.2.1-sources.jar!/android/support/v7/app/AppCompatActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32984293">
+          <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="15.857142">
+          <caret line="36" column="60" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4819#4844#0" expanded="true" />
+            <element signature="e#5076#5102#0" expanded="true" />
+            <element signature="e#8444#9133#0" expanded="true" />
+            <element signature="e#9132#9133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GuardKiKi/src/main/java/com/pg/pgguardkiki/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1551725">
+          <caret line="48" column="61" selection-start-line="48" selection-start-column="61" selection-end-line="48" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4492#5174#0" expanded="true" />
+            <element signature="e#5173#5174#0" expanded="true" />
           </folding>
         </state>
       </provider>
