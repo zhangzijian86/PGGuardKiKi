@@ -13,6 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.pg.pgguardkiki.R;
@@ -20,6 +25,7 @@ import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
 import com.pg.pgguardkiki.tools.ActivityCollector;
 import com.pg.pgguardkiki.tools.MyToast;
+import com.pg.pgguardkiki.tools.view.RoundImageView;
 import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
 
 public class MainActivity extends Activity implements
@@ -31,6 +37,11 @@ public class MainActivity extends Activity implements
     private ConnectService mMainConnectService;
     private ShapeLoadingDialog mMainDialog;
     private long firstTime;
+    private LinearLayout leftBarLL;
+    private RelativeLayout transparentRL;
+    private TranslateAnimation mHiddenAction;
+    private TranslateAnimation mShowAction;
+    private RoundImageView mainlogoRI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +53,24 @@ public class MainActivity extends Activity implements
 
         bindService(mServiceIntent, mMainServiceConnection,
                 Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
+
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,-1.0f ,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction.setDuration(500);
+
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f);
+        mHiddenAction.setDuration(500);
+
+        mainlogoRI  = (RoundImageView)findViewById(R.id.mainlogoRI);
+        mainlogoRI.setOnClickListener(this);
+        leftBarLL = (LinearLayout)findViewById(R.id.leftBarLL);
+        leftBarLL.setOnClickListener(this);
+        transparentRL = (RelativeLayout)findViewById(R.id.transparentRL);
+        transparentRL.setOnClickListener(this);
 
         mMainDialog=new ShapeLoadingDialog(this);
         mMainDialog.setLoadingText("数据获取中...");
@@ -70,7 +99,19 @@ public class MainActivity extends Activity implements
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.mainlogoRI:
+                leftBarLL.startAnimation(mShowAction);
+                leftBarLL.setVisibility(View.VISIBLE);
+                //mMainConnectService.sendMessage("specialfrienduser@zzj/Spark","mainlogoRI send text");
+                break;
+            case R.id.transparentRL:
+                leftBarLL.startAnimation(mHiddenAction);
+                leftBarLL.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
