@@ -38,7 +38,7 @@ import com.pg.pgguardkiki.tools.view.RoundImageView;
 import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
 
 public class MainActivity extends FragmentActivity implements
-        IConnectionStatusChangedCallback, View.OnClickListener{
+        IConnectionStatusChangedCallback, View.OnClickListener {
     private static final String ClassName = "MainActivity";
     private static final int MAIN_OUT_TIME = 0;
     public static final String MAIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.MAIN";
@@ -60,7 +60,11 @@ public class MainActivity extends FragmentActivity implements
     private RadioButton mHomeSearchRb;
     private RadioButton mHomeProfileRb;
     static final int NUM_ITEMS = 4;//一共四个fragment
-    Fragment fragment = null;
+    private HomeFagment mHomeFagment;
+    private FindFagment mFindFagment;
+    private SearchFagment mSearchFagment;
+    private ProfileFagment mProfileFagment;
+    private Fragment fragment = null;
     //-------
 
     @Override
@@ -74,7 +78,7 @@ public class MainActivity extends FragmentActivity implements
         bindService(mServiceIntent, mMainServiceConnection,
                 Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
 
-        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,-1.0f ,
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
         mShowAction.setDuration(500);
@@ -85,19 +89,24 @@ public class MainActivity extends FragmentActivity implements
                 0.0f);
         mHiddenAction.setDuration(500);
 
-        mainlogoRI  = (RoundImageView)findViewById(R.id.mainlogoRI);
+        mainlogoRI = (RoundImageView) findViewById(R.id.mainlogoRI);
         mainlogoRI.setOnClickListener(this);
-        leftBarLL = (LinearLayout)findViewById(R.id.leftBarLL);
+        leftBarLL = (LinearLayout) findViewById(R.id.leftBarLL);
         leftBarLL.setOnClickListener(this);
-        transparentRL = (RelativeLayout)findViewById(R.id.transparentRL);
+        transparentRL = (RelativeLayout) findViewById(R.id.transparentRL);
         transparentRL.setOnClickListener(this);
 
-        mMainDialog=new ShapeLoadingDialog(this);
+        mMainDialog = new ShapeLoadingDialog(this);
         mMainDialog.setLoadingText("数据获取中...");
 
         mMainOutTimeProcess = new ConnectionOutTimeProcess();
 
         //-------
+        mHomeFagment = new HomeFagment();
+        mFindFagment = new FindFagment();
+        mSearchFagment = new SearchFagment();
+        mProfileFagment = new ProfileFagment();
+
         mHomeContent = (FrameLayout) findViewById(R.id.mHomeContent); //tab上方的区域
         mHomeRadioGroup = (RadioGroup) findViewById(R.id.mHomeRadioGroup);  //底部的四个tab
         mHomeHomeRb = (RadioButton) findViewById(R.id.mHomeHomeRb);
@@ -153,18 +162,18 @@ public class MainActivity extends FragmentActivity implements
         public Fragment getItem(int i) {
             switch (i) {
                 case 0://首页
-                    fragment = new HomeFagment();
+                    fragment = mHomeFagment;
                     break;
                 case 1://发现
-                    fragment = new FindFagment();
+                    fragment = mFindFagment;
                     break;
 
                 case 2://搜索
-                    fragment = new SearchFagment();
+                    fragment = mSearchFagment;
                     break;
 
                 case 3://我的
-                    fragment = new ProfileFagment();
+                    fragment = mProfileFagment;
                     break;
                 default:
                     new HomeFagment();
@@ -201,8 +210,7 @@ public class MainActivity extends FragmentActivity implements
 //                leftBarLL.startAnimation(mShowAction);
 //                leftBarLL.setVisibility(View.VISIBLE);
                 //mMainConnectService.sendMessage("specialfrienduser@zzj/Spark","mainlogoRI send text");
-                HomeFagment hf= (HomeFagment)fragments.getItem(0);
-                hf.setTextColor();
+                mHomeFagment.setTextColor();
                 break;
             case R.id.transparentRL:
                 leftBarLL.startAnimation(mHiddenAction);
@@ -275,6 +283,7 @@ public class MainActivity extends FragmentActivity implements
             mMainConnectService = ((ConnectService.CSBinder) service).getService();
             mMainConnectService.registerConnectionStatusCallback(MainActivity.this);
         }
+
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mMainConnectService.unRegisterConnectionStatusCallback();

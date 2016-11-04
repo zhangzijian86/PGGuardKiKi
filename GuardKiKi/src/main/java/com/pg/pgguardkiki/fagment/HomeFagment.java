@@ -19,7 +19,7 @@ public class HomeFagment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
-        HomeFragmentTV = (TextView)view.findViewById(R.id.mHomeHomeRb);
+        HomeFragmentTV = (TextView)view.findViewById(R.id.HomeFragmentTV);
         return view;
     }
 
