@@ -56,6 +56,15 @@ public class ConnectService extends BaseService{
         mConnectionStatusChangedCallback = null;
     }
 
+    // 是否连接上服务器
+    public boolean isAuthenticated() {
+        if (smt != null) {
+            return smt.isAuthenticated();
+        }
+
+        return false;
+    }
+
     public void Login(final String phone,final String password) {
         Log.d(ClassName, "Login() phone:" + phone+"password:"+password);
         if (mConnectThread != null) {
@@ -175,6 +184,21 @@ public class ConnectService extends BaseService{
                 Log.d(ClassName, "register=a=222==");
                 smt.register(name, password);
                 Log.d(ClassName, "register=a=333==");
+            }
+        };
+        mConnectThread.start();
+    }
+
+    public void getRoster() {
+        Log.d(ClassName, "getRoster=a=000==");
+        mConnectThread = new Thread() {
+            @Override
+            public void run() {
+                Log.d(ClassName, "getRoster=a=111==");
+                smt = new SmackManagerTool(ConnectService.this);
+                Log.d(ClassName, "getRoster=a=222==");
+                smt.getRoster();
+                Log.d(ClassName, "getRoster=a=333==");
             }
         };
         mConnectThread.start();

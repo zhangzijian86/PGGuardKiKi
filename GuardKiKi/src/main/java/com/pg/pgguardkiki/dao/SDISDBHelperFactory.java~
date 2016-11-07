@@ -1,0 +1,52 @@
+package syberos.sdisservice.dao;
+
+import android.content.Context;
+
+/**
+ * Created by helpzhl on 16-7-7
+ * SDISDBHelperFactory.
+ */
+public class SDISDBHelperFactory {
+    /**
+     * 单例对象
+     */
+    private static PGDBHelper INSTANCE = null;
+
+    /**
+     * 单例对象
+     */
+    private static PGDBHelper TEMP_INSTANCE = null;
+
+
+    /**
+     * 数据库文件名
+     */
+    public static final String DB_NAME = "SDIS.db";
+
+    /**
+     * 临时数据库文件名
+     */
+    public static final String TEMP_DB_NAME = "TEMP_SDIS.db";
+
+    /**
+     * 获取PGDBHelper对象
+     *
+     * @param context Context
+     * @return PGDBHelper
+     */
+    public static PGDBHelper getDBHelper(Context context, boolean isTemp) {
+        if (isTemp) {
+            if (TEMP_INSTANCE == null) {
+                TEMP_INSTANCE = new PGDBHelper(context, TEMP_DB_NAME);
+            }
+            TEMP_INSTANCE.open();
+            return TEMP_INSTANCE;
+        } else {
+            if (INSTANCE == null) {
+                INSTANCE = new PGDBHelper(context, DB_NAME);
+            }
+            INSTANCE.open();
+            return INSTANCE;
+        }
+    }
+}

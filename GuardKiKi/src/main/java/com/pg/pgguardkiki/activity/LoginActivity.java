@@ -185,7 +185,11 @@ public class LoginActivity extends Activity implements
         }
         if (connectedState == mLoginConnectService.CONNECTED) {
             Log.d(ClassName, "==connectionStatusChanged=CONNECTED=" + content);
-            startActivity(new Intent(this, MainActivity.class));
+            Intent intent = new Intent();
+            intent.setClass(this, MainActivity.class);
+            intent.putExtra("PhoneNumber", mPhoneEdit.getText().toString().trim());
+            intent.putExtra("Password", mPasswordEdit.getText().toString().trim());
+            startActivity(intent);
             finish();
         } else if (connectedState == mLoginConnectService.DISCONNECTED) {
             Looper.prepare();

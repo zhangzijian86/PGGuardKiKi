@@ -1,6 +1,7 @@
 package com.pg.pgguardkiki.activity;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
@@ -26,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.pg.pgguardkiki.R;
+import com.pg.pgguardkiki.dao.PGDBHelper;
+import com.pg.pgguardkiki.dao.PGDBHelperFactory;
 import com.pg.pgguardkiki.fagment.FindFagment;
 import com.pg.pgguardkiki.fagment.HomeFagment;
 import com.pg.pgguardkiki.fagment.ProfileFagment;
@@ -42,6 +45,7 @@ public class MainActivity extends FragmentActivity implements
     private static final String ClassName = "MainActivity";
     private static final int MAIN_OUT_TIME = 0;
     public static final String MAIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.MAIN";
+    public static final String LOGIN_ACTION = "COM.PG.PGGUARDKIKI.ACTIVITY.ACTION.LOGIN";
     private ConnectionOutTimeProcess mMainOutTimeProcess;
     private ConnectService mMainConnectService;
     private ShapeLoadingDialog mMainDialog;
@@ -52,13 +56,18 @@ public class MainActivity extends FragmentActivity implements
     private TranslateAnimation mShowAction;
     private RoundImageView mainlogoRI;
 
+    private String mPhoneNumber;
+    private String mPassword;
+
+    private PGDBHelper mPGDBHelper;
+
     //-------
     private FrameLayout mHomeContent;
     private RadioGroup mHomeRadioGroup;
-    private RadioButton mHomeHomeRb;
-    private RadioButton mHomeFindRb;
-    private RadioButton mHomeSearchRb;
-    private RadioButton mHomeProfileRb;
+//    private RadioButton mHomeHomeRb;
+//    private RadioButton mHomeFindRb;
+//    private RadioButton mHomeSearchRb;
+//    private RadioButton mHomeProfileRb;
     static final int NUM_ITEMS = 4;//一共四个fragment
     private HomeFagment mHomeFagment;
     private FindFagment mFindFagment;
@@ -73,7 +82,13 @@ public class MainActivity extends FragmentActivity implements
         setContentView(R.layout.activity_main);
 
         Intent mServiceIntent = new Intent(this, ConnectService.class);
-        mServiceIntent.setAction(MAIN_ACTION);
+        mServiceIntent.setAction(LOGIN_ACTION);
+
+        mPhoneNumber  = this.getIntent().getStringExtra("PhoneNumber");
+        Log.d(ClassName, "==onCreate=mPhoneNumber=" + mPhoneNumber);
+
+        mPassword = this.getIntent().getStringExtra("Password");
+        Log.d(ClassName, "==onCreate=mPassword=" + mPassword);
 
         bindService(mServiceIntent, mMainServiceConnection,
                 Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
@@ -101,6 +116,10 @@ public class MainActivity extends FragmentActivity implements
 
         mMainOutTimeProcess = new ConnectionOutTimeProcess();
 
+        mPGDBHelper = PGDBHelperFactory.getDBHelper();
+
+        mPGDBHelper.query("PG_Roster",null,null,null,null);
+
         //-------
         mHomeFagment = new HomeFagment();
         mFindFagment = new FindFagment();
@@ -109,10 +128,10 @@ public class MainActivity extends FragmentActivity implements
 
         mHomeContent = (FrameLayout) findViewById(R.id.mHomeContent); //tab上方的区域
         mHomeRadioGroup = (RadioGroup) findViewById(R.id.mHomeRadioGroup);  //底部的四个tab
-        mHomeHomeRb = (RadioButton) findViewById(R.id.mHomeHomeRb);
-        mHomeFindRb = (RadioButton) findViewById(R.id.mHomeFindRb);
-        mHomeSearchRb = (RadioButton) findViewById(R.id.mHomeSearchRb);
-        mHomeProfileRb = (RadioButton) findViewById(R.id.mHomeProfileRb);
+//        mHomeHomeRb = (RadioButton) findViewById(R.id.mHomeHomeRb);
+//        mHomeFindRb = (RadioButton) findViewById(R.id.mHomeFindRb);
+//        mHomeSearchRb = (RadioButton) findViewById(R.id.mHomeSearchRb);
+//        mHomeProfileRb = (RadioButton) findViewById(R.id.mHomeProfileRb);
         //监听事件：为底部的RadioGroup绑定状态改变的监听事件
         mHomeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -211,6 +230,9 @@ public class MainActivity extends FragmentActivity implements
 //                leftBarLL.setVisibility(View.VISIBLE);
                 //mMainConnectService.sendMessage("specialfrienduser@zzj/Spark","mainlogoRI send text");
                 mHomeFagment.setTextColor();
+//                SQLiteDatabase aa;
+//                mMainConnectService.getRoster();
+//                mMainConnectService.sendMessage("zzz","TTT");
                 break;
             case R.id.transparentRL:
                 leftBarLL.startAnimation(mHiddenAction);
@@ -278,10 +300,17 @@ public class MainActivity extends FragmentActivity implements
     }
 
     ServiceConnection mMainServiceConnection = new ServiceConnection() {
+
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mMainConnectService = ((ConnectService.CSBinder) service).getService();
             mMainConnectService.registerConnectionStatusCallback(MainActivity.this);
+            // 开始连接xmpp服务器
+            if (!mMainConnectService.isAuthenticated()) {
+                mMainConnectService.Login(mPhoneNumber, mPassword);
+            } else {
+
+            }
         }
 
         @Override

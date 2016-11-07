@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.pg.pgguardkiki.R;
+import com.pg.pgguardkiki.dao.PGDBHelperFactory;
 import com.pg.pgguardkiki.tools.ConstantTool;
 import com.pg.pgguardkiki.tools.SystemDataTool;
 
@@ -29,6 +30,7 @@ public class SplashActivity extends AppCompatActivity {
 		} else {
             mHandler.postDelayed(toLoginActivity, 3000);
 		}
+        PGDBHelperFactory.getDBHelper();
     }
 
     Runnable toLoginActivity = new Runnable() {

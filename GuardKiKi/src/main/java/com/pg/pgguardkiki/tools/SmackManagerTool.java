@@ -4,6 +4,9 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.util.Log;
+
+import com.pg.pgguardkiki.dao.PGDBHelper;
+import com.pg.pgguardkiki.dao.PGDBHelperFactory;
 import com.pg.pgguardkiki.data.SystemData;
 import com.pg.pgguardkiki.service.ConnectService;
 
@@ -17,6 +20,9 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import com.pg.pgguardkiki.tools.ChatProvider;
 import com.pg.pgguardkiki.tools.ChatProvider.ChatConstants;
+
+import org.jivesoftware.smack.RosterEntry;
+import org.jivesoftware.smack.RosterGroup;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
@@ -31,13 +37,9 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Registration;
 import org.jivesoftware.smackx.ServiceDiscoveryManager;
-import org.jivesoftware.smackx.carbons.Carbon;
-import org.jivesoftware.smackx.carbons.CarbonManager;
-import org.jivesoftware.smackx.packet.DelayInfo;
 import org.jivesoftware.smackx.ping.PingManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptRequest;
-
 import java.util.Collection;
 
 /**
@@ -52,6 +54,7 @@ public class SmackManagerTool{
     private RosterListener mRosterListener;
     private final ContentResolver mContentResolver;
     private PacketListener mPacketListener;
+    private PGDBHelper mPGDBHelper;
 
     private static final int PACKET_TIMEOUT = 30000;
 
@@ -65,6 +68,7 @@ public class SmackManagerTool{
         //mConnectionConfig.setSASLAuthenticationEnabled(false);
         mConnection = new XMPPConnection(mConnectionConfig);
         this.mContentResolver = service.getContentResolver();
+        mPGDBHelper = PGDBHelperFactory.getDBHelper();
     }
 
     public static void registerSmackProviders() {
@@ -81,6 +85,7 @@ public class SmackManagerTool{
             SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
             SmackConfiguration.setKeepAliveInterval(-1);
             SmackConfiguration.setDefaultPingInterval(0);
+            registerRosterListener();// 监听联系人动态变化
             mConnection.connect();
         } catch (XMPPException e) {
             Log.d(ClassName, "Connect Error 0");
@@ -131,7 +136,136 @@ public class SmackManagerTool{
         presence.setMode(Presence.Mode.available);
         mConnection.sendPacket(presence);
         Log.d(ClassName, "==77==");
+        Roster mRoster1 = mConnection.getRoster();
+        Log.d(ClassName, "===getRoster=====222======");
+        Collection<RosterGroup> entriesGroup = mRoster1.getGroups();
+        Log.d(ClassName,"===getRoster=====333======");
+        for(RosterGroup group: entriesGroup){
+            Collection<RosterEntry> entries = group.getEntries();
+            Log.d(ClassName,"===getRoster=====group.getName=======" +group.getName());
+            for (RosterEntry entry : entries) {
+//                Presence presence = roster.getPresence(entry.getUser());
+                ContentValues cValue = new ContentValues();
+                cValue.put("Roster_Username",phone);
+                cValue.put("Roster_Jid",entry.getUser());
+                cValue.put("Roster_Nick",group.getName());
+                mPGDBHelper.replace("PG_Roster",cValue);
+                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getUser());
+                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getName());
+                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getType());
+                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getStatus());
+            }
+        }
+
         return mConnection.isAuthenticated();
+    }
+
+    private void registerRosterListener() {
+        mRoster = mConnection.getRoster();
+        mRosterListener = new RosterListener() {
+            private boolean isFristRoter;
+
+            @Override
+            public void presenceChanged(Presence presence) {
+                Log.d(ClassName, "presenceChanged(" + presence.getFrom() + "): " + presence);
+                String jabberID = getJabberID(presence.getFrom());
+                RosterEntry rosterEntry = mRoster.getEntry(jabberID);
+                //updateRosterEntryInDB(rosterEntry);
+                //mService.rosterChanged();
+            }
+
+            @Override
+            public void entriesUpdated(Collection<String> entries) {
+                // TODO Auto-generated method stub
+                Log.d(ClassName, "entriesUpdated(" + entries + ")");
+                for (String entry : entries) {
+                    RosterEntry rosterEntry = mRoster.getEntry(entry);
+                    //updateRosterEntryInDB(rosterEntry);
+                }
+                //mService.rosterChanged();
+            }
+
+            @Override
+            public void entriesDeleted(Collection<String> entries) {
+                Log.d(ClassName, "entriesDeleted(" + entries + ")");
+                for (String entry : entries) {
+                    //deleteRosterEntryFromDB(entry);
+                }
+                //mService.rosterChanged();
+            }
+
+            @Override
+            public void entriesAdded(Collection<String> entries) {
+                Log.d(ClassName, "entriesAdded(" + entries + ")");
+                ContentValues[] cvs = new ContentValues[entries.size()];
+                int i = 0;
+                for (String entry : entries) {
+                    RosterEntry rosterEntry = mRoster.getEntry(entry);
+                    //cvs[i++] = getContentValuesForRosterEntry(rosterEntry);
+                }
+                mContentResolver.bulkInsert(RosterProvider.CONTENT_URI, cvs);
+                if (isFristRoter) {
+                    isFristRoter = false;
+                    //mService.rosterChanged();
+                }
+            }
+        };
+        mRoster.addRosterListener(mRosterListener);
+    }
+
+    public boolean isAuthenticated() {
+        if (mConnection != null) {
+            return (mConnection.isConnected() && mConnection
+                    .isAuthenticated());
+        }
+        return false;
+    }
+
+    public void getRoster() {
+        Log.d(ClassName,"===getRoster=====111======");
+        Roster roster2 = mConnection.getRoster();
+        Log.d("111","===getRoster=====222====aa==");
+        Collection<RosterGroup> groups = roster2.getGroups();
+        Log.d("111","===getRoster=====333====aa=size="+groups.size());
+        for (RosterGroup group : groups) {
+            Log.d("111","===getRoster=====444====aa==");
+//            Group mygroup=new Group();
+//            mygroup.setGroupName(group.getName());
+            Collection<RosterEntry> entries = group.getEntries();
+//            List<Child> childList=new ArrayList<Child>();
+            for (RosterEntry entry : entries) {
+                Log.d("111","===getRoster=====555====aa=="+entry.getType().name());
+                Log.d("111","===getRoster=====555====bb=="+entry.getUser());
+                Log.d("111","===getRoster=====555====cc=="+entry.getName());
+                if(entry.getType().name().equals("both")){
+//                    Child child=new Child();
+//                    child.setUsername(entry.getUser().split("@")[0]);
+//                    childList.add(child);
+                }
+            }
+//            mygroup.setChildList(childList);
+//            listGroup.add(mygroup);
+        }
+//        Roster roster = mConnection.getRoster();
+//        Collection<RosterEntry> it = roster.getEntries();
+//        for(RosterEntry rosterEnter:it){
+//            Log.d(ClassName,"===getRoster=====222====aa=="+rosterEnter.getUser());
+//        }
+//        Log.d(ClassName,"===getRoster=====222======");
+//        Collection<RosterGroup> entriesGroup = roster.getGroups();
+//        Log.d(ClassName,"===getRoster=====333======");
+//        for(RosterGroup group: entriesGroup){
+//            Collection<RosterEntry> entries = group.getEntries();
+//            Log.d(ClassName,"===getRoster=====group.getName=======" +group.getName());
+//            for (RosterEntry entry : entries) {
+////                Presence presence = roster.getPresence(entry.getUser());
+//                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getUser());
+//                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getName());
+//                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getType());
+//                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getStatus());
+//                Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getGroups());
+//            }
+//        }
     }
 
 	public boolean register(String name, String password) {
