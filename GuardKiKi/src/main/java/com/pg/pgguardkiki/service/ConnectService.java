@@ -10,6 +10,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.pg.pgguardkiki.dao.PGDBHelper;
+import com.pg.pgguardkiki.dao.PGDBHelperFactory;
 import  com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.tools.SmackManagerTool;
 
@@ -37,6 +39,13 @@ public class ConnectService extends BaseService implements BDLocationListener {
 
     private LocationClient mLocationClient;
 
+    private PGDBHelper mPGDBHelper;
+
+    private String username;
+    private double latitude;
+    private double longitude;
+    private String address;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,11 +56,16 @@ public class ConnectService extends BaseService implements BDLocationListener {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式 高精度
         option.setCoorType("bd09ll");// 设置返回定位结果是百度经纬度 默认gcj02
-        option.setScanSpan(5000);// 设置发起定位请求的时间间隔 单位ms
+        option.setScanSpan(50000);// 设置发起定位请求的时间间隔 单位ms
         option.setIsNeedAddress(true);// 设置定位结果包含地址信息
         option.setNeedDeviceDirect(true);// 设置定位结果包含手机机头 的方向
+
+        mPGDBHelper = PGDBHelperFactory.getDBHelper();
+
         // 设置定位参数
         mLocationClient.setLocOption(option);
+
+        username= mPGDBHelper.queryUser("PG_User", null, null, null, null);
         // 启动定位
         mLocationClient.start();
     }
@@ -61,10 +75,25 @@ public class ConnectService extends BaseService implements BDLocationListener {
         // 非空判断
         if (location != null) {
             // 根据BDLocation 对象获得经纬度以及详细地址信息
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            String address = location.getAddrStr();
-            Log.i(ClassName, "address:" + address + " latitude:" + latitude
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            address = location.getAddrStr();
+            if(username!=null&&!username.toString().equals("")){
+                Log.i(ClassName, "======================RRRR=============================");
+//                this.setCurrentLocation("setCurrentLocation:number" + username + "&latitude:" + latitude + "&longitude:" + longitude + "&address" + address);
+                mConnectThread = new Thread() {
+                    @Override
+                    public void run() {
+                        Log.d(ClassName, "setCurrentLocation=a=111==");
+                        smt = new SmackManagerTool(ConnectService.this);
+                        Log.d(ClassName, "setCurrentLocation=a=222==");
+                        smt.setCurrentLocation("setCurrentLocation:number" + username + "&latitude:" + latitude + "&longitude:" + longitude + "&address" + address);
+                        Log.d(ClassName, "setCurrentLocation=a=333==");
+                    }
+                };
+                mConnectThread.start();
+            }
+            Log.i(ClassName, "username:"+username+"address:" + address + " latitude:" + latitude
                     + " longitude:" + longitude + "---");
         }
     }
@@ -111,6 +140,7 @@ public class ConnectService extends BaseService implements BDLocationListener {
                     smt = new SmackManagerTool(ConnectService.this);
                     if (smt.login(phone,password)) {
                         // 登陆成功
+                        username= mPGDBHelper.queryUser("PG_User", null, null, null, null);
                         postConnectionScuessed();
                     } else {
                         // 登陆失败
@@ -199,6 +229,21 @@ public class ConnectService extends BaseService implements BDLocationListener {
     }
 
     // 发送消息
+    public void setCurrentLocation(final String message) {
+        mConnectThread = new Thread() {
+            @Override
+            public void run() {
+                Log.d(ClassName, "setCurrentLocation=a=111==");
+                smt = new SmackManagerTool(ConnectService.this);
+                Log.d(ClassName, "setCurrentLocation=a=222==");
+                smt.setCurrentLocation(message);
+                Log.d(ClassName, "setCurrentLocation=a=333==");
+            }
+        };
+    }
+
+
+    // 发送消息
     public void sendMessage(String user, String message) {
         if (smt != null)
             smt.sendMessage(user, message);
@@ -253,7 +298,7 @@ public class ConnectService extends BaseService implements BDLocationListener {
 
     // 收到新消息
     public void newMessage(final String from, final String message) {
-        Log.d(ClassName, "newMessage from:"+from+"message:"+message);
+        Log.d(ClassName, "newMessage from:" + from + "message:" + message);
     }
 
     // 收到新消息
@@ -277,6 +322,10 @@ public class ConnectService extends BaseService implements BDLocationListener {
         mConnectionStatusChangedCallback.connectionStatusChanged(ChangePassword, content);
     }
 
+    // 收到新消息
+    public void setCurrentLocationSuccess() {
+        mConnectThread=null;
+    }
 
     // 收到新消息
     public void registerSuccess(final String from, final String message) {

@@ -40,7 +40,10 @@ import org.jivesoftware.smackx.ServiceDiscoveryManager;
 import org.jivesoftware.smackx.ping.PingManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptRequest;
+
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by zzj on 16-7-29.
@@ -76,11 +79,11 @@ public class SmackManagerTool{
     }
 
     public boolean login(String phone, String password){
-        Log.d(ClassName, "==11==");
+        Log.d(ClassName, "=login=11==");
         if (mConnection.isConnected()) {
             mConnection.disconnect();
         }
-        Log.d(ClassName, "==22==");
+        Log.d(ClassName, "=login=22==");
         try {
             SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
             SmackConfiguration.setKeepAliveInterval(-1);
@@ -91,23 +94,23 @@ public class SmackManagerTool{
             Log.d(ClassName, "Connect Error 0");
             e.printStackTrace();
         }
-        Log.d(ClassName, "==33==");
+        Log.d(ClassName, "=login=33==");
         if (!mConnection.isConnected()) {
             Log.d(ClassName, "Connect Error 1");
             return  false;
         }
-        Log.d(ClassName, "==33==");
+        Log.d(ClassName, "=login=33==");
         try {
             mConnection.login(phone,password);
         } catch (Exception e) {
             Log.d(ClassName, "Login Error");
             return  false;
         }
-        Log.d(ClassName, "==44==");
+        Log.d(ClassName, "=login=44==");
         registerRosterChangeListener();// 监听联系人动态变化
-        Log.d(ClassName, "==55==");
+        Log.d(ClassName, "=login=55==");
         registerNewsChangeListener();
-        Log.d(ClassName, "==66==");
+        Log.d(ClassName, "=login=66==");
 
         mConnection.addConnectionListener(new ConnectionListener() {
             public void connectionClosedOnError(Exception e) {
@@ -139,7 +142,7 @@ public class SmackManagerTool{
         Roster mRoster1 = mConnection.getRoster();
         Log.d(ClassName, "===getRoster=====222======");
         Collection<RosterGroup> entriesGroup = mRoster1.getGroups();
-        Log.d(ClassName,"===getRoster=====333======");
+        Log.d(ClassName, "===getRoster=====333======");
         for(RosterGroup group: entriesGroup){
             Collection<RosterEntry> entries = group.getEntries();
             Log.d(ClassName,"===getRoster=====group.getName=======" +group.getName());
@@ -149,14 +152,18 @@ public class SmackManagerTool{
                 cValue.put("Roster_Username",phone);
                 cValue.put("Roster_Jid",entry.getUser());
                 cValue.put("Roster_Nick",group.getName());
-                mPGDBHelper.replace("PG_Roster",cValue);
+                mPGDBHelper.insert("PG_Roster", cValue, "Roster_Username");
                 Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getUser());
                 Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getName());
                 Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getType());
                 Log.d(ClassName, "===getRoster=====getName.getName======="+entry.getStatus());
             }
         }
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        ContentValues cValue = new ContentValues();
+        cValue.put("PG_User_Username",phone);
+        cValue.put("PG_User_Logintime",df.format(new Date()).toString());
+        mPGDBHelper.insert("PG_User", cValue, "PG_User_Username");
         return mConnection.isAuthenticated();
     }
 
@@ -421,12 +428,41 @@ public class SmackManagerTool{
         }
 
         final Message newMessage = new Message("admin@zzj", Message.Type.chat);
-        newMessage.setBody("ChangePassword:"+phonenumber+"&"+password);
+        newMessage.setBody("ChangePassword:" + phonenumber + "&" + password);
         newMessage.addExtension(new DeliveryReceiptRequest());
         mConnection.sendPacket(newMessage);
 
         return true;
         //mConnection.disconnect();
+    }
+
+    public void setCurrentLocation(String message) {
+        Log.d(ClassName, "==setCurrentLocation=111=");
+        final Message newMessage = new Message("admin@zzj", Message.Type.chat);
+        Log.d(ClassName, "==setCurrentLocation=222=");
+        newMessage.setBody(message);
+        Log.d(ClassName, "==setCurrentLocation=333=");
+        newMessage.addExtension(new DeliveryReceiptRequest());
+        Log.d(ClassName, "==setCurrentLocation=444=");
+        if (mConnection.isConnected()&&mConnection.isAuthenticated()) {
+            Log.d(ClassName, "==setCurrentLocation=555=");
+            mConnection.sendPacket(newMessage);
+        }else{
+            try {
+                SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
+                SmackConfiguration.setKeepAliveInterval(-1);
+                SmackConfiguration.setDefaultPingInterval(0);
+                mConnection.connect();
+//            mConnection.loginAnonymously();//匿名登陆
+                registerMessageListener();
+            } catch (XMPPException e) {
+                Log.d(ClassName, "sendMessage Connect Error 0");
+                e.printStackTrace();
+                mService.connectError("Error 0");
+            }
+            mConnection.sendPacket(newMessage);
+        }
+        mService.setCurrentLocationSuccess();
     }
 
     public void sendMessage(String toJID, String message) {

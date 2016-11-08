@@ -34,11 +34,17 @@ public class PGDBHelper implements IDatabase {
     /**
      * 创建表SQL语句
      */
-    private static final String CREATE_TABLE = "CREATE TABLE PG_Roster(" +
+    private static final String CREATE_TABLE_PG_Roster = "CREATE TABLE PG_Roster(" +
            // "Roster_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + //ID 自增
             "Roster_Username Varchar(50) ," +                         //用户名也就是手机号码
             "Roster_Jid Varchar(50)," +                               //好友
             "Roster_Nick Varchar(50)" +                               //好友分组
+            ")";
+
+    private static final String CREATE_TABLE_PG_User = "CREATE TABLE PG_User(" +
+            // "Roster_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + //ID 自增
+            "PG_User_Username Varchar(50) ," +                         //用户名
+            "PG_User_Logintime Varchar(50) " +                          //登陆日期
             ")";
 
     /**
@@ -55,22 +61,34 @@ public class PGDBHelper implements IDatabase {
             boolean flag = file.exists();
             database = SQLiteDatabase.openOrCreateDatabase(file, null);
             if(!flag){
-                database.execSQL(CREATE_TABLE);
+                database.execSQL(CREATE_TABLE_PG_Roster);
+                database.execSQL(CREATE_TABLE_PG_User);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * 查询数据库内容
-     * @param table 表名
-     * @param columns 返回那些列
-     * @param selection 条件语句
-     * @param selectionArgs 条件参数
-     * @param clazz 数据类型
-     * @return list
-     */
+    public String queryUser(String table, String[] columns, String selection, String[] selectionArgs, Class clazz) {
+        try {
+            Cursor cursor = database.query(table, columns, selection, selectionArgs, null, null, null);
+            String uername = "";
+            String logintime = "";
+
+            while (cursor.moveToNext()) {
+                uername=cursor.getString(0);
+                logintime =cursor.getString(1);
+                Log.d(ClassName,"uername:"+uername+",logintime:"+logintime);
+                break;
+            }
+            if (cursor != null)
+                cursor.close();
+            return uername;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * 查询方法
      *
