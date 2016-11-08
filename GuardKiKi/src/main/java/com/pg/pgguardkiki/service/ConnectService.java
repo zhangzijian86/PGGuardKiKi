@@ -6,13 +6,17 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import  com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.tools.SmackManagerTool;
 
 /**
  * Created by zzj on 16-7-25.
  */
-public class ConnectService extends BaseService{
+public class ConnectService extends BaseService implements BDLocationListener {
     public static final int CONNECTED = 0;
     public static final int DISCONNECTED = -1;
     public static final int CONNECTING = 1;
@@ -31,10 +35,38 @@ public class ConnectService extends BaseService{
     private Thread mConnectThread;
     private Handler mMainHandler = new Handler();
 
+    private LocationClient mLocationClient;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(ClassName, "onCreate()");
+        mLocationClient = new LocationClient(getApplicationContext());
+        // 注册监听
+        mLocationClient.registerLocationListener(this);
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式 高精度
+        option.setCoorType("bd09ll");// 设置返回定位结果是百度经纬度 默认gcj02
+        option.setScanSpan(5000);// 设置发起定位请求的时间间隔 单位ms
+        option.setIsNeedAddress(true);// 设置定位结果包含地址信息
+        option.setNeedDeviceDirect(true);// 设置定位结果包含手机机头 的方向
+        // 设置定位参数
+        mLocationClient.setLocOption(option);
+        // 启动定位
+        mLocationClient.start();
+    }
+
+    @Override
+    public void onReceiveLocation(BDLocation location) {
+        // 非空判断
+        if (location != null) {
+            // 根据BDLocation 对象获得经纬度以及详细地址信息
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            String address = location.getAddrStr();
+            Log.i(ClassName, "address:" + address + " latitude:" + latitude
+                    + " longitude:" + longitude + "---");
+        }
     }
 
     @Override

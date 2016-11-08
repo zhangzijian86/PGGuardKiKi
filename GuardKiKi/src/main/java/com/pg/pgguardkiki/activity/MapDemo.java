@@ -46,6 +46,8 @@ public class MapDemo  extends Activity{
     private BDLocationListener mBDLocationListener;
     private BaiduMap mBaiduMap;
     private MapView mapView;
+    private double start1 = 39.958271;
+    private double start2 = 116.42652;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,62 +160,72 @@ public class MapDemo  extends Activity{
         public void onReceiveLocation(BDLocation location) {
             // 非空判断
             if (location != null) {
+                List<LatLng> points = new ArrayList<LatLng>();
+                LatLng p1 = new LatLng(start1, start2);
+                start1 = start1 + 0.01;
+                start2 = start2 + 0.01;
+                LatLng p2 = new LatLng(start1, start2);
+                points.add(p1);
+                points.add(p2);
+                OverlayOptions ooPolyline = new PolylineOptions().width(10).color(0xAAFF0000).points(points);
+                mBaiduMap.addOverlay(ooPolyline);
                 // 根据BDLocation 对象获得经纬度以及详细地址信息
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                String address = location.getAddrStr();
 
-                MyLocationData locData = new MyLocationData.Builder()
-                        .accuracy(100)
-                                // 此处设置开发者获取到的方向信息，顺时针0-360
-                        .direction(90.0f)
-                        .latitude(latitude)
-                        .longitude(longitude).build();
-                float f = mBaiduMap.getMaxZoomLevel();//19.0 最小比例尺
-                //float m = mBaiduMap.getMinZoomLevel();//3.0 最大比例尺
-                mBaiduMap.setMyLocationData(locData);
-                mBaiduMap.setMyLocationEnabled(true);
-                LatLng ll = new LatLng(latitude,longitude);
-                //MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll,f);
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, f - 2);//设置缩放比例
-                mBaiduMap.animateMapStatus(u);
-
-                // 开发者可根据自己实际的业务需求，利用标注覆盖物，在地图指定的位置上添加标注信息。具体实现方法如下：
-                //定义Maker坐标点
-                LatLng point = new LatLng(latitude, longitude);
-
-
-                //构建Marker图标
-                BitmapDescriptor bitmap = BitmapDescriptorFactory
-                        .fromResource(R.mipmap.tubiao);
-                //构建MarkerOption，用于在地图上添加Marker
-                OverlayOptions option = new MarkerOptions()
-                        .position(point)
-                        .icon(bitmap);
-                //在地图上添加Marker，并显示
-                mBaiduMap.addOverlay(option);
-
-
-                //文字，在地图中也是一种覆盖物，开发者可利用相关的接口，快速实现在地图上书写文字的需求。实现方式如下：
-                //定义文字所显示的坐标点
-                LatLng llText = new LatLng(latitude, longitude);
-                //构建文字Option对象，用于在地图上添加文字
-                OverlayOptions textOption = new TextOptions()
-                        .bgColor(0xAAFFFF00)
-                        .fontSize(28)
-                        .fontColor(0xFFFF00FF)
-                        .text("1111111111111")
-                        .rotate(0)
-                        .position(llText);
-                //在地图上添加该文字对象并显示
-                mBaiduMap.addOverlay(textOption);
-
-                Log.i(ClassName, "address:" + address + " latitude:" + latitude
-                        + " longitude:" + longitude + "---");
-                if (mLocationClient.isStarted()) {
-                    // 获得位置之后停止定位
-                    mLocationClient.stop();
-                }
+//                double latitude = location.getLatitude();
+//                double longitude = location.getLongitude();
+//                String address = location.getAddrStr();
+//
+//                MyLocationData locData = new MyLocationData.Builder()
+//                        .accuracy(100)
+//                                // 此处设置开发者获取到的方向信息，顺时针0-360
+//                        .direction(90.0f)
+//                        .latitude(latitude)
+//                        .longitude(longitude).build();
+//                float f = mBaiduMap.getMaxZoomLevel();//19.0 最小比例尺
+//                //float m = mBaiduMap.getMinZoomLevel();//3.0 最大比例尺
+//                mBaiduMap.setMyLocationData(locData);
+//                mBaiduMap.setMyLocationEnabled(true);
+//                LatLng ll = new LatLng(latitude,longitude);
+//                //MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll,f);
+//                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, f - 2);//设置缩放比例
+//                mBaiduMap.animateMapStatus(u);
+//
+//                // 开发者可根据自己实际的业务需求，利用标注覆盖物，在地图指定的位置上添加标注信息。具体实现方法如下：
+//                //定义Maker坐标点
+//                LatLng point = new LatLng(latitude, longitude);
+//
+//
+//                //构建Marker图标
+//                BitmapDescriptor bitmap = BitmapDescriptorFactory
+//                        .fromResource(R.mipmap.tubiao);
+//                //构建MarkerOption，用于在地图上添加Marker
+//                OverlayOptions option = new MarkerOptions()
+//                        .position(point)
+//                        .icon(bitmap);
+//                //在地图上添加Marker，并显示
+//                mBaiduMap.addOverlay(option);
+//
+//
+//                //文字，在地图中也是一种覆盖物，开发者可利用相关的接口，快速实现在地图上书写文字的需求。实现方式如下：
+//                //定义文字所显示的坐标点
+//                LatLng llText = new LatLng(latitude, longitude);
+//                //构建文字Option对象，用于在地图上添加文字
+//                OverlayOptions textOption = new TextOptions()
+//                        .bgColor(0xAAFFFF00)
+//                        .fontSize(28)
+//                        .fontColor(0xFFFF00FF)
+//                        .text("1111111111111")
+//                        .rotate(0)
+//                        .position(llText);
+//                //在地图上添加该文字对象并显示
+//                mBaiduMap.addOverlay(textOption);
+//
+//                Log.i(ClassName, "address:" + address + " latitude:" + latitude
+//                        + " longitude:" + longitude + "---");
+//                if (mLocationClient.isStarted()) {
+//                    // 获得位置之后停止定位
+//                    mLocationClient.stop();
+//                }
             }
         }
     }
