@@ -62,56 +62,42 @@
             android:background="@color/tab_bg"  >
 
             <RadioButton
-                android:id="@+id/mHomeHomeRb"
+                android:id="@+id/mMessageFagmentRb"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/home_home"
+                android:text="@string/main_message"
                 android:textColor="@drawable/selector_tab_text_color"
                 android:background="@color/tab_bg"
                 android:drawableTop="@drawable/selector_tab_home"
                 />
 
             <RadioButton
-                android:id="@+id/mHomeFindRb"
+                android:id="@+id/mContactsFagmentRb"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/home_find"
+                android:text="@string/main_contacts"
                 android:textColor="@drawable/selector_tab_text_color"
                 android:background="@color/tab_bg"
                 android:drawableTop="@drawable/selector_tab_find"
                 />
 
             <RadioButton
-                android:id="@+id/mHomeSearchRb"
+                android:id="@+id/mDynamicFagmentRb"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/home_search"
+                android:text="@string/main_dynamic"
                 android:textColor="@drawable/selector_tab_text_color"
                 android:background="@color/tab_bg"
                 android:drawableTop="@drawable/selector_tab_search"
-                />
-
-            <RadioButton
-                android:id="@+id/mHomeProfileRb"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/home_profile"
-                android:textColor="@drawable/selector_tab_text_color"
-                android:background="@color/tab_bg"
-                android:drawableTop="@drawable/selector_tab_profile"
-                android:checked="true"
                 />
         </RadioGroup>
     </RelativeLayout>

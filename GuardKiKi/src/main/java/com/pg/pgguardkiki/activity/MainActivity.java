@@ -1,7 +1,5 @@
 package com.pg.pgguardkiki.activity;
 
-import android.app.Activity;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,16 +10,13 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -29,13 +24,11 @@ import android.widget.Toast;
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.dao.PGDBHelper;
 import com.pg.pgguardkiki.dao.PGDBHelperFactory;
-import com.pg.pgguardkiki.fagment.FindFagment;
-import com.pg.pgguardkiki.fagment.HomeFagment;
-import com.pg.pgguardkiki.fagment.ProfileFagment;
-import com.pg.pgguardkiki.fagment.SearchFagment;
+import com.pg.pgguardkiki.fagment.ContactsFagment;
+import com.pg.pgguardkiki.fagment.DynamicFagment;
+import com.pg.pgguardkiki.fagment.MessageFagment;
 import com.pg.pgguardkiki.interfaces.IConnectionStatusChangedCallback;
 import com.pg.pgguardkiki.service.ConnectService;
-import com.pg.pgguardkiki.tools.ActivityCollector;
 import com.pg.pgguardkiki.tools.MyToast;
 import com.pg.pgguardkiki.tools.view.RoundImageView;
 import com.pg.pgguardkiki.tools.view.ShapeLoadingDialog;
@@ -69,10 +62,9 @@ public class MainActivity extends FragmentActivity implements
 //    private RadioButton mHomeSearchRb;
 //    private RadioButton mHomeProfileRb;
     static final int NUM_ITEMS = 4;//一共四个fragment
-    private HomeFagment mHomeFagment;
-    private FindFagment mFindFagment;
-    private SearchFagment mSearchFagment;
-    private ProfileFagment mProfileFagment;
+    private MessageFagment mMessageFagment;
+    private ContactsFagment mContactsFagment;
+    private DynamicFagment mDynamicFagment;
     private Fragment fragment = null;
     //-------
 
@@ -121,10 +113,9 @@ public class MainActivity extends FragmentActivity implements
         mPGDBHelper.query("PG_Roster",null,null,null,null);
 
         //-------
-        mHomeFagment = new HomeFagment();
-        mFindFagment = new FindFagment();
-        mSearchFagment = new SearchFagment();
-        mProfileFagment = new ProfileFagment();
+        mMessageFagment = new MessageFagment();
+        mContactsFagment = new ContactsFagment();
+        mDynamicFagment = new DynamicFagment();
 
         mHomeContent = (FrameLayout) findViewById(R.id.mHomeContent); //tab上方的区域
         mHomeRadioGroup = (RadioGroup) findViewById(R.id.mHomeRadioGroup);  //底部的四个tab
@@ -138,17 +129,14 @@ public class MainActivity extends FragmentActivity implements
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int index = 0;
                 switch (checkedId) {
-                    case R.id.mHomeHomeRb:
+                    case R.id.mMessageFagmentRb:
                         index = 0;
                         break;
-                    case R.id.mHomeFindRb:
+                    case R.id.mContactsFagmentRb:
                         index = 1;
                         break;
-                    case R.id.mHomeSearchRb:
+                    case R.id.mDynamicFagmentRb:
                         index = 2;
-                        break;
-                    case R.id.mHomeProfileRb:
-                        index = 3;
                         break;
                 }
                 //通过fragments这个adapter还有index来替换帧布局中的内容
@@ -181,21 +169,16 @@ public class MainActivity extends FragmentActivity implements
         public Fragment getItem(int i) {
             switch (i) {
                 case 0://首页
-                    fragment = mHomeFagment;
+                    fragment = mMessageFagment;
                     break;
                 case 1://发现
-                    fragment = mFindFagment;
+                    fragment = mContactsFagment;
                     break;
-
                 case 2://搜索
-                    fragment = mSearchFagment;
-                    break;
-
-                case 3://我的
-                    fragment = mProfileFagment;
+                    fragment = mDynamicFagment;
                     break;
                 default:
-                    new HomeFagment();
+                    fragment = mMessageFagment;
                     break;
             }
             return fragment;

@@ -29,6 +29,9 @@
     <color name="white">#FFFFFF</color>
 
 
-    <!--HomeActivity-->
-    <color name="tab_bg">#e62129</color>
+    <color name="tab_bg">#12b7f5</color>
+
+    <color name="gray">#AFAFAF</color>
+    <color name="common_title">#18B4ED</color>
+    <color name="whites">#ffffff</color>
 </resources>
