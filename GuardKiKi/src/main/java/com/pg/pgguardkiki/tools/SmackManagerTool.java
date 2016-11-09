@@ -143,6 +143,7 @@ public class SmackManagerTool{
         Log.d(ClassName, "===getRoster=====222======");
         Collection<RosterGroup> entriesGroup = mRoster1.getGroups();
         Log.d(ClassName, "===getRoster=====333======");
+        mPGDBHelper.deleteAll("PG_Roster");
         for(RosterGroup group: entriesGroup){
             Collection<RosterEntry> entries = group.getEntries();
             Log.d(ClassName,"===getRoster=====group.getName=======" +group.getName());

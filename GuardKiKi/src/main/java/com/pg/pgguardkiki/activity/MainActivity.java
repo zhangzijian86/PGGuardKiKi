@@ -226,13 +226,10 @@ public class MainActivity extends FragmentActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mainlogoRI:
-//                leftBarLL.startAnimation(mShowAction);
-//                leftBarLL.setVisibility(View.VISIBLE);
+                leftBarLL.startAnimation(mShowAction);
+                leftBarLL.setVisibility(View.VISIBLE);
                 //mMainConnectService.sendMessage("specialfrienduser@zzj/Spark","mainlogoRI send text");
-                mHomeFagment.setTextColor();
-//                SQLiteDatabase aa;
-//                mMainConnectService.getRoster();
-//                mMainConnectService.sendMessage("zzz","TTT");
+                //mHomeFagment.setTextColor();
                 break;
             case R.id.transparentRL:
                 leftBarLL.startAnimation(mHiddenAction);

@@ -56,7 +56,7 @@ public class ConnectService extends BaseService implements BDLocationListener {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式 高精度
         option.setCoorType("bd09ll");// 设置返回定位结果是百度经纬度 默认gcj02
-        option.setScanSpan(50000);// 设置发起定位请求的时间间隔 单位ms
+        option.setScanSpan(300000);// 设置发起定位请求的时间间隔 单位ms
         option.setIsNeedAddress(true);// 设置定位结果包含地址信息
         option.setNeedDeviceDirect(true);// 设置定位结果包含手机机头 的方向
 
@@ -87,12 +87,13 @@ public class ConnectService extends BaseService implements BDLocationListener {
                         Log.d(ClassName, "setCurrentLocation=a=111==");
                         smt = new SmackManagerTool(ConnectService.this);
                         Log.d(ClassName, "setCurrentLocation=a=222==");
-                        smt.setCurrentLocation("setCurrentLocation:number" + username + "&latitude:" + latitude + "&longitude:" + longitude + "&address" + address);
+                        smt.setCurrentLocation("setCurrentLocation:number:" + username + "&latitude:" + latitude + "&longitude:" + longitude + "&address:" + address);
                         Log.d(ClassName, "setCurrentLocation=a=333==");
                     }
                 };
                 mConnectThread.start();
             }
+            //Log.i(ClassName,"getCity:"+location.getCity()+"getDistrict:"+location.getDistrict()+"getStreet:"+location.getStreet());
             Log.i(ClassName, "username:"+username+"address:" + address + " latitude:" + latitude
                     + " longitude:" + longitude + "---");
         }

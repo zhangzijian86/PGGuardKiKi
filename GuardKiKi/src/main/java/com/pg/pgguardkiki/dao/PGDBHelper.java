@@ -44,7 +44,8 @@ public class PGDBHelper implements IDatabase {
     private static final String CREATE_TABLE_PG_User = "CREATE TABLE PG_User(" +
             // "Roster_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + //ID 自增
             "PG_User_Username Varchar(50) ," +                         //用户名
-            "PG_User_Logintime Varchar(50) " +                          //登陆日期
+            "PG_User_Logintime Varchar(50)," +                         //登陆日期
+            "PRIMARY KEY (PG_User_Username) " +
             ")";
 
     /**
