@@ -67,7 +67,7 @@ public class ConnectService extends BaseService implements BDLocationListener {
 
         username= mPGDBHelper.queryUser("PG_User", null, null, null, null);
         // 启动定位
-        mLocationClient.start();
+//        mLocationClient.start();
     }
 
     @Override

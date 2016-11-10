@@ -13,8 +13,11 @@ import android.widget.ExpandableListView;
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.adapter.ConstactAdapter;
 import com.pg.pgguardkiki.bean.Group;
+import com.pg.pgguardkiki.dao.PGDBHelper;
+import com.pg.pgguardkiki.dao.PGDBHelperFactory;
 import com.pg.pgguardkiki.tools.view.TitleBarView;
 import com.pg.pgguardkiki.tools.view.TreeView;
+import com.pg.pgguardkiki.bean.Nick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,34 +26,27 @@ import java.util.List;
  * Created by zzj on 11/9/16.
  */
 public class ContactsFagment  extends Fragment {
+    private static final String ClassName = "ContactsFagment";
     private Context mContext;
     private View mBaseView;
-    private TitleBarView mTitleBarView;
     private TreeView mTreeView;
     private ConstactAdapter mExpAdapter;
     private List<Group> listGroup;
+    private PGDBHelper mPGDBHelper;
+    private String username;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         mContext = getActivity();
         mBaseView = inflater.inflate(R.layout.fragment_contacts, null);
+        mPGDBHelper = PGDBHelperFactory.getDBHelper();
+        username= mPGDBHelper.queryUser("PG_User", null, null, null, null);
         findView();
         return mBaseView;
     }
 
     private void findView() {
-        mTitleBarView=(TitleBarView) mBaseView.findViewById(R.id.title_bar);
-        mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE, View.VISIBLE);
-        mTitleBarView.setTitleText(R.string.constacts);//标题
-        mTitleBarView.setTitleRight("添加");//右按钮-添加好友
-        mTitleBarView.setBtnRightOnclickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent=new Intent(mContext, AddFriendActivity.class);
-//                startActivity(intent);
-            }
-        });
         mTreeView = (TreeView) mBaseView.findViewById(R.id.iphone_tree_view);
         mTreeView.setHeaderView(LayoutInflater.from(mContext).inflate(R.layout.fragment_constact_head_view, mTreeView, false));
         mTreeView.setGroupIndicator(null);
@@ -64,16 +60,6 @@ public class ContactsFagment  extends Fragment {
             }
         });
         initData();
-//        if(QQApplication.xmppConnection==null){
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    initData();
-//                }
-//            }, 1000);
-//        }else{
-//            initData();
-//        }
     }
 
     /**
@@ -97,6 +83,14 @@ public class ContactsFagment  extends Fragment {
     public void findFriends() {
         try {
             listGroup=new ArrayList<Group>();
+            String[] columns = {"Roster_Nick"};
+            List<Nick> list= mPGDBHelper.query("PG_Roster", columns, "Roster_Username = '" + username + "'", null, Nick.class);
+            Log.d(ClassName, "===findFriends=====111====aa=="+list.size());
+            for(int i = 0; i < list.size(); i++)
+            {
+                Log.d(ClassName, "===findFriends=====111====aa=="+list.get(i).getRoster_Nick());
+            }
+
 //            Log.d("111", "===getRoster=====111====aa==");
 //            XMPPConnection conn = QQApplication.xmppConnection;
 //            Roster roster = conn.getRoster();

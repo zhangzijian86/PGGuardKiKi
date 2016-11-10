@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.pg.pgguardkiki.dao.IDatabase;
+import com.pg.pgguardkiki.tools.StringIdEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class PGDBHelper implements IDatabase {
 
     public String queryUser(String table, String[] columns, String selection, String[] selectionArgs, Class clazz) {
         try {
-            Cursor cursor = database.query(table, columns, selection, selectionArgs, null, null, null);
+            Cursor cursor = database.query(table, columns, selection, selectionArgs, null, null, "PG_User_Logintime desc" );
             String uername = "";
             String logintime = "";
 
@@ -104,24 +105,6 @@ public class PGDBHelper implements IDatabase {
     public List query(String table, String[] columns, String selection, String[] selectionArgs, Class clazz) {
         try {
             Cursor cursor = database.query(table, columns, selection, selectionArgs, null, null, null);
-
-            while (cursor.moveToNext()) {
-                String Roster_Username=cursor.getString(0);
-                String Roster_Jid=cursor.getString(1);
-                String Roster_Nick=cursor.getString(2);
-                Log.d(ClassName,"Roster_Username:"+Roster_Username+",Roster_Jid:"+Roster_Jid+",Roster_Nick:"+Roster_Nick);
-            }
-            //判断游标是否为空
-//            if(cursor.moveToFirst()){
-//                for(int i=0;i<cursor.getCount();i++){
-//                    cursor.move(i);
-//                    int id = cursor.getInt(0);
-//                    String Roster_Username=cursor.getString(1);
-//                    String Roster_Jid=cursor.getString(2);
-//                    String Roster_Nick=cursor.getString(3);
-//                    Log.d(ClassName,"Roster_Username:"+Roster_Username+",Roster_Jid:"+Roster_Jid+",Roster_Nick:"+Roster_Nick);
-//                }
-//            }
             List list = cursor2VOList(cursor, clazz);
             if (cursor != null)
                 cursor.close();
@@ -666,30 +649,29 @@ public class PGDBHelper implements IDatabase {
      * @return List
      */
     private static List cursor2VOList(Cursor cursor, Class clazz) {
-//        if (cursor == null) {
-//            return null;
-//        }
-//        List list = new ArrayList();
-//        Object obj;
-//        Class clazzTemp = clazz;
-//        if (clazz == String.class) {
-//            clazzTemp = StringIdEntity.class;
-//        }
-//        try {
-//            while (cursor.moveToNext()) {
-//                obj = setValues2Fields(cursor, clazzTemp);
-//                if (clazz == String.class) {
-//                    list.add(((StringIdEntity) obj).getId());
-//                } else {
-//                    list.add(obj);
-//                }
-//            }
-//            return list;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-        return null;
+        if (cursor == null) {
+            return null;
+        }
+        List list = new ArrayList();
+        Object obj;
+        Class clazzTemp = clazz;
+        if (clazz == String.class) {
+            clazzTemp = StringIdEntity.class;
+        }
+        try {
+            while (cursor.moveToNext()) {
+                obj = setValues2Fields(cursor, clazzTemp);
+                if (clazz == String.class) {
+                    list.add(((StringIdEntity) obj).getId());
+                } else {
+                    list.add(obj);
+                }
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -701,49 +683,49 @@ public class PGDBHelper implements IDatabase {
      */
     private static Object setValues2Fields(Cursor cursor, Class clazz) throws Exception {
 
-//        String[] columnNames = cursor.getColumnNames();// 字段数组
-//        //init a instance from the VO`s class
-//        Object obj = clazz.newInstance();
-//        //return a field array from obj`s ALL(include private exclude inherite(from father)) field
-//        Field[] fields = clazz.getDeclaredFields();
-//        for (Field field : fields) {
-//            Class<?> typeClass = field.getType();// 属性类型
-//            if (field.isSynthetic() || typeClass == java.util.List.class || typeClass == java.util.ArrayList.class) {
-//                continue;
-//            }
-//            //field`s type
-//            for (String columnName : columnNames) {
-//                typeClass = getBasicClass(typeClass);
-//                //if typeClass is basic class , package.if not,no change
-//                if (isBasicType(typeClass)) {
-//                    if (clazz == StringIdEntity.class) {
-//                        field.setAccessible(true);
-//                        try {
-//                            field.set(obj, cursor.getString(0));
-//                        } catch (Exception e) {
-////                            e.printStackTrace();
-//                        }
-//                    } else if (columnName.equalsIgnoreCase(field.getName())) {// 是基本类型
-//                        String str = cursor.getString(cursor.getColumnIndex(columnName));
-//                        if (str == null) {
-//                            break;
-//                        }
-//                        //if value is null,make it to ""
-//                        //use the constructor to init a attribute instance by the value
-//                        Constructor<?> cons = typeClass.getConstructor(String.class);
-//                        Object attribute = cons.newInstance(str);
-//                        field.setAccessible(true);
-//                        //give the obj the attr
-//                        field.set(obj, attribute);
-//                        break;
-//                    }
-//                } /*else {
-//                    Object obj2 = setValues2Fields(cursor, typeClass);// 递归
-//                    field.set(obj, obj2);
-//                    break;
-//                } */
-//            }
-//        }
+        String[] columnNames = cursor.getColumnNames();// 字段数组
+        //init a instance from the VO`s class
+        Object obj = clazz.newInstance();
+        //return a field array from obj`s ALL(include private exclude inherite(from father)) field
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            Class<?> typeClass = field.getType();// 属性类型
+            if (field.isSynthetic() || typeClass == java.util.List.class || typeClass == java.util.ArrayList.class) {
+                continue;
+            }
+            //field`s type
+            for (String columnName : columnNames) {
+                typeClass = getBasicClass(typeClass);
+                //if typeClass is basic class , package.if not,no change
+                if (isBasicType(typeClass)) {
+                    if (clazz == StringIdEntity.class) {
+                        field.setAccessible(true);
+                        try {
+                            field.set(obj, cursor.getString(0));
+                        } catch (Exception e) {
+//                            e.printStackTrace();
+                        }
+                    } else if (columnName.equalsIgnoreCase(field.getName())) {// 是基本类型
+                        String str = cursor.getString(cursor.getColumnIndex(columnName));
+                        if (str == null) {
+                            break;
+                        }
+                        //if value is null,make it to ""
+                        //use the constructor to init a attribute instance by the value
+                        Constructor<?> cons = typeClass.getConstructor(String.class);
+                        Object attribute = cons.newInstance(str);
+                        field.setAccessible(true);
+                        //give the obj the attr
+                        field.set(obj, attribute);
+                        break;
+                    }
+                } /*else {
+                    Object obj2 = setValues2Fields(cursor, typeClass);// 递归
+                    field.set(obj, obj2);
+                    break;
+                } */
+            }
+        }
         return null;
     }
 
