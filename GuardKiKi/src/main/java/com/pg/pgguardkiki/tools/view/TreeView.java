@@ -3,6 +3,7 @@ package com.pg.pgguardkiki.tools.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,8 @@ public class TreeView extends ExpandableListView implements
 
 	}
 
+	private static final String ClassName = "TreeView";
+
 	private static final int MAX_ALPHA = 255;
 
 	private TreeHeaderAdapter mAdapter;
@@ -118,6 +121,7 @@ public class TreeView extends ExpandableListView implements
 	 * 点击 HeaderView 触发的事件
 	 */
 	private void headerViewClick() {
+		Log.d(ClassName, "==headerViewClick==");
 		long packedPosition = getExpandableListPosition(this
 				.getFirstVisiblePosition());
 
@@ -144,6 +148,7 @@ public class TreeView extends ExpandableListView implements
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
+		Log.d(ClassName, "==onTouchEvent==");
 		if (mHeaderViewVisible) {
 			switch (ev.getAction()) {
 			case MotionEvent.ACTION_DOWN:
@@ -191,12 +196,15 @@ public class TreeView extends ExpandableListView implements
 	@Override
 	public boolean onGroupClick(ExpandableListView parent, View v,
 			int groupPosition, long id) {
+		Log.d(ClassName, "==onGroupClick=111=");
 		if (mAdapter.getHeadViewClickStatus(groupPosition) == 0) {
+			Log.d(ClassName, "==onGroupClick=222=");
 			mAdapter.onHeadViewClick(groupPosition, 1);
 			parent.expandGroup(groupPosition);
 			parent.setSelectedGroup(groupPosition);
 
 		} else if (mAdapter.getHeadViewClickStatus(groupPosition) == 1) {
+			Log.d(ClassName, "==onGroupClick=333=");
 			mAdapter.onHeadViewClick(groupPosition, 0);
 			parent.collapseGroup(groupPosition);
 		}
@@ -209,6 +217,7 @@ public class TreeView extends ExpandableListView implements
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		Log.d(ClassName, "==onMeasure==");
 		if (mHeaderView != null) {
 			measureChild(mHeaderView, widthMeasureSpec, heightMeasureSpec);
 			mHeaderViewWidth = mHeaderView.getMeasuredWidth();
@@ -222,6 +231,7 @@ public class TreeView extends ExpandableListView implements
 	protected void onLayout(boolean changed, int left, int top, int right,
 			int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
+		Log.d(ClassName, "==onLayout==");
 		final long flatPostion = getExpandableListPosition(getFirstVisiblePosition());
 		final int groupPos = ExpandableListView
 				.getPackedPositionGroup(flatPostion);
@@ -237,6 +247,7 @@ public class TreeView extends ExpandableListView implements
 	}
 
 	public void configureHeaderView(int groupPosition, int childPosition) {
+		Log.d(ClassName, "==configureHeaderView=111=");
 		if (mHeaderView == null || mAdapter == null
 				|| ((ExpandableListAdapter) mAdapter).getGroupCount() == 0) {
 			return;
@@ -246,11 +257,13 @@ public class TreeView extends ExpandableListView implements
 
 		switch (state) {
 		case TreeHeaderAdapter.PINNED_HEADER_GONE: {
+			Log.d(ClassName, "==configureHeaderView=222=");
 			mHeaderViewVisible = false;
 			break;
 		}
 
 		case TreeHeaderAdapter.PINNED_HEADER_VISIBLE: {
+			Log.d(ClassName, "==configureHeaderView=333=");
 			mAdapter.configureTreeHeader(mHeaderView, groupPosition,
 					childPosition, MAX_ALPHA);
 
@@ -264,6 +277,7 @@ public class TreeView extends ExpandableListView implements
 		}
 
 		case TreeHeaderAdapter.PINNED_HEADER_PUSHED_UP: {
+			Log.d(ClassName, "==configureHeaderView=444=");
 			View firstView = getChildAt(0);
 			int bottom = firstView.getBottom();
 

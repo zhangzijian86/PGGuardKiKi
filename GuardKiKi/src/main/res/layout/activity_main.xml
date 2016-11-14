@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#ecedf1"
+        android:background="#f7f7f8"
         >
         <RelativeLayout
             android:id="@+id/titleRL"
@@ -33,9 +33,10 @@
                 android:src="@mipmap/title" />
 
             <TextView
+                android:id="@+id/titleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/main_titletext"
+                android:text="@string/main_message"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textSize="20sp"
@@ -43,63 +44,76 @@
                 />
         </RelativeLayout>
 
+
         <FrameLayout
-            android:id="@+id/mHomeContent"
+            android:id="@+id/fl_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/mHomeRadioGroup"
-            android:layout_below="@+id/titleRL">
+            android:layout_below="@+id/titleRL"
+            android:layout_above="@+id/buttom_bar_group" >
 
+            <fragment
+                android:id="@+id/fragment_news"
+                android:name="com.pg.pgguardkiki.fagment.MessageFagment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <fragment
+                android:id="@+id/fragment_constact"
+                android:name="com.pg.pgguardkiki.fagment.ContactsFagment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <fragment
+                android:id="@+id/fragment_setting"
+                android:name="com.pg.pgguardkiki.fagment.DynamicFagment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </FrameLayout>
 
-        <!--底下的四个tab-->
-        <RadioGroup
-            android:id="@+id/mHomeRadioGroup"
+        <View
+            android:id="@+id/line"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
+            android:layout_height="0.5dp"
+            android:layout_above="@id/buttom_bar_group"
+            android:background="#CBCED2" />
+
+        <LinearLayout
+            android:id="@+id/buttom_bar_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/tab_bg"  >
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
 
-            <RadioButton
-                android:id="@+id/mMessageFagmentRb"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/main_message"
-                android:textColor="@drawable/selector_tab_text_color"
-                android:background="@color/tab_bg"
-                android:drawableTop="@drawable/selector_tab_home"
-                />
+            <RelativeLayout style="@style/ButtomBar" >
 
-            <RadioButton
-                android:id="@+id/mContactsFagmentRb"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/main_contacts"
-                android:textColor="@drawable/selector_tab_text_color"
-                android:background="@color/tab_bg"
-                android:drawableTop="@drawable/selector_tab_find"
-                />
+                <ImageButton
+                    android:id="@+id/buttom_message"
+                    style="@style/ButtomBarImgBtn"
+                    android:background="@drawable/bar_message"
+                    android:contentDescription="@string/app_name" />
+            </RelativeLayout>
 
-            <RadioButton
-                android:id="@+id/mDynamicFagmentRb"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/main_dynamic"
-                android:textColor="@drawable/selector_tab_text_color"
-                android:background="@color/tab_bg"
-                android:drawableTop="@drawable/selector_tab_search"
-                />
-        </RadioGroup>
+            <RelativeLayout style="@style/ButtomBar" >
+
+                <ImageButton
+                    android:id="@+id/buttom_constact"
+                    style="@style/ButtomBarImgBtn"
+                    android:background="@drawable/bar_constact"
+                    android:contentDescription="@string/app_name" />
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/ButtomBar" >
+
+                <ImageButton
+                    android:id="@+id/buttom_dynamic"
+                    style="@style/ButtomBarImgBtn"
+                    android:background="@drawable/bar_dynamic"
+                    android:contentDescription="@string/app_name" />
+            </RelativeLayout>
+        </LinearLayout>
+
     </RelativeLayout>
 
     <LinearLayout

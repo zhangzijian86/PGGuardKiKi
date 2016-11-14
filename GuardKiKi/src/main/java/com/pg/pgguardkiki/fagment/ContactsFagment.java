@@ -12,7 +12,9 @@ import android.widget.ExpandableListView;
 
 import com.pg.pgguardkiki.R;
 import com.pg.pgguardkiki.adapter.ConstactAdapter;
+import com.pg.pgguardkiki.bean.Child;
 import com.pg.pgguardkiki.bean.Group;
+import com.pg.pgguardkiki.bean.Jid;
 import com.pg.pgguardkiki.dao.PGDBHelper;
 import com.pg.pgguardkiki.dao.PGDBHelperFactory;
 import com.pg.pgguardkiki.tools.view.TitleBarView;
@@ -83,12 +85,30 @@ public class ContactsFagment  extends Fragment {
     public void findFriends() {
         try {
             listGroup=new ArrayList<Group>();
-            String[] columns = {"Roster_Nick"};
-            List<Nick> list= mPGDBHelper.query("PG_Roster", columns, "Roster_Username = '" + username + "'", null, Nick.class);
-            Log.d(ClassName, "===findFriends=====111====aa=="+list.size());
-            for(int i = 0; i < list.size(); i++)
+            String[] nickColumns = {"Roster_Nick"};
+            List<Nick> nicklist= mPGDBHelper.query("PG_Roster", nickColumns, "Roster_Username = '" + username + "'", null, Nick.class);
+            for(int i = 0; i < nicklist.size(); i++)
             {
-                Log.d(ClassName, "===findFriends=====111====aa=="+list.get(i).getRoster_Nick());
+                int flag = 0;
+                Group mygroup=new Group();
+                mygroup.setGroupName(nicklist.get(i).getRoster_Nick());
+                Log.d(ClassName, "==nicklist.get(i).getRoster_Nick()==" + nicklist.get(i).getRoster_Nick());
+                String[] jidColumns = {"Roster_Jid"};
+                List<Jid> jidlist= mPGDBHelper.query("PG_Roster", jidColumns, "Roster_Username = '" + username + "' and Roster_Nick = '"+nicklist.get(i).getRoster_Nick()+"'", null, Jid.class);
+                List<Child> childList=new ArrayList<Child>();
+                for (int j = 0; j < jidlist.size(); j++) {
+                    Log.d(ClassName, "==jidlist.get(j).getRoster_Jid()==" + jidlist.get(j).getRoster_Jid());
+                    if(!jidlist.get(j).getRoster_Jid().equals("ordinaryfrienduser@zzj")&&!jidlist.get(j).getRoster_Jid().equals("specialfrienduser@zzj")) {//
+                        Child child = new Child();
+                        child.setUsername(jidlist.get(j).getRoster_Jid());
+                        childList.add(child);
+                        flag ++;
+                    }
+                }
+                mygroup.setChildList(childList);
+                if(flag!=0){
+                    listGroup.add(mygroup);
+                }
             }
 
 //            Log.d("111", "===getRoster=====111====aa==");

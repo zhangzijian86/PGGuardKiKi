@@ -105,6 +105,11 @@ public class PGDBHelper implements IDatabase {
     public List query(String table, String[] columns, String selection, String[] selectionArgs, Class clazz) {
         try {
             Cursor cursor = database.query(table, columns, selection, selectionArgs, null, null, null);
+//            while (cursor.moveToNext()) {
+//                String Roster_Nick=cursor.getString(0);
+//                Log.d(ClassName,"=======Roster_Nick===111="+Roster_Nick);
+//                Log.d(ClassName,"=======Roster_Nick===222="+cursor.getCount());
+//            }
             List list = cursor2VOList(cursor, clazz);
             if (cursor != null)
                 cursor.close();
@@ -726,7 +731,7 @@ public class PGDBHelper implements IDatabase {
                 } */
             }
         }
-        return null;
+        return obj;
     }
 
     /**

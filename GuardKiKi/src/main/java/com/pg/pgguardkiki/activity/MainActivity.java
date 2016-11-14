@@ -1,6 +1,5 @@
 package com.pg.pgguardkiki.activity;
 
-import android.support.v4.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,16 +8,16 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pg.pgguardkiki.R;
@@ -49,24 +48,25 @@ public class MainActivity extends FragmentActivity implements
     private TranslateAnimation mShowAction;
     private RoundImageView mainlogoRI;
 
+    private TextView titleTV;
+
     private String mPhoneNumber;
     private String mPassword;
 
     private PGDBHelper mPGDBHelper;
 
-    //-------
-    private FrameLayout mHomeContent;
-    private RadioGroup mHomeRadioGroup;
-//    private RadioButton mHomeHomeRb;
-//    private RadioButton mHomeFindRb;
-//    private RadioButton mHomeSearchRb;
-//    private RadioButton mHomeProfileRb;
-    static final int NUM_ITEMS = 4;//一共四个fragment
     private MessageFagment mMessageFagment;
     private ContactsFagment mContactsFagment;
     private DynamicFagment mDynamicFagment;
-    private Fragment fragment = null;
-    //-------
+
+    private PopupWindow mPopupWindow;
+    private LinearLayout buttomBarGroup;
+
+    private ImageButton buttom_message;
+    private ImageButton buttom_constact;
+    private ImageButton buttom_dynamic;
+
+    private View currentButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class MainActivity extends FragmentActivity implements
         Intent mServiceIntent = new Intent(this, ConnectService.class);
         mServiceIntent.setAction(LOGIN_ACTION);
 
-        mPhoneNumber  = this.getIntent().getStringExtra("PhoneNumber");
+        mPhoneNumber = this.getIntent().getStringExtra("PhoneNumber");
         Log.d(ClassName, "==onCreate=mPhoneNumber=" + mPhoneNumber);
 
         mPassword = this.getIntent().getStringExtra("Password");
@@ -96,6 +96,8 @@ public class MainActivity extends FragmentActivity implements
                 0.0f);
         mHiddenAction.setDuration(500);
 
+        titleTV = (TextView) findViewById(R.id.titleTV);
+
         mainlogoRI = (RoundImageView) findViewById(R.id.mainlogoRI);
         mainlogoRI.setOnClickListener(this);
         leftBarLL = (LinearLayout) findViewById(R.id.leftBarLL);
@@ -110,81 +112,21 @@ public class MainActivity extends FragmentActivity implements
 
         mPGDBHelper = PGDBHelperFactory.getDBHelper();
 
-        mPGDBHelper.query("PG_Roster",null,null,null,null);
+        mMessageFagment = (MessageFagment) getSupportFragmentManager().findFragmentById(R.id.fragment_news);//消息
+        mContactsFagment = (ContactsFagment) getSupportFragmentManager().findFragmentById(R.id.fragment_constact);//联系人
+        mDynamicFagment = (DynamicFagment) getSupportFragmentManager().findFragmentById(R.id.fragment_setting);//我
 
-        //-------
-        mMessageFagment = new MessageFagment();
-        mContactsFagment = new ContactsFagment();
-        mDynamicFagment = new DynamicFagment();
 
-        mHomeContent = (FrameLayout) findViewById(R.id.mHomeContent); //tab上方的区域
-        mHomeRadioGroup = (RadioGroup) findViewById(R.id.mHomeRadioGroup);  //底部的四个tab
-//        mHomeHomeRb = (RadioButton) findViewById(R.id.mHomeHomeRb);
-//        mHomeFindRb = (RadioButton) findViewById(R.id.mHomeFindRb);
-//        mHomeSearchRb = (RadioButton) findViewById(R.id.mHomeSearchRb);
-//        mHomeProfileRb = (RadioButton) findViewById(R.id.mHomeProfileRb);
-        //监听事件：为底部的RadioGroup绑定状态改变的监听事件
-        mHomeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int index = 0;
-                switch (checkedId) {
-                    case R.id.mMessageFagmentRb:
-                        index = 0;
-                        break;
-                    case R.id.mContactsFagmentRb:
-                        index = 1;
-                        break;
-                    case R.id.mDynamicFagmentRb:
-                        index = 2;
-                        break;
-                }
-                //通过fragments这个adapter还有index来替换帧布局中的内容
-                fragment = (Fragment) fragments.instantiateItem(mHomeContent, index);
-                //一开始将帧布局中 的内容设置为第一个
-                fragments.setPrimaryItem(mHomeContent, 0, fragment);
-                fragments.finishUpdate(mHomeContent);
+        buttomBarGroup = (LinearLayout) findViewById(R.id.buttom_bar_group);
+        buttom_message = (ImageButton) findViewById(R.id.buttom_message);
+        buttom_constact = (ImageButton) findViewById(R.id.buttom_constact);
+        buttom_dynamic = (ImageButton) findViewById(R.id.buttom_dynamic);
 
-            }
-        });
-        //通过fragments这个adapter还有index来替换帧布局中的内容
-        fragment = (Fragment) fragments.instantiateItem(mHomeContent, 0);
-        //一开始将帧布局中 的内容设置为第一个
-        fragments.setPrimaryItem(mHomeContent, 0, fragment);
-        fragments.finishUpdate(mHomeContent);
-        //-------
+        buttom_message.setOnClickListener(this);
+        buttom_constact.setOnClickListener(this);
+        buttom_dynamic.setOnClickListener(this);
+        buttom_message.performClick();
     }
-
-    //-------
-    //用adapter来管理四个Fragment界面的变化。注意，我这里用的Fragment都是v4包里面的
-    FragmentStatePagerAdapter fragments = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-
-        @Override
-        public int getCount() {
-            return NUM_ITEMS;//一共有四个Fragment
-        }
-
-        //进行Fragment的初始化
-        @Override
-        public Fragment getItem(int i) {
-            switch (i) {
-                case 0://首页
-                    fragment = mMessageFagment;
-                    break;
-                case 1://发现
-                    fragment = mContactsFagment;
-                    break;
-                case 2://搜索
-                    fragment = mDynamicFagment;
-                    break;
-                default:
-                    fragment = mMessageFagment;
-                    break;
-            }
-            return fragment;
-        }
-    };
-    //-------
 
     @Override
     protected void onDestroy() {
@@ -218,9 +160,29 @@ public class MainActivity extends FragmentActivity implements
                 leftBarLL.startAnimation(mHiddenAction);
                 leftBarLL.setVisibility(View.INVISIBLE);
                 break;
+            case R.id.buttom_message:
+                 getSupportFragmentManager().beginTransaction().hide(mContactsFagment).hide(mDynamicFagment).show(mMessageFagment).commit();
+                 setButton(v);
+                 break;
+            case R.id.buttom_constact:
+                 getSupportFragmentManager().beginTransaction().hide(mMessageFagment).hide(mDynamicFagment).show(mContactsFagment).commit();
+                 setButton(v);
+                 break;
+            case R.id.buttom_dynamic:
+                 getSupportFragmentManager().beginTransaction().hide(mContactsFagment).hide(mMessageFagment).show(mDynamicFagment).commit();
+                 setButton(v);
+            break;
             default:
                 break;
         }
+    }
+
+    private void setButton(View v){
+        if(currentButton!=null&&currentButton.getId()!=v.getId()){
+            currentButton.setEnabled(true);
+        }
+        v.setEnabled(false);
+        currentButton=v;
     }
 
     /**
